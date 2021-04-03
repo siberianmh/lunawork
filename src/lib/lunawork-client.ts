@@ -4,6 +4,7 @@ import { CommandParserStage } from './command/command-parser'
 import { ArgTypes } from './utils/arg-type-provider'
 import { ListenerManager } from './listener/listener-manager'
 import { Stage } from './stage'
+import { ILogger, Logger, LogLevel } from './logger/logger'
 import { Awaited } from './types'
 
 /**
@@ -32,6 +33,11 @@ interface ILunaworkClientOptions {
    * @default () => client.options.defaultPrefix
    */
   fetchPrefix?: ILunaworkPrefixHook
+
+  /**
+   * The logger options, defaults to an instance of Logger when instance is not specified.
+   */
+  logger?: IClientLoggerOptions
 }
 
 /**
@@ -91,6 +97,12 @@ export class LunaworkClient extends Client {
    */
   public fetchPrefix: ILunaworkPrefixHook
 
+  /**
+   * The logger to be used by the framework. By default, a [[Logger]] instance is used, which emits the
+   * messages to the console.
+   */
+  public logger: ILogger
+
   readonly commandArgumentTypes: ArgTypes
 
   constructor(options: ClientOptions = {}) {
@@ -99,6 +111,10 @@ export class LunaworkClient extends Client {
     this.commandManager = new CommandManager()
     this.listenerManager = new ListenerManager(this)
     this.commandArgumentTypes = options.commandArgumentTypes || {}
+
+    this.logger =
+      options.logger?.instance ??
+      new Logger(options.logger?.level ?? LogLevel.Info)
 
     this.fetchPrefix =
       options.fetchPrefix ?? (() => this.options.defaultPrefix ?? null)
@@ -159,9 +175,15 @@ export class LunaworkClient extends Client {
   }
 }
 
+export interface IClientLoggerOptions {
+  level?: LogLevel
+  instance?: ILogger
+}
+
 declare module 'discord.js' {
   // eslint-disable-next-line
   interface Client {
+    logger: ILogger
     fetchPrefix: ILunaworkPrefixHook
   }
 

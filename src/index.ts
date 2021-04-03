@@ -11,6 +11,7 @@ export {
   mergeInhibitors,
   Inhibitor,
 } from './lib/command/inhibitors'
+export { ILogger, LogLevel, LogMethods, Logger } from './lib/logger/logger'
 export { IListenerDecoratorOptions, listener } from './lib/listener/decorator'
 export { IListener } from './lib/listener/listener'
 export { Context } from './lib/utils/context'
