@@ -6,6 +6,7 @@ import { ListenerManager } from './listener/listener-manager'
 import { Stage } from './stage'
 import { ILogger, Logger, LogLevel } from './logger/logger'
 import { Awaited } from './types'
+import { WebsocketManager } from './websocket/websocket-manager'
 
 /**
  * A valid prefix in Lunawork:
@@ -61,6 +62,7 @@ interface ILunaworkClientOptions {
  */
 export class LunaworkClient extends Client {
   public commandManager: CommandManager
+  public webSocketManager: WebsocketManager
   public listenerManager: ListenerManager
   public stages: Set<Stage> = new Set()
 
@@ -109,6 +111,7 @@ export class LunaworkClient extends Client {
     super(options)
 
     this.commandManager = new CommandManager()
+    this.webSocketManager = new WebsocketManager(this)
     this.listenerManager = new ListenerManager(this)
     this.commandArgumentTypes = options.commandArgumentTypes || {}
 
@@ -167,9 +170,13 @@ export class LunaworkClient extends Client {
     instance.processListeners
       .bind(instance)()
       .forEach((l) => this.listenerManager.add(l))
+    instance.processWebSockets
+      .bind(instance)()
+      .forEach((l) => this.webSocketManager.add(l))
     instance.processCommands
       .bind(instance)()
       .forEach((c) => this.commandManager.add(c))
+
     this.stages.add(instance)
     return this
   }

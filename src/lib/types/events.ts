@@ -1,4 +1,4 @@
-import { ClientEvents } from 'discord.js'
+import { ClientEvents, WSEventType } from 'discord.js'
 import { Context } from '../utils/context'
 
 export interface IEvents extends ClientEvents {
@@ -8,6 +8,7 @@ export interface IEvents extends ClientEvents {
 }
 
 export type Event = keyof IEvents
+export type WSEvent = WSEventType
 
 declare module 'discord.js' {
   // eslint-disable-next-line @typescript-eslint/naming-convention

@@ -5,7 +5,13 @@ import { IListenerDecoratorMeta } from './listener/decorator'
 import { getArgTypes } from './utils/arg-type-provider'
 import { ICommand } from './command/command'
 import { IListener } from './listener/listener'
-import { commandMetas, listenerMetas } from './utils/reflect-prefixes'
+import { IWebsocket } from './websocket/websocket'
+import {
+  commandMetas,
+  listenerMetas,
+  websocketMetas,
+} from './utils/reflect-prefixes'
+import { IWebsocketDecoratorMeta } from './websocket/decorator'
 
 export class Stage {
   public client: LunaworkClient
@@ -26,6 +32,21 @@ export class Stage {
           module: this,
           func: meta.func,
         } as IListener),
+    )
+  }
+
+  public processWebSockets() {
+    const websocketsMeta: Array<IWebsocketDecoratorMeta> =
+      Reflect.getMetadata(websocketMetas, this) || []
+
+    return websocketsMeta.map(
+      (meta) =>
+        ({
+          event: meta.event,
+          id: this.constructor.name + '/' + meta.id,
+          module: this,
+          func: meta.func,
+        } as IWebsocket),
     )
   }
 
