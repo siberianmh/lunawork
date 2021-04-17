@@ -4,12 +4,14 @@ import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
 import { listener } from '../listener/decorator'
 import { Stage } from '../stage'
+import { CommandInteraction } from '../../djs-extend/command-interaction'
 
 export class CommandParserStage extends Stage {
   public constructor(client: LunaworkClient) {
     super(client)
   }
 
+  // Default command with prefix
   @listener({ event: 'message' })
   public async onMessage(msg: Message) {
     if (msg.author && msg.author.bot) {
@@ -92,6 +94,24 @@ export class CommandParserStage extends Stage {
       cmd.onError(msg, err)
     }
     return this.client.emit('comamndExecution', context)
+  }
+
+  // Slash Commands
+  @listener({ event: 'interaction' })
+  public async onInteraction(interaction: CommandInteraction) {
+    if (!interaction.isCommand()) {
+      return
+    }
+
+    // const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
+
+    // // It's not possible in case of slash commands
+    // if (!cmd) {
+    //   return
+    // }
+
+    console.log(interaction.commandName)
+    return interaction.reply(interaction.commandName)
   }
 
   private getPrefix(
