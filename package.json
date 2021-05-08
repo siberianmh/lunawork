@@ -22,7 +22,7 @@
     "reflect-metadata": "^0.1.13"
   },
   "peerDependencies": {
-    "discord.js": "12.x"
+    "discord.js": "discordjs/discord.js#0e40f9b86826ba50aa3840807fb86e1bce6b1c3d"
   },
   "devDependencies": {
     "@types/node": "^15.0.2",

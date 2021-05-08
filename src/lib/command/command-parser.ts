@@ -1,10 +1,9 @@
 import { LunaworkClient } from '../lunawork-client'
-import { Message } from 'discord.js'
+import { Message, CommandInteraction } from 'discord.js'
 import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
 import { listener } from '../listener/decorator'
 import { Stage } from '../stage'
-import { CommandInteraction } from '../../djs-extend/command-interaction'
 
 export class CommandParserStage extends Stage {
   public constructor(client: LunaworkClient) {

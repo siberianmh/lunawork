@@ -1,4 +1,4 @@
-import { Client, ClientOptions, Message } from 'discord.js'
+import { Client, ClientOptions, Message, Intents } from 'discord.js'
 import { CommandManager } from './command/command-manager'
 import { CommandParserStage } from './command/command-parser'
 import { ArgTypes } from './utils/arg-type-provider'
@@ -108,7 +108,7 @@ export class LunaworkClient extends Client {
 
   readonly commandArgumentTypes: ArgTypes
 
-  constructor(options: ClientOptions = {}) {
+  constructor(options: ClientOptions = { intents: Intents.NON_PRIVILEGED }) {
     super(options)
 
     this.commandManager = new CommandManager()
