@@ -16,6 +16,7 @@
     "framework"
   ],
   "scripts": {
+    "postinstall": "yarn build",
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
