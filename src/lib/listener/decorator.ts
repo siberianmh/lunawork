@@ -1,16 +1,9 @@
 import { Stage } from '../stage'
-import { Event } from '../types/events'
+import { IListener } from './listener'
 import { listenerMetas } from '../utils/reflect-prefixes'
 
-export interface IListenerDecoratorOptions {
-  event: Event
-}
-
-export interface IListenerDecoratorMeta {
-  readonly event: Event
-  readonly id: string
-  readonly func: (...args: Array<any>) => void
-}
+export type IListenerDecoratorOptions = Pick<IListener, 'event'>
+export type IListenerDecoratorMeta = Pick<IListener, 'event' | 'id' | 'func'>
 
 export function listener(opts: IListenerDecoratorOptions) {
   return function (
@@ -18,10 +11,10 @@ export function listener(opts: IListenerDecoratorOptions) {
     propertyKey: string,
     descriptor: PropertyDescriptor,
   ) {
-    const targetConstructorName = target.constructor.name // Making this a variable to avoid some weird TS bug.
-
     if (!(target instanceof Stage)) {
-      throw new TypeError(`${targetConstructorName} doesn't extend Stage`)
+      throw new TypeError(
+        `${(target as any).constructor.name} doesn't extend Stage`,
+      )
     }
 
     if (!(descriptor.value.constructor instanceof Function)) {

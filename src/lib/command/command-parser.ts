@@ -4,6 +4,7 @@ import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
 import { listener } from '../listener/decorator'
 import { Stage } from '../stage'
+import { ICommand } from './command'
 
 export class CommandParserStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -75,6 +76,36 @@ export class CommandParserStage extends Stage {
     }
 
     // Executing the command
+    return await this.execute(msg, parsed, cmdTrigger, cmd, typedArgs)
+  }
+
+  // Slash Commands
+  @listener({ event: 'interaction' })
+  public async onInteraction(interaction: CommandInteraction) {
+    if (!interaction.isCommand()) {
+      return
+    }
+
+    console.log(interaction)
+
+    const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
+
+    if (!cmd?.slashCommand) {
+      return interaction.reply('Unable to find command', { ephemeral: true })
+    }
+
+    const typedArgs = interaction.options.map((arg) => arg.value)
+    return this.execute(interaction, '', '', cmd, typedArgs)
+  }
+
+  private async execute(
+    msg: Message | CommandInteraction,
+    parsed: string,
+    cmdTrigger: string,
+    cmd: ICommand,
+    typedArgs: Array<unknown>,
+  ) {
+    // Executing the command
     const context = new Context(msg, parsed, cmdTrigger, cmd)
     try {
       const result = cmd.func.call(
@@ -86,31 +117,17 @@ export class CommandParserStage extends Stage {
         await result
       }
     } catch (err) {
-      console.error(
-        `error while executing command ${cmd.id}! executed by ${msg.author.tag}/${msg.author.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
-        err,
-      )
-      cmd.onError(msg, err)
+      if (msg instanceof Message) {
+        console.error(
+          `error while executing command ${cmd.id}! executed by ${msg.author.tag}/${msg.author.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
+          err,
+        )
+        cmd.onError(msg, err)
+      } else {
+        msg.reply('Error occured while interacting with request')
+      }
     }
     return this.client.emit('comamndExecution', context)
-  }
-
-  // Slash Commands
-  @listener({ event: 'interaction' })
-  public async onInteraction(interaction: CommandInteraction) {
-    if (!interaction.isCommand()) {
-      return
-    }
-
-    // const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
-
-    // // It's not possible in case of slash commands
-    // if (!cmd) {
-    //   return
-    // }
-
-    console.log(interaction.commandName)
-    return interaction.reply(interaction.commandName)
   }
 
   private getPrefix(

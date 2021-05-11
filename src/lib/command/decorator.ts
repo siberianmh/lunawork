@@ -1,15 +1,13 @@
-import { Message } from 'discord.js'
 import { Stage } from '../stage'
-import { Inhibitor } from './inhibitors'
 import { Context } from '../utils/context'
 import { commandMetas, optionalCommandArgs } from '../utils/reflect-prefixes'
+import { ICommand } from './command'
 
-export interface ICommandDecoratorOptions {
-  description?: string
+export type ICommandDecoratorOptions = Pick<
+  ICommand,
+  'single' | 'inhibitors' | 'onError' | 'description' | 'slashCommand'
+> & {
   aliases: Array<string>
-  single: boolean
-  inhibitors: Array<Inhibitor>
-  onError: (msg: Message, error: Error) => void
 }
 
 export interface ICommandArgument {
@@ -18,12 +16,7 @@ export interface ICommandArgument {
   optional: boolean
 }
 
-interface ICommandDecoratorMeta {
-  id: string
-  args: Array<ICommandArgument>
-  usesContextAPI: boolean
-}
-
+type ICommandDecoratorMeta = Pick<ICommand, 'id' | 'args' | 'usesContextAPI'>
 export type ICommandDecorator = ICommandDecoratorMeta & ICommandDecoratorOptions
 
 export function command(
@@ -76,6 +69,7 @@ export function command(
       single: opts.single || false,
       inhibitors: opts.inhibitors || [],
       usesContextAPI: types[0] === Context,
+      slashCommand: opts.slashCommand || false,
       onError:
         opts.onError ||
         ((msg) => {

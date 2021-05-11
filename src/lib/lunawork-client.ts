@@ -7,7 +7,6 @@ import { Stage } from './stage'
 import { ILogger, Logger, LogLevel } from './logger/logger'
 import { Awaited } from './types'
 import { WebsocketManager } from './websocket/websocket-manager'
-import { InteractionsWrapperStage } from './interactions/interactions-stage'
 
 /**
  * A valid prefix in Lunawork:
@@ -124,7 +123,6 @@ export class LunaworkClient extends Client {
       options.fetchPrefix ?? (() => this.options.defaultPrefix ?? null)
 
     this.registerStage(CommandParserStage)
-    this.registerStage(InteractionsWrapperStage)
   }
 
   public registerStage(stage: typeof Stage | Stage) {
@@ -171,13 +169,13 @@ export class LunaworkClient extends Client {
 
     instance.processListeners
       .bind(instance)()
-      .forEach((l) => this.listenerManager.add(l))
+      .forEach((listener) => this.listenerManager.add(listener))
     instance.processWebSockets
       .bind(instance)()
-      .forEach((l) => this.webSocketManager.add(l))
+      .forEach((wsListener) => this.webSocketManager.add(wsListener))
     instance.processCommands
       .bind(instance)()
-      .forEach((c) => this.commandManager.add(c))
+      .forEach((command) => this.commandManager.add(command))
 
     this.stages.add(instance)
     return this

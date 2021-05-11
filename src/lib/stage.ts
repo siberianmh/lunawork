@@ -65,6 +65,7 @@ export class Stage {
           module: this,
           single: meta.single,
           inhibitors: meta.inhibitors,
+          slashCommand: meta.slashCommand,
           onError: meta.onError,
           usesContextAPI: meta.usesContextAPI,
         } as ICommand),
