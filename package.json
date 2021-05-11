@@ -23,7 +23,7 @@
     "reflect-metadata": "^0.1.13"
   },
   "peerDependencies": {
-    "discord.js": "discordjs/discord.js#0e40f9b86826ba50aa3840807fb86e1bce6b1c3d"
+    "discord.js": "discordjs/discord.js#2eac84296b448907213680690ec766bb5fbe5990"
   },
   "devDependencies": {
     "@types/node": "^15.0.2",
