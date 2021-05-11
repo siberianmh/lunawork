@@ -86,8 +86,6 @@ export class CommandParserStage extends Stage {
       return
     }
 
-    console.log(interaction)
-
     const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
 
     if (!cmd?.slashCommand) {
@@ -127,7 +125,7 @@ export class CommandParserStage extends Stage {
         msg.reply('Error occured while interacting with request')
       }
     }
-    return this.client.emit('comamndExecution', context)
+    return this.client.emit('commandExecution', context)
   }
 
   private getPrefix(

@@ -80,6 +80,7 @@ export class Stage {
         }
       }),
     )
+
     return cmds
   }
 }
