@@ -49,11 +49,13 @@ interface ILunaworkClientOptions {
  * ```typescript
  * const client = new LunaworkClient({
  *   presence: {
- *     activity: {
- *       name: 'for commands!',
- *       type: 'LISTENING',
- *     },
- *   },
+ *    activities: [
+ *      {
+ *        name: 'for commands!',
+ *        type: 'LISTENING',
+ *      },
+ *    ],
+ *  },
  * })
  *
  * client.login(process.env.DISCORD_TOKEN)
