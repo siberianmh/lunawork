@@ -18,6 +18,7 @@ export {
   IWebsocketDecoratorOptions,
   wsListener,
 } from './lib/websocket/decorator'
+export { isCommandMessage, isMessage } from './lib/utils/type-guarding'
 export { IWebsocket } from './lib/websocket/websocket'
 export { Context } from './lib/utils/context'
 export { optional } from './lib/command/optional'
