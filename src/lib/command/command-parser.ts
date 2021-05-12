@@ -116,12 +116,16 @@ export class CommandParserStage extends Stage {
       }
     } catch (err) {
       if (msg instanceof Message) {
-        console.error(
+        this.client.logger.error(
           `error while executing command ${cmd.id}! executed by ${msg.author.tag}/${msg.author.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
           err,
         )
         cmd.onError(msg, err)
       } else {
+        this.client.logger.error(
+          `error while exeucting command ${cmd.id}! executed by ${msg.user.tag}/${msg.user.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
+          err,
+        )
         msg.reply('Error occured while interacting with request')
       }
     }
