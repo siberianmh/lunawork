@@ -30,5 +30,6 @@ jobs:
           node-version: '16'
       - name: Install deps
         run: yarn install
-      - name: Run build
-        run: yarn build
+      # TODO: return when release be published to npm
+      # - name: Run build
+      #   run: yarn build
