@@ -28,7 +28,7 @@
     "discord.js": "discordjs/discord.js#ab82cafcde0ee259a32ef14303c1b4a64dea8fae"
   },
   "devDependencies": {
-    "@types/node": "^15.3.0",
+    "@types/node": "^15.3.1",
     "discord-api-types": "^0.18.1",
     "discord.js": "discordjs/discord.js#ab82cafcde0ee259a32ef14303c1b4a64dea8fae",
     "prettier": "^2.3.0",
