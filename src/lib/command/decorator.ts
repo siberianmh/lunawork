@@ -5,7 +5,12 @@ import { ICommand } from './command'
 
 export type ICommandDecoratorOptions = Pick<
   ICommand,
-  'single' | 'inhibitors' | 'onError' | 'description' | 'slashCommand'
+  | 'single'
+  | 'inhibitors'
+  | 'onError'
+  | 'description'
+  | 'slashCommand'
+  | 'usesContextAPI'
 > & {
   aliases: Array<string>
 }
