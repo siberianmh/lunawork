@@ -17,6 +17,7 @@
     "slash commands"
   ],
   "scripts": {
+    "postinstall": "yarn build",
     "build": "tsc",
     "prepublish": "yarn build",
     "lint": "prettier --check \"./**/*.{ts,tsx,js,yaml,yml}\"",
