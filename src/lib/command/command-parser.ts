@@ -87,7 +87,6 @@ export class CommandParserStage extends Stage {
     }
 
     const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
-    console.log(interaction)
 
     if (!cmd?.slashCommand) {
       return interaction.reply('Unable to find command', { ephemeral: true })
