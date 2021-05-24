@@ -87,12 +87,15 @@ export class CommandParserStage extends Stage {
     }
 
     const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
+    console.log(interaction)
 
     if (!cmd?.slashCommand) {
       return interaction.reply('Unable to find command', { ephemeral: true })
     }
 
-    const typedArgs = interaction.options.map((arg) => arg.value)
+    const typedArgs = interaction.options.map(
+      (arg) => arg.member || arg.user || arg.channel || arg.value,
+    )
     return this.execute(interaction, '', '', cmd, typedArgs)
   }
 
