@@ -36,8 +36,7 @@ export class CommandParserStage extends Stage {
     for (const inhibitor of cmd.inhibitors) {
       const reason = await inhibitor(msg, this.client)
       if (reason) {
-        msg.reply(`:warning: command was inhibited: ${reason}`)
-        return
+        return msg.channel.send(`:warning: command was inhibited: ${reason}`)
       }
     }
 
@@ -49,7 +48,7 @@ export class CommandParserStage extends Stage {
       typedArgs.push(stringArgs.join(' '))
     } else {
       if (stringArgs.length < leastArgs) {
-        return msg.reply(
+        return msg.channel.send(
           `:warning: expected atleast ${leastArgs} argument${
             leastArgs !== 1 ? 's' : ''
           } but got ${stringArgs.length} argument${
@@ -88,8 +87,15 @@ export class CommandParserStage extends Stage {
 
     const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
 
-    if (!cmd?.slashCommand) {
+    if (!cmd || !cmd.slashCommand) {
       return interaction.reply('Unable to find command', { ephemeral: true })
+    }
+
+    for (const inhibitor of cmd.inhibitors) {
+      const reason = await inhibitor(interaction, this.client)
+      if (reason) {
+        return interaction.reply(`:warning: command was inhibited: ${reason}`)
+      }
     }
 
     const typedArgs = interaction.options.map(

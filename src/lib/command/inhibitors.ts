@@ -1,4 +1,4 @@
-import { Message, PermissionResolvable } from 'discord.js'
+import { Message, CommandInteraction, PermissionResolvable } from 'discord.js'
 import { LunaworkClient } from '../lunawork-client'
 
 export function mergeInhibitors(a: Inhibitor, b: Inhibitor): Inhibitor {
@@ -16,16 +16,17 @@ export const guildsOnly: Inhibitor = async (msg) =>
   msg.member ? undefined : 'not in a guild'
 
 export const dmsOnly: Inhibitor = async (msg) =>
-  msg.channel.type === 'dm' ? undefined : 'not in dms'
+  msg.channel!.type === 'dm' ? undefined : 'not in dms'
 
 export const hasGuildPermission = (perm: PermissionResolvable) =>
   mergeInhibitors(guildsOnly, async (msg) =>
+    // @ts-ignore
     msg.member!.permissions.has(perm)
       ? undefined
       : 'missing discord permission ' + perm,
   )
 
 export type Inhibitor = (
-  msg: Message,
+  msg: Message | CommandInteraction,
   client: LunaworkClient,
 ) => Promise<string | undefined>
