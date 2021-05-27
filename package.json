@@ -27,12 +27,12 @@
     "reflect-metadata": "^0.1.13"
   },
   "peerDependencies": {
-    "discord.js": "discordjs/discord.js#ab82cafcde0ee259a32ef14303c1b4a64dea8fae"
+    "discord.js": "discordjs/discord.js#b90b0c3cfa2278caa38d1ff41eef2ccf4428b99e"
   },
   "devDependencies": {
     "@types/node": "^15.3.1",
     "discord-api-types": "^0.18.1",
-    "discord.js": "discordjs/discord.js#ab82cafcde0ee259a32ef14303c1b4a64dea8fae",
+    "discord.js": "discordjs/discord.js#b90b0c3cfa2278caa38d1ff41eef2ccf4428b99e",
     "prettier": "^2.3.0",
     "typescript": "^4.3.2"
   },
