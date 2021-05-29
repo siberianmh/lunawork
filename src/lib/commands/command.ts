@@ -5,9 +5,9 @@ import type { Inhibitor } from './inhibitors'
 import type { Awaited } from '../types'
 import type { Context } from '../utils/context'
 
-export interface ICommand {
+export interface IPrefixCommand {
   func: (
-    usesContextAPI: Message | CommandInteraction | Context,
+    usesContextAPI: Message | Context,
     ...typedArgs: Array<unknown>
   ) => Awaited<void>
   args: Array<ICommandArgument>
@@ -21,4 +21,17 @@ export interface ICommand {
   onError: (msg: Message, error: Error) => void
 
   description?: string
+}
+
+export interface ISlashCommand {
+  func: (
+    usesContextAPI: CommandInteraction | Context,
+    ...typedArgs: Array<unknown>
+  ) => Awaited<void>
+  id: string
+  module: Stage
+  inhibitors: Array<Inhibitor>
+  usesContextAPI: boolean
+  onError: (msg: CommandInteraction, error: Error) => void
+  description: string
 }

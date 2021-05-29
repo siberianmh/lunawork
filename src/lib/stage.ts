@@ -8,7 +8,7 @@ import {
 } from './utils/reflect-prefixes'
 
 // Prefixed commands
-import { ICommand } from './commands/command'
+import { IPrefixCommand } from './commands/command'
 import { ICommandDecorator } from './commands/prefix/decorator'
 
 // Listener
@@ -74,7 +74,7 @@ export class Stage {
           slashCommand: meta.slashCommand,
           onError: meta.onError,
           usesContextAPI: meta.usesContextAPI,
-        } as ICommand),
+        } as IPrefixCommand),
     )
 
     cmds.forEach((cmd) =>

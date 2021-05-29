@@ -20,7 +20,7 @@ export {
   ICommandDecoratorOptions,
 } from './lib/commands/prefix/decorator'
 export { optional } from './lib/commands/optional'
-export { ICommand } from './lib/commands/command'
+export { IPrefixCommand as ICommand } from './lib/commands/command'
 export {
   dmsOnly,
   guildsOnly,

@@ -1,7 +1,7 @@
 import { Stage } from '../../stage'
 import { Context } from '../../utils/context'
 import { commandMetas, optionalCommandArgs } from '../../utils/reflect-prefixes'
-import { ICommand } from '../command'
+import { IPrefixCommand as ICommand } from '../command'
 
 export type ICommandDecoratorOptions = Pick<
   ICommand,

@@ -4,7 +4,7 @@ import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
 import { listener } from '../listener/decorator'
 import { Stage } from '../stage'
-import { ICommand } from './command'
+import { IPrefixCommand as ICommand } from './command'
 
 export class CommandParserStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -116,6 +116,7 @@ export class CommandParserStage extends Stage {
     try {
       const result = cmd.func.call(
         cmd.module,
+        // @ts-expect-error
         cmd.usesContextAPI ? context : msg,
         ...typedArgs,
       )
