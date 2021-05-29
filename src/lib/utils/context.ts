@@ -1,5 +1,5 @@
 import { CommandInteraction, Message } from 'discord.js'
-import { ICommand } from '../command/command'
+import { ICommand } from '../commands/command'
 
 export class Context {
   constructor(

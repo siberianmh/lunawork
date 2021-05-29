@@ -1,5 +1,5 @@
 import type { CommandInteraction, Message } from 'discord.js'
-import type { ICommandArgument } from './decorator'
+import type { ICommandArgument } from './prefix/decorator'
 import type { Stage } from '../stage'
 import type { Inhibitor } from './inhibitors'
 import type { Awaited } from '../types'

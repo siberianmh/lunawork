@@ -1,6 +1,6 @@
 import { Client, ClientOptions, Message, Intents } from 'discord.js'
-import { CommandManager } from './command/command-manager'
-import { CommandParserStage } from './command/command-parser'
+import { CommandManager } from './commands/command-manager'
+import { CommandParserStage } from './commands/command-parser'
 import { ArgTypes } from './utils/arg-type-provider'
 import { ListenerManager } from './listener/listener-manager'
 import { Stage } from './stage'

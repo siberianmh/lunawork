@@ -1,16 +1,22 @@
 import 'reflect-metadata'
 import { LunaworkClient } from './lunawork-client'
-import { ICommandDecorator } from './command/decorator'
-import { IListenerDecoratorMeta } from './listener/decorator'
 import { getArgTypes } from './utils/arg-type-provider'
-import { ICommand } from './command/command'
-import { IListener } from './listener/listener'
-import { IWebsocket } from './websocket/websocket'
 import {
   commandMetas,
   listenerMetas,
   websocketMetas,
 } from './utils/reflect-prefixes'
+
+// Prefixed commands
+import { ICommand } from './commands/command'
+import { ICommandDecorator } from './commands/prefix/decorator'
+
+// Listener
+import { IListener } from './listener/listener'
+import { IListenerDecoratorMeta } from './listener/decorator'
+
+// WebSocket Listener
+import { IWebsocket } from './websocket/websocket'
 import { IWebsocketDecoratorMeta } from './websocket/decorator'
 
 export class Stage {

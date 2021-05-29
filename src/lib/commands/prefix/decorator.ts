@@ -1,7 +1,7 @@
-import { Stage } from '../stage'
-import { Context } from '../utils/context'
-import { commandMetas, optionalCommandArgs } from '../utils/reflect-prefixes'
-import { ICommand } from './command'
+import { Stage } from '../../stage'
+import { Context } from '../../utils/context'
+import { commandMetas, optionalCommandArgs } from '../../utils/reflect-prefixes'
+import { ICommand } from '../command'
 
 export type ICommandDecoratorOptions = Pick<
   ICommand,
@@ -11,9 +11,7 @@ export type ICommandDecoratorOptions = Pick<
   | 'description'
   | 'slashCommand'
   | 'usesContextAPI'
-> & {
-  aliases: Array<string>
-}
+> & { aliases: Array<string> }
 
 export interface ICommandArgument {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -49,11 +47,12 @@ export function command(
       target,
       propertyKey,
     )
-    // Optional arg stuff
+
+    // Optional args stuff
     const optionals: Array<number> =
       Reflect.getMetadata(optionalCommandArgs, target, propertyKey) || []
     if (optionals.includes(0)) {
-      throw new Error('The first argument may not be optional')
+      throw new Error('The fisrt argument may not be optional')
     }
     let lastOpt: number = optionals[0] + 1
     for (const x of optionals) {
@@ -78,7 +77,7 @@ export function command(
       onError:
         opts.onError ||
         ((msg) => {
-          msg.reply(':warning: error while executing command!')
+          msg.channel.send(':warning: error while executing command!')
         }),
     }
 
