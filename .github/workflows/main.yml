@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      # - name: Install deps
-      #   run: yarn install
+      - name: Install deps
+        run: yarn install
       - name: Run lint
         run: yarn lint
 
@@ -30,6 +30,5 @@ jobs:
           node-version: '16'
       - name: Install deps
         run: yarn install
-      # TODO: return when release be published to npm
-      # - name: Run build
-      #   run: yarn build
+      - name: Run build
+        run: yarn build

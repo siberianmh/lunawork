@@ -18,13 +18,14 @@
   ],
   "scripts": {
     "postinstall": "yarn build",
-    "build": "tsc",
+    "build": "rimraf ./dist && tsc",
     "prepublish": "yarn build",
     "lint": "prettier --check \"./**/*.{ts,tsx,js,yaml,yml}\"",
     "lint:fix": "yarn lint --write"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
     "discord.js": "discordjs/discord.js#b90b0c3cfa2278caa38d1ff41eef2ccf4428b99e"
