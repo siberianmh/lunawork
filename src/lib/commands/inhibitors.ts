@@ -20,7 +20,7 @@ export const dmsOnly: Inhibitor = async (msg) =>
 
 export const hasGuildPermission = (perm: PermissionResolvable) =>
   mergeInhibitors(guildsOnly, async (msg) =>
-    // @ts-ignore
+    // @ts-expect-error
     msg.member!.permissions.has(perm)
       ? undefined
       : 'missing discord permission ' + perm,
