@@ -178,6 +178,9 @@ export class LunaworkClient extends Client {
     instance.processCommands
       .bind(instance)()
       .forEach((command) => this.commandManager.add(command))
+    instance.processSlashCommands
+      .bind(instance)()
+      .forEach((slashCmd) => this.commandManager.add(slashCmd))
 
     this.stages.add(instance)
     return this

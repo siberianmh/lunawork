@@ -1,18 +1,21 @@
+import { CommandInteraction } from 'discord.js'
 import { Stage } from '../../stage'
 import { slashCommandMetas } from '../../utils/reflect-prefixes'
 import { ISlashCommand } from '../command'
+import { Inhibitor } from '../inhibitors'
 
-export type ICommandDecoratorOptions = Pick<
-  ISlashCommand,
-  'inhibitors' | 'onError' | 'description' | 'usesContextAPI'
->
+export interface ICommandDecoratorOptions {
+  readonly description: string
+
+  readonly inhibitors?: Array<Inhibitor>
+  readonly onError?: (msg: CommandInteraction, error: Error) => void
+  readonly usesContextAPI?: boolean
+}
 
 type ICommandDecoratorMeta = Pick<ISlashCommand, 'id' | 'usesContextAPI'>
 export type ICommandDecorator = ICommandDecoratorMeta & ICommandDecoratorOptions
 
-export function slashCommand(
-  opts: Partial<ICommandDecoratorOptions> | undefined = {},
-) {
+export function slashCommand(opts: ICommandDecoratorOptions) {
   return function (
     target: Stage,
     propertyKey: string,

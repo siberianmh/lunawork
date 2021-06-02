@@ -5,12 +5,7 @@ import { IPrefixCommand as ICommand } from '../command'
 
 export type ICommandDecoratorOptions = Pick<
   ICommand,
-  | 'single'
-  | 'inhibitors'
-  | 'onError'
-  | 'description'
-  | 'slashCommand'
-  | 'usesContextAPI'
+  'single' | 'inhibitors' | 'onError' | 'description' | 'usesContextAPI'
 > & { aliases: Array<string> }
 
 export interface ICommandArgument {
@@ -73,7 +68,6 @@ export function command(
       single: opts.single || false,
       inhibitors: opts.inhibitors || [],
       usesContextAPI: types[0] === Context,
-      slashCommand: opts.slashCommand || false,
       onError:
         opts.onError ||
         ((msg) => {

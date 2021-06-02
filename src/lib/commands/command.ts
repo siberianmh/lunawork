@@ -16,7 +16,6 @@ export interface IPrefixCommand {
   module: Stage
   single: boolean
   inhibitors: Array<Inhibitor>
-  slashCommand: boolean | 'both'
   usesContextAPI: boolean
   onError: (msg: Message, error: Error) => void
 
@@ -32,6 +31,7 @@ export interface ISlashCommand {
   module: Stage
   inhibitors: Array<Inhibitor>
   usesContextAPI: boolean
+  trigger: string
   onError: (msg: CommandInteraction, error: Error) => void
   description: string
 }

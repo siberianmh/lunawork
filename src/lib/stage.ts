@@ -3,13 +3,15 @@ import { LunaworkClient } from './lunawork-client'
 import { getArgTypes } from './utils/arg-type-provider'
 import {
   commandMetas,
+  slashCommandMetas,
   listenerMetas,
   websocketMetas,
 } from './utils/reflect-prefixes'
 
 // Prefixed commands
-import { IPrefixCommand } from './commands/command'
+import { IPrefixCommand, ISlashCommand } from './commands/command'
 import { ICommandDecorator } from './commands/prefix/decorator'
+import { ICommandDecorator as ISlashCommandDecorator } from './commands/slash/decorator'
 
 // Listener
 import { IListener } from './listener/listener'
@@ -71,7 +73,6 @@ export class Stage {
           module: this,
           single: meta.single,
           inhibitors: meta.inhibitors,
-          slashCommand: meta.slashCommand,
           onError: meta.onError,
           usesContextAPI: meta.usesContextAPI,
         } as IPrefixCommand),
@@ -85,6 +86,27 @@ export class Stage {
           )
         }
       }),
+    )
+
+    return cmds
+  }
+
+  public processSlashCommands() {
+    const targetMetas: Array<ISlashCommandDecorator> =
+      Reflect.getMetadata(slashCommandMetas, this) || []
+
+    const cmds = targetMetas.map(
+      (meta) =>
+        ({
+          description: meta.description,
+          func: Reflect.get(this, meta.id),
+          id: this.constructor.name + '/' + meta.id,
+          inhibitors: meta.inhibitors,
+          module: this,
+          onError: meta.onError,
+          usesContextAPI: meta.usesContextAPI,
+          trigger: meta.id,
+        } as ISlashCommand),
     )
 
     return cmds

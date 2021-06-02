@@ -14,7 +14,7 @@ export function getArgTypes(client: LunaworkClient) {
     {
       Number: (s) => (isNaN(parseFloat(s)) ? null : parseFloat(s)),
       String: (s) => s,
-      Command: (s) => client.commandManager.getByTrigger(s),
+      Command: (s) => client.commandManager.getPrefixedByTrigger(s),
       Listener: (s) => client.listenerManager.getById(s),
       User: (s, msg) => {
         const res = USER_PATTERN.exec(s)

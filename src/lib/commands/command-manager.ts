@@ -1,9 +1,18 @@
-import { IPrefixCommand as ICommand } from './command'
+import { IPrefixCommand, ISlashCommand } from './command'
 
 export class CommandManager {
-  public cmds: Set<ICommand> = new Set()
+  public cmds: Set<IPrefixCommand> = new Set()
+  public slashCmds: Set<ISlashCommand> = new Set()
 
-  public add(cmd: ICommand) {
+  public add(cmd: IPrefixCommand | ISlashCommand) {
+    if ('triggers' in cmd) {
+      return this.addPrefixCmd(cmd)
+    } else {
+      return this.addSlashCmd(cmd)
+    }
+  }
+
+  private addPrefixCmd(cmd: IPrefixCommand) {
     if (this.cmds.has(cmd)) {
       return
     }
@@ -18,11 +27,27 @@ export class CommandManager {
     this.cmds.add(cmd)
   }
 
-  public remove(cmd: ICommand) {
-    this.cmds.delete(cmd)
+  private addSlashCmd(cmd: ISlashCommand) {
+    if (this.slashCmds.has(cmd)) {
+      return
+    }
+
+    this.slashCmds.add(cmd)
   }
 
-  public getByTrigger(trigger: string) {
+  public remove(cmd: IPrefixCommand | ISlashCommand) {
+    if ('triggers' in cmd) {
+      this.cmds.delete(cmd)
+    } else {
+      this.slashCmds.delete(cmd)
+    }
+  }
+
+  public getPrefixedByTrigger(trigger: string) {
     return Array.from(this.cmds).find((c) => c.triggers.includes(trigger))
+  }
+
+  public getSlashByTrigger(trigger: string) {
+    return Array.from(this.slashCmds).find((c) => c.trigger === trigger)
   }
 }

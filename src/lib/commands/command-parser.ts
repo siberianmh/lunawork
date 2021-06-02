@@ -4,7 +4,7 @@ import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
 import { listener } from '../listener/decorator'
 import { Stage } from '../stage'
-import { IPrefixCommand as ICommand } from './command'
+// import { IPrefixCommand, ISlashCommand } from './command'
 
 export class CommandParserStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -28,7 +28,7 @@ export class CommandParserStage extends Stage {
     const noPrefix = msg.content.replace(parsed, '')
     const stringArgs: Array<string> = noPrefix.split(' ').slice(1) || []
     const cmdTrigger = noPrefix.split(' ')[0].toLowerCase()
-    const cmd = this.client.commandManager.getByTrigger(cmdTrigger)
+    const cmd = this.client.commandManager.getPrefixedByTrigger(cmdTrigger)
     if (!cmd) {
       return
     }
@@ -85,9 +85,11 @@ export class CommandParserStage extends Stage {
       return
     }
 
-    const cmd = this.client.commandManager.getByTrigger(interaction.commandName)
+    const cmd = this.client.commandManager.getSlashByTrigger(
+      interaction.commandName,
+    )
 
-    if (!cmd || !cmd.slashCommand) {
+    if (!cmd) {
       return interaction.reply('Unable to find command', { ephemeral: true })
     }
 
@@ -108,7 +110,8 @@ export class CommandParserStage extends Stage {
     msg: Message | CommandInteraction,
     parsed: string,
     cmdTrigger: string,
-    cmd: ICommand,
+    // FIXME
+    cmd: any,
     typedArgs: Array<unknown>,
   ) {
     // Executing the command
@@ -116,7 +119,6 @@ export class CommandParserStage extends Stage {
     try {
       const result = cmd.func.call(
         cmd.module,
-        // @ts-expect-error
         cmd.usesContextAPI ? context : msg,
         ...typedArgs,
       )

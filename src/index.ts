@@ -28,3 +28,10 @@ export {
   mergeInhibitors,
   Inhibitor,
 } from './lib/commands/inhibitors'
+
+// Slash commands
+export {
+  slashCommand,
+  ICommandDecoratorOptions as ISlashCommandDecoratorOptions,
+} from './lib/commands/slash/decorator'
+export { ISlashCommand } from './lib/commands/command'
