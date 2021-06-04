@@ -1,12 +1,12 @@
 import { LunaworkClient } from '../lunawork-client'
-import { IWebsocket } from './websocket'
+import { IWebSocket } from '../listeners/types'
 
 export class WebsocketManager {
-  public websockets: Set<IWebsocket> = new Set()
+  public websockets: Set<IWebSocket> = new Set()
 
   public constructor(public client: LunaworkClient) {}
 
-  public add(websocket: IWebsocket) {
+  public add(websocket: IWebSocket) {
     if (this.websockets.has(websocket)) {
       return
     }
@@ -25,14 +25,14 @@ export class WebsocketManager {
     this.client.ws.on(websocket.event, websocket.wrapperFunc)
   }
 
-  public remove(websocket: IWebsocket) {
+  public remove(websocket: IWebSocket) {
     if (websocket.wrapperFunc) {
       this.client.ws.removeListener(websocket.event, websocket.wrapperFunc)
     }
     this.websockets.delete(websocket)
   }
 
-  public getById(id: string): IWebsocket | undefined {
+  public getById(id: string): IWebSocket | undefined {
     return Array.from(this.websockets).find((w) => w.id === id)
   }
 }

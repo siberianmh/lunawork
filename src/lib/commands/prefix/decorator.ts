@@ -1,12 +1,17 @@
+import { Message } from 'discord.js'
 import { Stage } from '../../stage'
 import { Context } from '../../utils/context'
 import { commandMetas, optionalCommandArgs } from '../../utils/reflect-prefixes'
-import { IPrefixCommand as ICommand } from '../command'
+import { Inhibitor } from '../inhibitors'
 
-export type ICommandDecoratorOptions = Pick<
-  ICommand,
-  'single' | 'inhibitors' | 'onError' | 'description' | 'usesContextAPI'
-> & { aliases: Array<string> }
+export interface IPrefixCommanDecoratorOptions {
+  readonly single: boolean
+  readonly inhibitors: Array<Inhibitor>
+  readonly onError: (msg: Message, error: Error) => void
+  readonly description: string | undefined
+  readonly usesContextAPI: boolean
+  readonly aliases: Array<string>
+}
 
 export interface ICommandArgument {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -14,12 +19,21 @@ export interface ICommandArgument {
   optional: boolean
 }
 
-type ICommandDecoratorMeta = Pick<ICommand, 'id' | 'args' | 'usesContextAPI'>
-export type ICommandDecorator = ICommandDecoratorMeta & ICommandDecoratorOptions
+interface IPrefixCommandDecoratorMeta {
+  readonly id: string
+  readonly args: Array<ICommandArgument>
+}
+
+export type IPrefixCommandDecorator = IPrefixCommandDecoratorMeta &
+  IPrefixCommanDecoratorOptions
 
 export function command(
-  opts: Partial<ICommandDecoratorOptions> | undefined = {},
-) {
+  opts: Partial<IPrefixCommanDecoratorOptions> | undefined = {},
+): (
+  target: Stage,
+  propertyKey: string,
+  descriptor: PropertyDescriptor,
+) => void {
   return function (
     target: Stage,
     propertyKey: string,
@@ -57,7 +71,7 @@ export function command(
       lastOpt = x
     }
 
-    const newMeta: ICommandDecorator = {
+    const newMeta: IPrefixCommandDecorator = {
       aliases: opts.aliases || [],
       description: opts.description,
       id: propertyKey,
@@ -84,7 +98,7 @@ export function command(
       )
     }
 
-    const targetMetas: Array<ICommandDecorator> =
+    const targetMetas: Array<IPrefixCommandDecorator> =
       Reflect.getMetadata(commandMetas, target) || []
     targetMetas.push(newMeta)
     Reflect.defineMetadata(commandMetas, targetMetas, target)

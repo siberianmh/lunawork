@@ -1,5 +1,5 @@
 import { LunaworkClient } from '../lunawork-client'
-import { IListener } from './listener'
+import { IListener } from '../listeners/types'
 
 export class ListenerManager {
   public listeners: Set<IListener> = new Set()

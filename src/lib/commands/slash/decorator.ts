@@ -1,10 +1,9 @@
 import { CommandInteraction } from 'discord.js'
 import { Stage } from '../../stage'
 import { slashCommandMetas } from '../../utils/reflect-prefixes'
-import { ISlashCommand } from '../command'
 import { Inhibitor } from '../inhibitors'
 
-export interface ICommandDecoratorOptions {
+export interface ISlashCommandDecoratorOptions {
   readonly description: string
 
   readonly inhibitors?: Array<Inhibitor>
@@ -12,10 +11,14 @@ export interface ICommandDecoratorOptions {
   readonly usesContextAPI?: boolean
 }
 
-type ICommandDecoratorMeta = Pick<ISlashCommand, 'id' | 'usesContextAPI'>
-export type ICommandDecorator = ICommandDecoratorMeta & ICommandDecoratorOptions
+interface ISlashCommandDecoratorMeta {
+  readonly id: string
+}
 
-export function slashCommand(opts: ICommandDecoratorOptions) {
+export type ISlashCommandDecorator = ISlashCommandDecoratorMeta &
+  ISlashCommandDecoratorOptions
+
+export function slashCommand(opts: ISlashCommandDecoratorOptions) {
   return function (
     target: Stage,
     propertyKey: string,
@@ -32,7 +35,7 @@ export function slashCommand(opts: ICommandDecoratorOptions) {
       )
     }
 
-    const newMeta: ICommandDecorator = {
+    const newMeta: ISlashCommandDecorator = {
       description: opts.description || '',
       id: propertyKey,
       inhibitors: opts.inhibitors || [],
@@ -42,7 +45,7 @@ export function slashCommand(opts: ICommandDecoratorOptions) {
       usesContextAPI: false,
     }
 
-    const targetMetas: Array<ICommandDecorator> =
+    const targetMetas: Array<ISlashCommandDecorator> =
       Reflect.getMetadata(slashCommandMetas, target) || []
     targetMetas.push(newMeta)
     Reflect.defineMetadata(slashCommandMetas, targetMetas, target)

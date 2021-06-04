@@ -1,18 +1,18 @@
-import { Stage } from '../stage'
-import { WSEvent } from '../types/events'
-import { websocketMetas } from '../utils/reflect-prefixes'
+import { Stage } from '../../stage'
+import { WSEvent } from '../../types/events'
+import { websocketMetas } from '../../utils/reflect-prefixes'
 
-export interface IWebsocketDecoratorOptions {
+export interface IWebSocketDecoratorOptions {
   event: WSEvent
 }
 
-export interface IWebsocketDecoratorMeta {
+export interface IWebSocketDecoratorMeta {
   readonly event: WSEvent
   readonly id: string
-  readonly func: (...args: Array<any>) => void
+  readonly func: (...args: Array<unknown>) => void
 }
 
-export function wsListener(opts: IWebsocketDecoratorOptions) {
+export function wsListener(opts: IWebSocketDecoratorOptions) {
   return function (
     target: Stage,
     propertyKey: string,
@@ -30,7 +30,7 @@ export function wsListener(opts: IWebsocketDecoratorOptions) {
       )
     }
 
-    const websocketsMeta: Array<IWebsocketDecoratorMeta> =
+    const websocketsMeta: Array<IWebSocketDecoratorMeta> =
       Reflect.getMetadata(websocketMetas, target) || []
 
     websocketsMeta.push({

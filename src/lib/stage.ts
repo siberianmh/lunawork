@@ -8,18 +8,16 @@ import {
   websocketMetas,
 } from './utils/reflect-prefixes'
 
-// Prefixed commands
-import { IPrefixCommand, ISlashCommand } from './commands/command'
-import { ICommandDecorator } from './commands/prefix/decorator'
-import { ICommandDecorator as ISlashCommandDecorator } from './commands/slash/decorator'
+import { IPrefixCommand, ISlashCommand } from './commands/types/command'
+import { IPrefixCommandDecorator } from './commands/prefix/decorator'
+import { ISlashCommandDecorator } from './commands/slash/decorator'
 
 // Listener
-import { IListener } from './listener/listener'
+import { IListener, IWebSocket } from './listeners/types'
 import { IListenerDecoratorMeta } from './listener/decorator'
 
 // WebSocket Listener
-import { IWebsocket } from './websocket/websocket'
-import { IWebsocketDecoratorMeta } from './websocket/decorator'
+import { IWebSocketDecoratorMeta } from './listeners/websocket/decorator'
 
 export class Stage {
   public client: LunaworkClient
@@ -44,7 +42,7 @@ export class Stage {
   }
 
   public processWebSockets() {
-    const websocketsMeta: Array<IWebsocketDecoratorMeta> =
+    const websocketsMeta: Array<IWebSocketDecoratorMeta> =
       Reflect.getMetadata(websocketMetas, this) || []
 
     return websocketsMeta.map(
@@ -54,12 +52,12 @@ export class Stage {
           id: this.constructor.name + '/' + meta.id,
           module: this,
           func: meta.func,
-        } as IWebsocket),
+        } as IWebSocket),
     )
   }
 
   public processCommands() {
-    const targetMetas: Array<ICommandDecorator> =
+    const targetMetas: Array<IPrefixCommandDecorator> =
       Reflect.getMetadata(commandMetas, this) || []
 
     const cmds = targetMetas.map(

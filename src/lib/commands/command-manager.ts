@@ -1,4 +1,4 @@
-import { IPrefixCommand, ISlashCommand } from './command'
+import { IPrefixCommand, ISlashCommand } from './types/command'
 
 export class CommandManager {
   public cmds: Set<IPrefixCommand> = new Set()

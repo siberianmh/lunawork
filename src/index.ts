@@ -4,23 +4,21 @@ export { LunaworkClient } from './lib/lunawork-client'
 export { Stage } from './lib/stage'
 export { ILogger, LogLevel, LogMethods, Logger } from './lib/logger/logger'
 export { IListenerDecoratorOptions, listener } from './lib/listener/decorator'
-export { IListener } from './lib/listener/listener'
+export { IListener, IWebSocket } from './lib/listeners/types'
 export {
-  IWebsocketDecoratorOptions,
+  IWebSocketDecoratorOptions,
   wsListener,
-} from './lib/websocket/decorator'
+} from './lib/listeners/websocket/decorator'
 export { isCommandMessage, isMessage } from './lib/utils/type-guarding'
-export { IWebsocket } from './lib/websocket/websocket'
 export { Context } from './lib/utils/context'
 export { IEvents } from './lib/types/events'
 
 // Prefixed commands
 export {
   command,
-  ICommandDecoratorOptions,
+  IPrefixCommanDecoratorOptions,
 } from './lib/commands/prefix/decorator'
-export { optional } from './lib/commands/optional'
-export { IPrefixCommand as ICommand } from './lib/commands/command'
+export { optional } from './lib/commands/prefix/optional'
 export {
   dmsOnly,
   guildsOnly,
@@ -32,6 +30,7 @@ export {
 // Slash commands
 export {
   slashCommand,
-  ICommandDecoratorOptions as ISlashCommandDecoratorOptions,
+  ISlashCommandDecoratorOptions,
 } from './lib/commands/slash/decorator'
-export { ISlashCommand } from './lib/commands/command'
+
+export { IPrefixCommand, ISlashCommand } from './lib/commands/types/command'

@@ -1,9 +1,10 @@
 import { Client, ClientOptions, Message, Intents } from 'discord.js'
+import { Stage } from './stage'
+
 import { CommandManager } from './commands/command-manager'
 import { CommandParserStage } from './commands/command-parser'
 import { ArgTypes } from './utils/arg-type-provider'
 import { ListenerManager } from './listener/listener-manager'
-import { Stage } from './stage'
 import { ILogger, Logger, LogLevel } from './logger/logger'
 import { Awaited } from './types'
 import { WebsocketManager } from './websocket/websocket-manager'
@@ -127,6 +128,12 @@ export class LunaworkClient extends Client {
     this.registerStage(CommandParserStage)
   }
 
+  public registerStages(stages: Array<typeof Stage | Stage>) {
+    for (const stage of stages) {
+      this.registerStage(stage)
+    }
+  }
+
   public registerStage(stage: typeof Stage | Stage) {
     if (stage === Stage || stage instanceof Stage) {
       throw new TypeError(
@@ -175,6 +182,7 @@ export class LunaworkClient extends Client {
     instance.processWebSockets
       .bind(instance)()
       .forEach((wsListener) => this.webSocketManager.add(wsListener))
+
     instance.processCommands
       .bind(instance)()
       .forEach((command) => this.commandManager.add(command))

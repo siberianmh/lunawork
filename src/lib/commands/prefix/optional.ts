@@ -1,5 +1,5 @@
-import { Stage } from '../stage'
-import { optionalCommandArgs } from '../utils/reflect-prefixes'
+import { Stage } from '../../stage'
+import { optionalCommandArgs } from '../../utils/reflect-prefixes'
 
 export function optional(
   target: Record<string, unknown>,
