@@ -2,7 +2,7 @@ import { Message, CommandInteraction } from 'discord.js'
 import { LunaworkClient } from '../lunawork-client'
 import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
-import { listener } from '../listener/decorator'
+import { listener } from '../listeners/listener/decorator'
 import { Stage } from '../stage'
 // import { IPrefixCommand, ISlashCommand } from './command'
 

@@ -1,6 +1,6 @@
-import { Stage } from '../stage'
-import { IListener } from '../listeners/types'
-import { listenerMetas } from '../utils/reflect-prefixes'
+import { Stage } from '../../stage'
+import { IListener } from '../types'
+import { listenerMetas } from '../../utils/reflect-prefixes'
 
 export type IListenerDecoratorOptions = Pick<IListener, 'event'>
 export type IListenerDecoratorMeta = Pick<IListener, 'event' | 'id' | 'func'>

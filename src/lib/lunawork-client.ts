@@ -4,10 +4,10 @@ import { Stage } from './stage'
 import { CommandManager } from './commands/command-manager'
 import { CommandParserStage } from './commands/command-parser'
 import { ArgTypes } from './utils/arg-type-provider'
-import { ListenerManager } from './listener/listener-manager'
 import { ILogger, Logger, LogLevel } from './logger/logger'
 import { Awaited } from './types'
-import { WebsocketManager } from './websocket/websocket-manager'
+
+import { EventEmitterManager } from './listeners/manager'
 
 /**
  * A valid prefix in Lunawork:
@@ -65,8 +65,7 @@ interface ILunaworkClientOptions {
  */
 export class LunaworkClient extends Client {
   public commandManager: CommandManager
-  public webSocketManager: WebsocketManager
-  public listenerManager: ListenerManager
+  public eventEmitterManager: EventEmitterManager
   public stages: Set<Stage> = new Set()
 
   /**
@@ -114,8 +113,7 @@ export class LunaworkClient extends Client {
     super(options)
 
     this.commandManager = new CommandManager()
-    this.webSocketManager = new WebsocketManager(this)
-    this.listenerManager = new ListenerManager(this)
+    this.eventEmitterManager = new EventEmitterManager(this)
     this.commandArgumentTypes = options.commandArgumentTypes || {}
 
     this.logger =
@@ -178,10 +176,12 @@ export class LunaworkClient extends Client {
 
     instance.processListeners
       .bind(instance)()
-      .forEach((listener) => this.listenerManager.add(listener))
+      .forEach((listener) => this.eventEmitterManager.addListener(listener))
     instance.processWebSockets
       .bind(instance)()
-      .forEach((wsListener) => this.webSocketManager.add(wsListener))
+      .forEach((wsListener) =>
+        this.eventEmitterManager.addWebSocket(wsListener),
+      )
 
     instance.processCommands
       .bind(instance)()

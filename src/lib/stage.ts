@@ -12,11 +12,8 @@ import { IPrefixCommand, ISlashCommand } from './commands/types/command'
 import { IPrefixCommandDecorator } from './commands/prefix/decorator'
 import { ISlashCommandDecorator } from './commands/slash/decorator'
 
-// Listener
 import { IListener, IWebSocket } from './listeners/types'
-import { IListenerDecoratorMeta } from './listener/decorator'
-
-// WebSocket Listener
+import { IListenerDecoratorMeta } from './listeners/listener/decorator'
 import { IWebSocketDecoratorMeta } from './listeners/websocket/decorator'
 
 export class Stage {
