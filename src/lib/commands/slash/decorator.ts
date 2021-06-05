@@ -1,9 +1,10 @@
-import { CommandInteraction } from 'discord.js'
+import { CommandInteraction, ApplicationCommandData } from 'discord.js'
 import { Stage } from '../../stage'
 import { slashCommandMetas } from '../../utils/reflect-prefixes'
 import { Inhibitor } from '../inhibitors'
 
-export interface ISlashCommandDecoratorOptions {
+export interface ISlashCommandDecoratorOptions
+  extends Partial<ApplicationCommandData> {
   readonly description: string
 
   readonly inhibitors?: Array<Inhibitor>

@@ -1,4 +1,8 @@
-import type { CommandInteraction, Message } from 'discord.js'
+import type {
+  ApplicationCommandData,
+  CommandInteraction,
+  Message,
+} from 'discord.js'
 import type { ICommandArgument } from './../prefix/decorator'
 import type { Stage } from '../../stage'
 import type { Inhibitor } from '../inhibitors'
@@ -21,7 +25,7 @@ export interface IPrefixCommand {
   readonly description: string
 }
 
-export interface ISlashCommand {
+export interface ISlashCommand extends Partial<ApplicationCommandData> {
   func: (
     usesContextAPI: CommandInteraction | Context,
     ...typedArgs: Array<unknown>

@@ -1,3 +1,7 @@
+import { ApplicationCommandData } from 'discord.js'
+import { listener } from '../listeners/listener/decorator'
+import { LunaworkClient } from '../lunawork-client'
+import { Stage } from '../stage'
 import { IPrefixCommand, ISlashCommand } from './types/command'
 
 export class CommandManager {
@@ -49,5 +53,42 @@ export class CommandManager {
 
   public getSlashByTrigger(trigger: string) {
     return Array.from(this.slashCmds).find((c) => c.trigger === trigger)
+  }
+}
+
+export class SlashCommandManager extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  @listener({ event: 'ready' })
+  public async registerSlashCommands() {
+    const { slashCmds } = this.client.commandManager
+
+    for (const cmd of slashCmds) {
+      const registerData: ApplicationCommandData = {
+        name: cmd.name ?? cmd.trigger,
+        description: cmd.description,
+        options: cmd.options ?? [],
+      }
+
+      return this.register(registerData)
+    }
+
+    return
+  }
+
+  private async register(command: ApplicationCommandData) {
+    if (process.env.NODE_ENV === 'development') {
+      const guilds = this.client.guilds.cache.array()
+
+      for (const guild of guilds) {
+        return await guild.commands.create(command)
+      }
+    } else {
+      return await this.client.application?.commands.create(command)
+    }
+
+    return
   }
 }

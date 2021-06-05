@@ -1,12 +1,11 @@
 import { Client, ClientOptions, Message, Intents } from 'discord.js'
 import { Stage } from './stage'
 
-import { CommandManager } from './commands/command-manager'
+import { CommandManager, SlashCommandManager } from './commands/command-manager'
 import { CommandParserStage } from './commands/command-parser'
 import { ArgTypes } from './utils/arg-type-provider'
 import { ILogger, Logger, LogLevel } from './logger/logger'
-import { Awaited } from './types'
-
+import { Awaited, IExperimentalOptions } from './types'
 import { EventEmitterManager } from './listeners/manager'
 
 /**
@@ -23,6 +22,12 @@ export interface ILunaworkPrefixHook {
 
 interface ILunaworkClientOptions {
   commandArgumentTypes?: ArgTypes
+
+  /**
+   * A set of the experimental options.
+   * The usage can be changed at any time. Use at own risk.
+   */
+  experimental?: Partial<IExperimentalOptions>
 
   /**
    * The default prefix, in case of `null`, only mention prefix will trigger the bot's commands.
@@ -109,7 +114,9 @@ export class LunaworkClient extends Client {
 
   readonly commandArgumentTypes: ArgTypes
 
-  constructor(options: ClientOptions = { intents: Intents.NON_PRIVILEGED }) {
+  public constructor(
+    options: ClientOptions = { intents: Intents.NON_PRIVILEGED },
+  ) {
     super(options)
 
     this.commandManager = new CommandManager()
@@ -124,6 +131,10 @@ export class LunaworkClient extends Client {
       options.fetchPrefix ?? (() => this.options.defaultPrefix ?? null)
 
     this.registerStage(CommandParserStage)
+
+    if (this.options.experimental?.autoRegisterSlash) {
+      this.registerStage(SlashCommandManager)
+    }
   }
 
   public registerStages(stages: Array<typeof Stage | Stage>) {
