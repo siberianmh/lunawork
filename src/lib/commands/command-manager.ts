@@ -72,7 +72,7 @@ export class SlashCommandManager extends Stage {
         options: cmd.options ?? [],
       }
 
-      return this.register(registerData)
+      await this.register(registerData)
     }
 
     return
@@ -83,10 +83,10 @@ export class SlashCommandManager extends Stage {
       const guilds = this.client.guilds.cache.array()
 
       for (const guild of guilds) {
-        return await guild.commands.create(command)
+        await guild.commands.create(command)
       }
     } else {
-      return await this.client.application?.commands.create(command)
+      await this.client.application?.commands.create(command)
     }
 
     return

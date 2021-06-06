@@ -97,6 +97,7 @@ export class Stage {
           func: Reflect.get(this, meta.id),
           id: this.constructor.name + '/' + meta.id,
           inhibitors: meta.inhibitors,
+          options: meta.options,
           module: this,
           onError: meta.onError,
           usesContextAPI: meta.usesContextAPI,

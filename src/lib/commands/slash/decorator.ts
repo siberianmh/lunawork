@@ -37,9 +37,11 @@ export function slashCommand(opts: ISlashCommandDecoratorOptions) {
     }
 
     const newMeta: ISlashCommandDecorator = {
+      name: opts.name || '',
       description: opts.description || '',
       id: propertyKey,
       inhibitors: opts.inhibitors || [],
+      options: opts.options || [],
       onError:
         opts.onError ||
         ((msg) => msg.reply(':warning: error while executing the command')),
