@@ -27,13 +27,10 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2"
   },
-  "peerDependencies": {
-    "discord.js": "discordjs/discord.js#b90b0c3cfa2278caa38d1ff41eef2ccf4428b99e"
-  },
   "devDependencies": {
     "@types/node": "^15.3.1",
     "discord-api-types": "^0.18.1",
-    "discord.js": "discordjs/discord.js#b90b0c3cfa2278caa38d1ff41eef2ccf4428b99e",
+    "discord.js": "13.0.0-dev.c6aeebb18d6b969f7c8bdb1b719883d4384dd03e",
     "prettier": "^2.3.1",
     "typescript": "^4.3.2"
   },

@@ -1,5 +1,5 @@
 import type { LunaworkClient } from '../lunawork-client'
-import { Message, User, GuildMember } from 'discord.js'
+import { Message, User, GuildMember, Snowflake } from 'discord.js'
 
 export type ArgTypes = {
   [key: string]: (s: string, msg: Message) => unknown
@@ -21,7 +21,7 @@ export function getArgTypes(client: LunaworkClient) {
         let user: User | undefined
 
         if (res && res[1]) {
-          user = msg.client.users.cache.get(res[1])
+          user = msg.client.users.cache.get(res[1] as Snowflake)
         }
         if (!user) {
           user = msg.client.users.cache.find(
@@ -42,7 +42,7 @@ export function getArgTypes(client: LunaworkClient) {
         const res = USER_PATTERN.exec(s)
         let member: GuildMember | undefined
         if (res && res[1]) {
-          member = msg.guild.members.cache.get(res[1])
+          member = msg.guild.members.cache.get(res[1] as Snowflake)
         }
         if (!member) {
           member = msg.guild.members.cache.find(
@@ -66,14 +66,14 @@ export function getArgTypes(client: LunaworkClient) {
         if (!res || !msg.guild) {
           return
         }
-        return msg.guild.channels.cache.get(res[1])
+        return msg.guild.channels.cache.get(res[1] as Snowflake)
       },
       Role: (s, msg) => {
         const res = ROLE_PATTERN.exec(s)
         if (!res || !msg.guild) {
           return
         }
-        return msg.guild.roles.cache.get(res[1])
+        return msg.guild.roles.cache.get(res[1] as Snowflake)
       },
     } as ArgTypes,
     client.commandArgumentTypes,

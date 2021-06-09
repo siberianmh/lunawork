@@ -90,7 +90,10 @@ export class CommandParserStage extends Stage {
     )
 
     if (!cmd) {
-      return interaction.reply('Unable to find command', { ephemeral: true })
+      return interaction.reply({
+        content: 'Unable to find command',
+        ephemeral: true,
+      })
     }
 
     for (const inhibitor of cmd.inhibitors) {
