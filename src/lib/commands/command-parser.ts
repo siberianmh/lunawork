@@ -36,7 +36,9 @@ export class CommandParserStage extends Stage {
     for (const inhibitor of cmd.inhibitors) {
       const reason = await inhibitor(msg, this.client)
       if (reason) {
-        return msg.channel.send(`:warning: command was inhibited: ${reason}`)
+        return msg.channel.send({
+          content: `:warning: command was inhibited: ${reason}`,
+        })
       }
     }
 
@@ -48,13 +50,13 @@ export class CommandParserStage extends Stage {
       typedArgs.push(stringArgs.join(' '))
     } else {
       if (stringArgs.length < leastArgs) {
-        return msg.channel.send(
-          `:warning: expected atleast ${leastArgs} argument${
+        return msg.channel.send({
+          content: `:warning: expected at least ${leastArgs} argument${
             leastArgs !== 1 ? 's' : ''
           } but got ${stringArgs.length} argument${
             stringArgs.length !== 1 ? 's' : ''
           } instead`,
-        )
+        })
       }
       for (const i in stringArgs) {
         if (!cmd.args[i]) {

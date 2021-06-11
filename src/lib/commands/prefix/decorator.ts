@@ -85,7 +85,9 @@ export function command(
       onError:
         opts.onError ||
         ((msg) => {
-          msg.channel.send(':warning: error while executing command!')
+          msg.channel.send({
+            content: ':warning: error while executing command!',
+          })
         }),
     }
 
