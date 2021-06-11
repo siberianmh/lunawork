@@ -1,9 +1,8 @@
+import { Message, User, GuildMember } from 'discord.js'
 import type { LunaworkClient } from '../lunawork-client'
-import { Message, User, GuildMember, Snowflake } from 'discord.js'
+import { toBigIntLiteral } from './to-bigint'
 
-export type ArgTypes = {
-  [key: string]: (s: string, msg: Message) => unknown
-}
+export type ArgTypes = Record<string, (s: string, msg: Message) => unknown>
 
 const USER_PATTERN = /(?:<@!?)?(\d+)>?/
 const CHANNEL_PATTERN = /(?:<#)?(\d+)>?/
@@ -21,7 +20,7 @@ export function getArgTypes(client: LunaworkClient) {
         let user: User | undefined
 
         if (res && res[1]) {
-          user = msg.client.users.cache.get(res[1] as Snowflake)
+          user = msg.client.users.cache.get(toBigIntLiteral(res[1]))
         }
         if (!user) {
           user = msg.client.users.cache.find(
@@ -42,7 +41,7 @@ export function getArgTypes(client: LunaworkClient) {
         const res = USER_PATTERN.exec(s)
         let member: GuildMember | undefined
         if (res && res[1]) {
-          member = msg.guild.members.cache.get(res[1] as Snowflake)
+          member = msg.guild.members.cache.get(toBigIntLiteral(res[1]))
         }
         if (!member) {
           member = msg.guild.members.cache.find(
@@ -66,14 +65,14 @@ export function getArgTypes(client: LunaworkClient) {
         if (!res || !msg.guild) {
           return
         }
-        return msg.guild.channels.cache.get(res[1] as Snowflake)
+        return msg.guild.channels.cache.get(toBigIntLiteral(res[1]))
       },
       Role: (s, msg) => {
         const res = ROLE_PATTERN.exec(s)
         if (!res || !msg.guild) {
           return
         }
-        return msg.guild.roles.cache.get(res[1] as Snowflake)
+        return msg.guild.roles.cache.get(toBigIntLiteral(res[1]))
       },
     } as ArgTypes,
     client.commandArgumentTypes,
