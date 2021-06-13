@@ -6,15 +6,21 @@ import {
   slashCommandMetas,
   listenerMetas,
   websocketMetas,
+  buttonMetas,
 } from './utils/reflect-prefixes'
 
-import { IPrefixCommand, ISlashCommand } from './commands/types/command'
+import {
+  IButton,
+  IPrefixCommand,
+  ISlashCommand,
+} from './commands/types/command'
 import { IPrefixCommandDecorator } from './commands/prefix/decorator'
 import { ISlashCommandDecorator } from './commands/slash/decorator'
 
 import { IListener, IWebSocket } from './listeners/types'
 import { IListenerDecoratorMeta } from './listeners/listener/decorator'
 import { IWebSocketDecoratorMeta } from './listeners/websocket/decorator'
+import { IButtonDecorator } from './commands/buttons/decorator'
 
 export class Stage {
   public client: LunaworkClient
@@ -84,6 +90,24 @@ export class Stage {
     )
 
     return cmds
+  }
+
+  public processButtons() {
+    const targetMetas: Array<IButtonDecorator> =
+      Reflect.getMetadata(buttonMetas, this) || []
+
+    const buttons = targetMetas.map(
+      (meta) =>
+        ({
+          customId: meta.customId,
+          func: Reflect.get(this, meta.id),
+          id: this.constructor.name + '/' + meta.id,
+          module: this,
+          onError: meta.onError,
+        } as IButton),
+    )
+
+    return buttons
   }
 
   public processSlashCommands() {

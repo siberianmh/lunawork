@@ -1,6 +1,7 @@
 import {
   Message,
   CommandInteraction,
+  ButtonInteraction,
   CommandInteractionOption,
 } from 'discord.js'
 import { LunaworkClient } from '../lunawork-client'
@@ -15,7 +16,7 @@ export class ExecutorStage extends Stage {
     super(client)
   }
 
-  // Default command with prefix
+  //#region Default command with prefix
   @listener({ event: 'message' })
   public async onMessage(msg: Message) {
     if (msg.author && msg.author.bot) {
@@ -83,8 +84,9 @@ export class ExecutorStage extends Stage {
     // Executing the command
     return await this.execute(msg, parsed, cmdTrigger, cmd, typedArgs)
   }
+  //#endregion
 
-  // Slash Commands
+  //#region Slash Commands
   @listener({ event: 'interaction' })
   public async onInteraction(interaction: CommandInteraction) {
     if (!interaction.isCommand()) {
@@ -127,6 +129,29 @@ export class ExecutorStage extends Stage {
 
     return this.execute(interaction, '', '', cmd, typedArgs)
   }
+  //#endregion
+
+  //#region Buttons
+  @listener({ event: 'interaction' })
+  public async onButton(interaction: ButtonInteraction) {
+    if (!interaction.isButton()) {
+      return
+    }
+
+    const cmd = Array.from(this.client.commandManager.buttons).find(
+      (b) => b.customId === interaction.customID,
+    )
+
+    if (!cmd) {
+      return interaction.reply({
+        content: 'Unable to find command',
+        ephemeral: true,
+      })
+    }
+
+    return this.execute(interaction, '', '', cmd, [])
+  }
+  //#endregion
 
   private handleSubCommand(
     options: Array<CommandInteractionOption>,
@@ -149,7 +174,7 @@ export class ExecutorStage extends Stage {
   }
 
   private async execute(
-    msg: Message | CommandInteraction,
+    msg: Message | ButtonInteraction | CommandInteraction,
     parsed: string,
     cmdTrigger: string,
     // FIXME

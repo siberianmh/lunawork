@@ -1,11 +1,11 @@
 import { Client, ClientOptions, Message, Intents } from 'discord.js'
-import { Stage } from './stage'
 
+import type { Awaited, IExperimentalOptions } from './types'
+import { Stage } from './stage'
 import { CommandManager, SlashCommandManager } from './commands/command-manager'
 import { ExecutorStage } from './commands/executor'
 import { ArgTypes } from './utils/arg-type-provider'
 import { ILogger, Logger, LogLevel } from './logger/logger'
-import { Awaited, IExperimentalOptions } from './types'
 import { EventEmitterManager } from './listeners/manager'
 
 /**
@@ -197,6 +197,9 @@ export class LunaworkClient extends Client {
     instance.processCommands
       .bind(instance)()
       .forEach((command) => this.commandManager.add(command))
+    instance.processButtons
+      .bind(instance)()
+      .forEach((button) => this.commandManager.add(button))
     instance.processSlashCommands
       .bind(instance)()
       .forEach((slashCmd) => this.commandManager.add(slashCmd))

@@ -1,5 +1,6 @@
 import type {
   ApplicationCommandData,
+  ButtonInteraction,
   CommandInteraction,
   Message,
 } from 'discord.js'
@@ -37,4 +38,15 @@ export interface ISlashCommand extends Partial<ApplicationCommandData> {
   trigger: string
   onError: (msg: CommandInteraction, error: Error) => void
   description: string
+}
+
+export interface IButton {
+  func: (
+    button: ButtonInteraction,
+    ...typedArgs: Array<unknown>
+  ) => Awaited<void>
+  id: string
+  customId: string
+  module: Stage
+  onError: (msg: ButtonInteraction, error: Error) => void
 }

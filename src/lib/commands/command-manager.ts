@@ -2,15 +2,18 @@ import { ApplicationCommandData } from 'discord.js'
 import { listener } from '../listeners/listener/decorator'
 import { LunaworkClient } from '../lunawork-client'
 import { Stage } from '../stage'
-import { IPrefixCommand, ISlashCommand } from './types/command'
+import { IButton, IPrefixCommand, ISlashCommand } from './types/command'
 
 export class CommandManager {
   public cmds: Set<IPrefixCommand> = new Set()
+  public buttons: Set<IButton> = new Set()
   public slashCmds: Set<ISlashCommand> = new Set()
 
-  public add(cmd: IPrefixCommand | ISlashCommand) {
+  public add(cmd: IPrefixCommand | IButton | ISlashCommand) {
     if ('triggers' in cmd) {
       return this.addPrefixCmd(cmd)
+    } else if ('customId' in cmd) {
+      return this.addButton(cmd)
     } else {
       return this.addSlashCmd(cmd)
     }
@@ -29,6 +32,14 @@ export class CommandManager {
       )
     }
     this.cmds.add(cmd)
+  }
+
+  public addButton(cmd: IButton) {
+    if (this.buttons.has(cmd)) {
+      return
+    }
+
+    this.buttons.add(cmd)
   }
 
   private addSlashCmd(cmd: ISlashCommand) {
