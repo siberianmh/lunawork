@@ -41,7 +41,7 @@ export function slashCommand(opts: ISlashCommandDecoratorOptions) {
       description: opts.description || '',
       id: propertyKey,
       inhibitors: opts.inhibitors || [],
-      options: opts.options || [],
+      options: opts.options || undefined,
       onError:
         opts.onError ||
         ((msg) => msg.reply(':warning: error while executing the command')),
