@@ -1,4 +1,8 @@
-import { Message, CommandInteraction } from 'discord.js'
+import {
+  Message,
+  CommandInteraction,
+  CommandInteractionOption,
+} from 'discord.js'
 import { LunaworkClient } from '../lunawork-client'
 import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
@@ -6,7 +10,7 @@ import { listener } from '../listeners/listener/decorator'
 import { Stage } from '../stage'
 // import { IPrefixCommand, ISlashCommand } from './command'
 
-export class CommandParserStage extends Stage {
+export class ExecutorStage extends Stage {
   public constructor(client: LunaworkClient) {
     super(client)
   }
@@ -105,10 +109,43 @@ export class CommandParserStage extends Stage {
       }
     }
 
-    const typedArgs = interaction.options.map(
-      (arg) => arg.member || arg.user || arg.channel || arg.value,
-    )
+    let typedArgs = [] as Array<unknown>
+
+    for (const option of interaction.options.array()) {
+      if (
+        option.type === 'SUB_COMMAND_GROUP' ||
+        option.type === 'SUB_COMMAND'
+      ) {
+        const args = this.handleSubCommand(interaction.options.array())
+        typedArgs = args
+      } else {
+        typedArgs.push(
+          option.member || option.user || option.channel || option.value,
+        )
+      }
+    }
+
     return this.execute(interaction, '', '', cmd, typedArgs)
+  }
+
+  private handleSubCommand(
+    options: Array<CommandInteractionOption>,
+    baseArray?: Array<unknown>,
+  ): Array<unknown> {
+    const output = baseArray ?? ([] as Array<unknown>)
+
+    options.forEach((option) => {
+      if (option.name && option.options) {
+        output.push(option.name)
+        this.handleSubCommand(option.options.array(), output)
+      }
+
+      if (option.value) {
+        output.push(option.value)
+      }
+    })
+
+    return output
   }
 
   private async execute(

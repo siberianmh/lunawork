@@ -2,7 +2,7 @@ import { Client, ClientOptions, Message, Intents } from 'discord.js'
 import { Stage } from './stage'
 
 import { CommandManager, SlashCommandManager } from './commands/command-manager'
-import { CommandParserStage } from './commands/command-parser'
+import { ExecutorStage } from './commands/executor'
 import { ArgTypes } from './utils/arg-type-provider'
 import { ILogger, Logger, LogLevel } from './logger/logger'
 import { Awaited, IExperimentalOptions } from './types'
@@ -130,7 +130,7 @@ export class LunaworkClient extends Client {
     this.fetchPrefix =
       options.fetchPrefix ?? (() => this.options.defaultPrefix ?? null)
 
-    this.registerStage(CommandParserStage)
+    this.registerStage(ExecutorStage)
 
     if (this.options.experimental?.autoRegisterSlash) {
       this.registerStage(SlashCommandManager)
