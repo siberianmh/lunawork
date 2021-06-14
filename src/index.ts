@@ -12,7 +12,11 @@ export {
   IWebSocketDecoratorOptions,
   wsListener,
 } from './lib/listeners/websocket/decorator'
-export { isCommandMessage, isMessage } from './lib/utils/type-guarding'
+export {
+  isCommandMessage,
+  isMessage,
+  isButtonMessage,
+} from './lib/utils/type-guarding'
 export { Context } from './lib/utils/context'
 export { IEvents } from './lib/types/events'
 

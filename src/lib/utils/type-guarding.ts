@@ -1,4 +1,4 @@
-import { Message, CommandInteraction } from 'discord.js'
+import { Message, CommandInteraction, ButtonInteraction } from 'discord.js'
 
 /**
  * Check whether a given message is a Message
@@ -16,4 +16,14 @@ export function isCommandMessage(
   message: unknown,
 ): message is CommandInteraction {
   return message instanceof CommandInteraction
+}
+
+/**
+ * Check whether a given message is a ButtonInteraction
+ * @param message The message object to check
+ */
+export function isButtonMessage(
+  message: unknown,
+): message is ButtonInteraction {
+  return message instanceof ButtonInteraction
 }
