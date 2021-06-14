@@ -36,7 +36,7 @@ interface ILunaworkClientOptions {
   defaultPrefix?: LunaworkPrefix
 
   /**
-   * The prefix hook, by default it is a callback function that returns [[ILunaworkClientOptions.defaultPrefix]].
+   * The prefix hook, by default it is a callback function that returns {@link ILunaworkClientOptions.defaultPrefix}.
    * @default () => client.options.defaultPrefix
    */
   fetchPrefix?: ILunaworkPrefixHook
@@ -48,7 +48,7 @@ interface ILunaworkClientOptions {
 }
 
 /**
- * The base [[Client]] extension that makes Lunawork work. When building a Discord bot with the framework, the developer
+ * The base {@link Client} extension that makes Lunawork work. When building a Discord bot with the framework, the developer
  * must either use this class, or extend it.
  *
  * @example
@@ -107,7 +107,7 @@ export class LunaworkClient extends Client {
   public fetchPrefix: ILunaworkPrefixHook
 
   /**
-   * The logger to be used by the framework. By default, a [[Logger]] instance is used, which emits the
+   * The logger to be used by the framework. By default, a {@link Logger} instance is used, which emits the
    * messages to the console.
    */
   public logger: ILogger
