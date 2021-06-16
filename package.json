@@ -32,7 +32,7 @@
     "discord-api-types": "^0.18.1",
     "discord.js": "13.0.0-dev.02693bc02f45980d8165820a103220f0027b96b7",
     "prettier": "^2.3.1",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.3"
   },
   "publishConfig": {
     "access": "public"
