@@ -85,10 +85,10 @@ discord-api-types@^0.18.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.18.1.tgz#5d08ed1263236be9c21a22065d0e6b51f790f492"
   integrity sha512-hNC38R9ZF4uaujaZQtQfm5CdQO58uhdkoHQAVvMfIL0LgOSZeW575W8H6upngQOuoxWd8tiRII3LLJm9zuQKYg==
 
-discord.js@13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057:
-  version "13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057.tgz#7358b44985b2423f1fdb1a9c259d26de74d662f7"
-  integrity sha512-9EFBA08VUt9hIZzgQ1IcNv3/EwLvo4N9RikEzv/qNYjRvonnKi70tp0dpChduM8GFxgqrcTEa2mZJGfuumBBHA==
+discord.js@13.0.0-dev.fdad14099779e61cb84dcd1cb2497e0e853a6144:
+  version "13.0.0-dev.fdad14099779e61cb84dcd1cb2497e0e853a6144"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.0.0-dev.fdad14099779e61cb84dcd1cb2497e0e853a6144.tgz#536791b22a90ed3e0bac943f0dd1d0c6fedfcd7c"
+  integrity sha512-lhK0y/52bRLfzAWvZXR+IMqjHk45H/UDCIOWhy9OK3NvsrkjtSdlcUYkbyNBpf4QtISHiCz24XCz/cPNd+tWfA==
   dependencies:
     "@discordjs/collection" "^0.1.6"
     "@discordjs/form-data" "^3.0.1"
@@ -97,6 +97,8 @@ discord.js@13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057:
     abort-controller "^3.0.0"
     discord-api-types "^0.18.1"
     node-fetch "^2.6.1"
+    prism-media "^1.2.9"
+    tweetnacl "^1.0.3"
     ws "^7.4.6"
 
 event-target-shim@^5.0.0:
@@ -175,6 +177,11 @@ prettier@^2.3.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.3.1.tgz#76903c3f8c4449bc9ac597acefa24dc5ad4cbea6"
   integrity sha512-p+vNbgpLjif/+D+DwAZAbndtRrR0md0MwfmOVN9N+2RgyACMT+7tfaRnT+WDPkqnuVwleyuBIG2XBxKDme3hPA==
 
+prism-media@^1.2.9:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-1.3.1.tgz#418acd2b122bedea2e834056d678f9a5ad2943ae"
+  integrity sha512-nyYAa3KB4qteJIqdguKmwxTJgy55xxUtkJ3uRnOvO5jO+frci+9zpRXw6QZVcfDeva3S654fU9+26P2OSTzjHw==
+
 reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
@@ -186,6 +193,11 @@ rimraf@^3.0.2:
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
   dependencies:
     glob "^7.1.3"
+
+tweetnacl@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
+  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
 
 typescript@^4.3.4:
   version "4.3.4"
