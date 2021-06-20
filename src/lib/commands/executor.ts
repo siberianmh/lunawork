@@ -160,13 +160,17 @@ export class ExecutorStage extends Stage {
     const output = baseArray ?? ([] as Array<unknown>)
 
     options.forEach((option) => {
-      if (option.name && option.options) {
+      if (!option.value && !option.options && option.name) {
         output.push(option.name)
-        this.handleSubCommand(option.options.array(), output)
       }
 
       if (option.value) {
         output.push(option.value)
+      }
+
+      if (option.options && option.name) {
+        output.push(option.name)
+        this.handleSubCommand(option.options.array(), output)
       }
     })
 
