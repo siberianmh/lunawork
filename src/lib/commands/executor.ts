@@ -9,7 +9,7 @@ import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
 import { listener } from '../listeners/listener/decorator'
 import { Stage } from '../stage'
-// import { IPrefixCommand, ISlashCommand } from './command'
+import { IPrefixCommand, ISlashCommand, IButton } from './types/command'
 
 export class ExecutorStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -70,11 +70,11 @@ export class ExecutorStage extends Stage {
         const sa = stringArgs[i]
         const arg = getArgTypes(this.client)[cmd.args[i].type.name](sa, msg)
         if (arg === null || arg === undefined) {
-          return msg.reply(
-            `:warning: argument #${
+          return msg.channel.send({
+            content: `:warning: argument #${
               parseInt(i, 10) + 1
             } is not of expected type ${cmd.args[i].type.name}`,
-          )
+          })
         } else {
           typedArgs.push(arg)
         }
@@ -177,15 +177,16 @@ export class ExecutorStage extends Stage {
     msg: Message | ButtonInteraction | CommandInteraction,
     parsed: string,
     cmdTrigger: string,
-    // FIXME
-    cmd: any,
+    cmd: ISlashCommand | IPrefixCommand | IButton,
     typedArgs: Array<unknown>,
   ) {
     // Executing the command
     const context = new Context(msg, parsed, cmdTrigger, cmd)
     try {
+      // @ts-expect-error
       const result = cmd.func.call(
         cmd.module,
+        // @ts-expect-error
         cmd.usesContextAPI ? context : msg,
         ...typedArgs,
       )
@@ -198,14 +199,16 @@ export class ExecutorStage extends Stage {
           `error while executing command ${cmd.id}! executed by ${msg.author.tag}/${msg.author.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
           err,
         )
+        // @ts-expect-error
         cmd.onError(msg, err)
       } else {
         this.client.logger.error(
           `error while exeucting command ${cmd.id}! executed by ${msg.user.tag}/${msg.user.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
           err,
         )
-        msg.reply('Error occured while interacting with request')
       }
+      // @ts-expect-error
+      cmd.onError(msg, err)
     }
     return this.client.emit('commandExecution', context)
   }
