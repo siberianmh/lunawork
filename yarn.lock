@@ -16,10 +16,10 @@
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-"@sapphire/async-queue@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.1.2.tgz#df44c9ece32d0a04b9b52f87d65ddf0135254176"
-  integrity sha512-NkR7AzC9uyb++tMIZgG4X0ci8JM1rnvNmKbLwY42RgotRV8JGUntZ7ZpR7MN7p5zPlVdKo/YmOqcCCsBJ6LNuw==
+"@sapphire/async-queue@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.1.4.tgz#ae431310917a8880961cebe8e59df6ffa40f2957"
+  integrity sha512-fFrlF/uWpGOX5djw5Mu2Hnnrunao75WGey0sP0J3jnhmrJ5TAPzHYOmytD5iN/+pMxS+f+u/gezqHa9tPhRHEA==
 
 "@types/node@*":
   version "15.12.2"
@@ -31,10 +31,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.3.1.tgz#23a06b87eedb524016616e886b116b8fdcb180af"
   integrity sha512-weaeiP4UF4XgF++3rpQhpIJWsCTS4QJw5gvBhQu6cFIxTwyxWIe3xbnrY/o2lTCQ0lsdb8YIUDUvLR4Vuz5rbw==
 
-"@types/ws@^7.4.4":
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.4.4.tgz#93e1e00824c1de2608c30e6de4303ab3b4c0c9bc"
-  integrity sha512-d/7W23JAXPodQNbOZNXvl2K+bqAQrCMwlh/nuQsPSQk6Fq0opHoPrUw43aHsvSbIiQPr8Of2hkFbnz1XBFVyZQ==
+"@types/ws@^7.4.5":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.4.5.tgz#8ff0f7efcd8fea19f51f9dd66cb8b498d172a752"
+  integrity sha512-8mbDgtc8xpxDDem5Gwj76stBDJX35KQ3YBoayxlqUQcL5BZUthiqP/VQ4PQnLHqM4PmlbyO74t98eJpURO+gPA==
   dependencies:
     "@types/node" "*"
 
@@ -85,19 +85,24 @@ discord-api-types@^0.18.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.18.1.tgz#5d08ed1263236be9c21a22065d0e6b51f790f492"
   integrity sha512-hNC38R9ZF4uaujaZQtQfm5CdQO58uhdkoHQAVvMfIL0LgOSZeW575W8H6upngQOuoxWd8tiRII3LLJm9zuQKYg==
 
-discord.js@13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057:
-  version "13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.0.0-dev.a3cbcca13da1af416c219bd64a0a6e84bb87a057.tgz#7358b44985b2423f1fdb1a9c259d26de74d662f7"
-  integrity sha512-9EFBA08VUt9hIZzgQ1IcNv3/EwLvo4N9RikEzv/qNYjRvonnKi70tp0dpChduM8GFxgqrcTEa2mZJGfuumBBHA==
+discord-api-types@^0.19.0-next.f393ba520d7d6d2aacaca7b3ca5d355fab614f6e:
+  version "0.19.0-next.f393ba520d7d6d2aacaca7b3ca5d355fab614f6e"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.19.0-next.f393ba520d7d6d2aacaca7b3ca5d355fab614f6e.tgz#d5f36f5712ec8fe2fe928b5c37618c94a3969d6a"
+  integrity sha512-ttRA/8e/WKHDbGFfED5WlS7gID+kalmNr6iMiWBCvkphQ7kFHiTOVbnj/zX9ksaRaYXp/I38SCQ+qZvLu8DJZg==
+
+discord.js@13.0.0-dev.5842e35.1625011425:
+  version "13.0.0-dev.5842e35.1625011425"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.0.0-dev.5842e35.1625011425.tgz#aa9dff8bac393dafbcd4a29132b53931c2297a84"
+  integrity sha512-68yUruYVN3mYKVMNfAfQp6RDl+zcgNSHS82S83HExWwdzTRSd4lnO3MJrk1Oc+Eoy4UNVE1LoCXkOUN64MitSA==
   dependencies:
     "@discordjs/collection" "^0.1.6"
     "@discordjs/form-data" "^3.0.1"
-    "@sapphire/async-queue" "^1.1.2"
-    "@types/ws" "^7.4.4"
+    "@sapphire/async-queue" "^1.1.4"
+    "@types/ws" "^7.4.5"
     abort-controller "^3.0.0"
-    discord-api-types "^0.18.1"
+    discord-api-types "^0.19.0-next.f393ba520d7d6d2aacaca7b3ca5d355fab614f6e"
     node-fetch "^2.6.1"
-    ws "^7.4.6"
+    ws "^7.5.0"
 
 event-target-shim@^5.0.0:
   version "5.0.1"
@@ -197,7 +202,7 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
-ws@^7.4.6:
-  version "7.4.6"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
-  integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
+ws@^7.5.0:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.1.tgz#44fc000d87edb1d9c53e51fbc69a0ac1f6871d66"
+  integrity sha512-2c6faOUH/nhoQN6abwMloF7Iyl0ZS2E9HGtsiLrWn0zOOMWlhtDmdf/uihDt6jnuCxgtwGBNy6Onsoy2s2O2Ow==
