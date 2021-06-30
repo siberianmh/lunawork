@@ -4,6 +4,7 @@ import {
   ButtonInteraction,
   CommandInteractionOption,
 } from 'discord.js'
+import { APIMessage } from 'discord-api-types'
 import { LunaworkClient } from '../lunawork-client'
 import { getArgTypes } from '../utils/arg-type-provider'
 import { Context } from '../utils/context'
@@ -88,7 +89,9 @@ export class ExecutorStage extends Stage {
 
   //#region Slash Commands
   @listener({ event: 'interaction' })
-  public async onInteraction(interaction: CommandInteraction) {
+  public async onInteraction(
+    interaction: CommandInteraction,
+  ): Promise<void | Message | APIMessage> {
     if (!interaction.isCommand()) {
       return
     }
@@ -107,7 +110,9 @@ export class ExecutorStage extends Stage {
     for (const inhibitor of cmd.inhibitors) {
       const reason = await inhibitor(interaction, this.client)
       if (reason) {
-        return interaction.reply(`:warning: command was inhibited: ${reason}`)
+        return interaction.reply({
+          content: `:warning: command was inhibited: ${reason}`,
+        })
       }
     }
 
@@ -214,7 +219,8 @@ export class ExecutorStage extends Stage {
       // @ts-expect-error
       cmd.onError(msg, err)
     }
-    return this.client.emit('commandExecution', context)
+    this.client.emit('commandExecution', context)
+    return
   }
 
   private getPrefix(
