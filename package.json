@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/node": "^15.3.1",
     "discord-api-types": "^0.18.1",
-    "discord.js": "13.0.0-dev.64f093f.1625054868",
+    "discord.js": "13.0.0-dev.941cd86.1625141252",
     "prettier": "^2.3.2",
     "typescript": "^4.3.4"
   },
