@@ -1,23 +1,35 @@
 import 'reflect-metadata'
 
-export { LunaworkClient } from './lib/lunawork-client'
-export { Stage } from './lib/stage'
-export { ILogger, LogLevel, LogMethods, Logger } from './lib/logger/logger'
+export { LunaworkClient } from './core/client'
+export { Stage } from './core/stage'
+
+// Decorators
+export { IListenerDecoratorOptions, listener } from './decorators/listener'
+export { IWebSocketDecoratorOptions, wsListener } from './decorators/wslistener'
 export {
-  IListenerDecoratorOptions,
-  listener,
-} from './lib/listeners/listener/decorator'
-export { IListener, IWebSocket } from './lib/listeners/types'
+  ISlashCommandDecoratorOptions,
+  slashCommand,
+} from './decorators/slash-command'
+export { IPrefixCommandDecoratorOptions, command } from './decorators/command'
+export { optional } from './decorators/optional'
+export { IButtonDecoratorOptions, button } from './decorators/button'
 export {
-  IWebSocketDecoratorOptions,
-  wsListener,
-} from './lib/listeners/websocket/decorator'
+  ISelectMenuDecoratorOptions,
+  selectMenu,
+} from './decorators/select-menu'
+
+// Utils
 export {
+  Inhibitor,
+  dmsOnly,
+  guildsOnly,
+  hasGuildPermission,
+  mergeInhibitors,
+} from './lib/inhibitors'
+export {
+  isButtonMessage,
   isCommandMessage,
   isMessage,
-  isButtonMessage,
-} from './lib/utils/type-guarding'
-export { Context } from './lib/utils/context'
-export { IEvents } from './lib/types/events'
-
-export * from './lib/commands'
+  isSelectMenuMessage,
+} from './lib/type-guarding'
+export { Context } from './lib/context'

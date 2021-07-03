@@ -1,1 +1,0 @@
-# @slashCommand decorator
