@@ -174,7 +174,7 @@ export class ExecutorStage extends Stage {
     }
 
     const cmd = Array.from(this.client.manager.buttons).find(
-      (b) => b.customID === interaction.customID,
+      (b) => b.customID === interaction.customId,
     )
 
     if (!cmd) {
@@ -196,7 +196,7 @@ export class ExecutorStage extends Stage {
     }
 
     const cmd = Array.from(this.client.manager.selectMenus).find(
-      (b) => b.customID === interaction.customID,
+      (b) => b.customID === interaction.customId,
     )
 
     if (!cmd) {
