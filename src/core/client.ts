@@ -97,7 +97,7 @@ export class LunaworkClient extends Client {
   public fetchPrefix: ILunaworkPrefixHook
 
   public constructor(
-    options: ClientOptions = { intents: Intents.NON_PRIVILEGED },
+    options: ClientOptions = { intents: Intents.FLAGS.GUILDS },
   ) {
     super(options)
 

@@ -21,7 +21,7 @@ export const guildsOnly: Inhibitor = async (msg) =>
   msg.member ? undefined : 'not in a guild'
 
 export const dmsOnly: Inhibitor = async (msg) =>
-  msg.channel!.type === 'dm' ? undefined : 'not in dms'
+  msg.channel!.type === 'DM' ? undefined : 'not in dms'
 
 export const hasGuildPermission = (perm: PermissionResolvable) =>
   mergeInhibitors(guildsOnly, async (msg) =>
