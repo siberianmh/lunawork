@@ -120,12 +120,12 @@ export class ExecutorStage extends Stage {
 
     let resultArgs: Array<unknown> = []
 
-    for (const option of interaction.options.array()) {
+    for (const option of interaction.options.data) {
       if (
         option.type === 'SUB_COMMAND_GROUP' ||
         option.type === 'SUB_COMMAND'
       ) {
-        const args = this.handleSubCommand(interaction.options.array())
+        const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
       } else {
         resultArgs.push(
@@ -142,7 +142,7 @@ export class ExecutorStage extends Stage {
   }
 
   private handleSubCommand(
-    options: Array<CommandInteractionOption>,
+    options: ReadonlyArray<CommandInteractionOption>,
     baseArray?: Array<unknown>,
   ): Array<unknown> {
     const output = baseArray ?? ([] as Array<unknown>)
@@ -158,7 +158,7 @@ export class ExecutorStage extends Stage {
 
       if (option.options && option.name) {
         output.push(option.name)
-        this.handleSubCommand(option.options.array(), output)
+        this.handleSubCommand(option.options, output)
       }
     })
 
