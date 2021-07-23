@@ -2,4 +2,38 @@
 title: command decorator
 ---
 
-## @command
+## Usage
+
+> We recommend using the `@slashCommand` decorator, as the new and modern way to
+> provide commands for users. Even if the `@command` decorator is not actively
+> supported and probably be deprecated in the future, it is finished.
+
+`@command` decorator, represents a prefix command, which can be executed by
+`<prefix>command`.
+
+### Options
+
+| name        | type          | description                          |
+| ----------- | ------------- | ------------------------------------ |
+| aliases     | Array<string> | an array of aliases for this command |
+| description | string        | can be used in the help command      |
+
+#### Example
+
+```typescript
+import { LunaworkClient, Stage, command } from '@siberianmh/lunawork'
+import { Message } from 'discord.js'
+
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed by `<prefix>hello world`
+  // And respond `Hello world` to the user
+  @command()
+  public async hello(msg: Message, arg1: string) {
+    return msg.channel.send({ content: `Hello ${arg1}` })
+  }
+}
+```

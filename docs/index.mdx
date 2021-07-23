@@ -1,5 +1,100 @@
 ---
-title: Getting Started
+title: Introduction
 ---
 
-## Getting Started
+## Prerequisites
+
+Please make sure that [Node.js](https://nodejs.org) (>=14) is installed on your
+operation system.
+
+## Installation
+
+> Currently, Lunawork is fully compatible with
+> [TypeScript](https://www.typescriptlang.org/), and we don't test compatible
+> with **pure JavaScript**, we recommended you to use TypeScript if you want to
+> continue using Lunawork.
+
+```sh
+# Create the folder
+mkdir discord-bot
+cd discord-bot
+
+# Init the repository
+yarn init -y
+yarn add @siberianmh/lunawork discord.js reflect-metadata
+yarn add typescript ts-node --dev
+```
+
+Next, let's update the `package.json` and adds the `dev` command:
+
+```json
+{
+  "name": "discord-bot",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "ts-node ./src/index.ts"
+  },
+  "dependencies": {
+    "@siberianmh/lunawork": "^0.0.1",
+    "discord.js": "^13.0.0",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5",
+    "ts-node": "^10.1.0"
+  }
+}
+```
+
+And after let's create the `src/index.ts` file with the following content:
+
+```ts
+// Import libraries
+import 'reflect-metadata'
+import { LunaworkClient, Stage } from '@siberianmh/lunawork'
+import { CommandInteraction } from 'discord.js'
+
+// Create the first stage with commands
+class CommandStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed when slash command `doFun`
+  // be exeucted by user.
+  @slashCommand({ description: 'Make the fun' })
+  public async doFun(msg: CommandInteraction) {
+    return msg.reply({ content: 'Wu ho' })
+  }
+}
+
+// Register client, support all `discord.js` options
+const client = new LunaworkClient({
+  experimental: {
+    // Will automatically register all `@slashCommand`
+    // decorators
+    autoRegisterSlash: true,
+  },
+})
+
+// Register previously create command stage
+client.registerStage(CommandStage)
+
+// Login and log that we successfully logged in.
+client.login(process.env.DISCORD_TOKEN)
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user?.tag}`)
+})
+```
+
+Next start the project with the following command:
+
+```sh
+yarn start
+# or
+npm run start
+```
+
+You should see the `Logged in as <BotUsername#0000>` in the terminal window and
+use the created `/doFun` slash command in the Discord. If this not happenened
+verify that you provide the valid Bot token.

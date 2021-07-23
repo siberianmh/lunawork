@@ -2,4 +2,36 @@
 title: slashCommand decorator
 ---
 
-# slashCommand decorator
+## Usage
+
+`@slashCommand` decorator is a modern way to provide commands to users. This
+decorator supports automatically registering using the
+`experimental.autoRegisterSlash` option in the `LunaworkClient` constructor.
+
+### Options
+
+| name          | type                   | description                                                                                      |
+| ------------- | ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `name`        | string                 | if provided this is being used as `name` for command instead of function name                    |
+| `description` | string (required)      | the description for the command, required and will be shown when the user see a list of commands |
+| `options`     | ApplicationCommandData | the list of options, see [discord.js] doc for this                                               |
+
+#### Example
+
+```typescript
+import { LunaworkClient, Stage, slashCommand } from '@siberianmh/lunawork'
+import { CommandInteraction } from 'discord.js'
+
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed by `/hello <query>:world`
+  // And respond `Hello world` to the user
+  @slashCommand({ description: 'Give the greet' })
+  public async greet(msg: CommandInteraction, arg1: string) {
+    return msg.reply({ content: `Hello ${arg1}` })
+  }
+}
+```

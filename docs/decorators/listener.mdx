@@ -2,4 +2,32 @@
 title: listener decorator
 ---
 
-## @listener
+## Usage
+
+`@listener` decorator represents the `client.on(<event>, (fn) => {})` in the
+`discord.js`, and supports all `discord.js` EventEmitter events.
+
+### Options
+
+| name  | type   | description                                                                                                                     |
+| ----- | ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| event | string | see [discord.js](https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-channelCreate) doc for all supported events. |
+
+#### Example
+
+```typescript
+import { LunaworkClient, Stage, listener } from '@siberianmh/lunawork'
+import { Message } from 'discord.js'
+
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed when new message is sent
+  @listener({ event: 'message' })
+  public async onNewMessage(msg: Message) {
+    console.log(msg) // Logs the `Message`
+  }
+}
+```
