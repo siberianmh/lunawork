@@ -186,7 +186,7 @@ export class SlashCommandManager extends Stage {
 
   private async register(command: ApplicationCommandData) {
     if (process.env.NODE_ENV === 'development') {
-      const guilds = this.client.guilds.cache.array()
+      const guilds = [...this.client.guilds.cache.values()]
 
       for (const guild of guilds) {
         await guild.commands.create(command)
