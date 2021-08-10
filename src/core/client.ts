@@ -25,6 +25,11 @@ interface ILunaworkClientOptions {
   experimental?: Partial<IExperimentalOptions>
 
   /**
+   * Register the Slash commands automatically
+   */
+  autoRegisterSlash?: boolean
+
+  /**
    * The default prefix.
    *
    * Defaults to `null`
@@ -108,7 +113,7 @@ export class LunaworkClient extends Client {
 
     this.registerStage(ExecutorStage)
 
-    if (this.options.experimental?.autoRegisterSlash) {
+    if (this.options.autoRegisterSlash) {
       this.registerStage(SlashCommandManager)
     }
   }

@@ -25,7 +25,7 @@ export class ExampleStage extends Stage {
   }
 
   // Will be executed when new message is sent
-  @listener({ event: 'message' })
+  @listener({ event: 'messageCreate' })
   public async onNewMessage(msg: Message) {
     console.log(msg) // Logs the `Message`
   }

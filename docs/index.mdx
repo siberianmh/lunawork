@@ -70,11 +70,7 @@ class CommandStage extends Stage {
 
 // Register client, support all `discord.js` options
 const client = new LunaworkClient({
-  experimental: {
-    // Will automatically register all `@slashCommand`
-    // decorators
-    autoRegisterSlash: true,
-  },
+  autoRegisterSlash: true,
 })
 
 // Register previously create command stage

@@ -21,7 +21,7 @@ export class ExecutorStage extends Stage {
   }
 
   //#region Default command with prefix
-  @listener({ event: 'message' })
+  @listener({ event: 'messageCreate' })
   public async onMessage(msg: Message) {
     if (msg.author && msg.author.bot) {
       return
@@ -97,7 +97,7 @@ export class ExecutorStage extends Stage {
   //#endregion
 
   //#region Slash Commands
-  @listener({ event: 'interaction' })
+  @listener({ event: 'interactionCreate' })
   public async onSlashCommand(interaction: CommandInteraction) {
     if (!interaction.isCommand()) {
       return
@@ -167,7 +167,7 @@ export class ExecutorStage extends Stage {
   //#endregion
 
   //#region Buttons
-  @listener({ event: 'interaction' })
+  @listener({ event: 'interactionCreate' })
   public async onButton(interaction: ButtonInteraction) {
     if (!interaction.isButton()) {
       return
@@ -189,7 +189,7 @@ export class ExecutorStage extends Stage {
   //#endregion
 
   //#region Select Menus
-  @listener({ event: 'interaction' })
+  @listener({ event: 'interactionCreate' })
   public async onSelectMenu(interaction: SelectMenuInteraction) {
     if (!interaction.isSelectMenu()) {
       return
