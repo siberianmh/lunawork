@@ -1,9 +1,9 @@
 import { CommandInteraction, ApplicationCommandData } from 'discord.js'
 import { Stage } from '../core/stage'
-import { slashCommandMetaKey } from '../lib/reflect-prefixes'
+import { applicationCommandMetaKey } from '../lib/reflect-prefixes'
 import { Inhibitor } from '../lib/inhibitors'
 
-export interface ISlashCommandDecoratorOptions
+export interface IApplicationCommandDecoratorOptions
   extends Partial<ApplicationCommandData> {
   readonly description: string
 
@@ -11,14 +11,14 @@ export interface ISlashCommandDecoratorOptions
   readonly onError?: (msg: CommandInteraction, error: Error) => void
 }
 
-interface ISlashCommandDecoratorMeta {
+interface IApplicationCommandDecoratorMeta {
   readonly id: string
 }
 
-export type ISlashCommandDecorator = ISlashCommandDecoratorMeta &
-  ISlashCommandDecoratorOptions
+export type IApplicationCommandDecorator = IApplicationCommandDecoratorMeta &
+  IApplicationCommandDecoratorOptions
 
-export function slashCommand(opts: ISlashCommandDecoratorOptions) {
+export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
   return function (
     target: Stage,
     propertyKey: string,
@@ -35,7 +35,7 @@ export function slashCommand(opts: ISlashCommandDecoratorOptions) {
       )
     }
 
-    const newMeta: ISlashCommandDecorator = {
+    const newMeta: IApplicationCommandDecorator = {
       name: opts.name || '',
       description: opts.description || '',
       id: propertyKey,
@@ -49,9 +49,22 @@ export function slashCommand(opts: ISlashCommandDecoratorOptions) {
           })),
     }
 
-    const targetMeta: Array<ISlashCommandDecorator> =
-      Reflect.getMetadata(slashCommandMetaKey, target) || []
+    const targetMeta: Array<IApplicationCommandDecorator> =
+      Reflect.getMetadata(applicationCommandMetaKey, target) || []
     targetMeta.push(newMeta)
-    Reflect.defineMetadata(slashCommandMetaKey, targetMeta, target)
+    Reflect.defineMetadata(applicationCommandMetaKey, targetMeta, target)
+  }
+}
+
+/**
+ * @deprecated use `applicationCommand(opts)` instead
+ */
+export function slashCommand(opts: IApplicationCommandDecoratorOptions) {
+  return function (
+    target: Stage,
+    propertyKey: string,
+    descriptor: PropertyDescriptor,
+  ) {
+    return applicationCommand(opts)(target, propertyKey, descriptor)
   }
 }

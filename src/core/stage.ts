@@ -7,13 +7,13 @@ import {
   commandMetaKey,
   listenerMetaKey,
   selectMenuMetaKey,
-  slashCommandMetaKey,
+  applicationCommandMetaKey,
   webSocketMetaKey,
 } from '../lib/reflect-prefixes'
 import { IListener, IWebSocket } from '../lib/types'
 import { IWebSocketDecoratorMeta } from '../decorators/wslistener'
-import { ISlashCommandDecorator } from '../decorators/slash-command'
-import { ISlashCommand } from '../lib/types/slash-command'
+import { IApplicationCommandDecorator } from '../decorators/application-command'
+import { IApplicationCommand } from '../lib/types/application-command'
 import { IPrefixCommand } from '../lib/types/prefix'
 import { IPrefixCommanDecorator } from '../decorators/command'
 import { getArgTypes } from '../lib/arg-type-provider'
@@ -56,10 +56,10 @@ export class Stage {
         } as IWebSocket),
     )
 
-    const slashCommandMeta: Array<ISlashCommandDecorator> =
-      Reflect.getMetadata(slashCommandMetaKey, this) || []
+    const applicationCommandMeta: Array<IApplicationCommandDecorator> =
+      Reflect.getMetadata(applicationCommandMetaKey, this) || []
 
-    const slashCommands = slashCommandMeta.map(
+    const applicationCommands = applicationCommandMeta.map(
       (meta) =>
         ({
           id: this.constructor.name + '/' + meta.id,
@@ -70,7 +70,7 @@ export class Stage {
           onError: meta.onError,
           trigger: meta.id,
           description: meta.description,
-        } as ISlashCommand),
+        } as IApplicationCommand),
     )
 
     const prefixCommandsMeta: Array<IPrefixCommanDecorator> =
@@ -133,7 +133,7 @@ export class Stage {
     return {
       listeners,
       wsListeners,
-      slashCommands,
+      applicationCommands,
       prefixCommands,
       buttons,
       selectMenus,

@@ -3,7 +3,7 @@ import { Client, ClientOptions, Message, Intents } from 'discord.js'
 import type { Awaited, IExperimentalOptions } from '../lib/types'
 import { Stage } from './stage'
 import { ExecutorStage } from './executor'
-import { Manager, SlashCommandManager } from './manager'
+import { Manager, ApplicationCommandManager } from './manager'
 
 /**
  * A valid prefix in Lunawork:
@@ -114,7 +114,7 @@ export class LunaworkClient extends Client {
     this.registerStage(ExecutorStage)
 
     if (this.options.autoRegisterSlash) {
-      this.registerStage(SlashCommandManager)
+      this.registerStage(ApplicationCommandManager)
     }
   }
 
@@ -173,12 +173,12 @@ export class LunaworkClient extends Client {
       prefixCommands,
       listeners,
       wsListeners,
-      slashCommands,
+      applicationCommands,
     } = instance.process.bind(instance)()
 
     this.manager.registerListeners(listeners)
     this.manager.registerWebSocketListeners(wsListeners)
-    this.manager.registerSlashCommands(slashCommands)
+    this.manager.registerApplicationCommands(applicationCommands)
     this.manager.registerPrefixCommands(prefixCommands)
     this.manager.registerButtons(buttons)
     this.manager.registerSelectMenus(selectMenus)

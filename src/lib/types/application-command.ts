@@ -3,7 +3,7 @@ import { Inhibitor } from '../inhibitors'
 import { Awaited } from './util'
 import type { Stage } from '../../core/stage'
 
-export interface ISlashCommand extends Partial<ApplicationCommandData> {
+export interface IApplicationCommand extends Partial<ApplicationCommandData> {
   func: (msg: CommandInteraction, ...typedArgs: Array<unknown>) => Awaited<void>
   id: string
   stage: Stage

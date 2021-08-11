@@ -1,12 +1,12 @@
 ---
-title: slashCommand decorator
+title: applicationCommand decorator
 ---
 
 ## Usage
 
-`@slashCommand` decorator is a modern way to provide commands to users. This
-decorator supports automatically registering using the
-`experimental.autoRegisterSlash` option in the `LunaworkClient` constructor.
+`@applicationCommand` decorator is a modern way to provide commands to users.
+This decorator supports automatically registering using the `autoRegisterSlash`
+option in the `LunaworkClient` constructor.
 
 ### Options
 
@@ -19,7 +19,7 @@ decorator supports automatically registering using the
 #### Example
 
 ```typescript
-import { LunaworkClient, Stage, slashCommand } from '@siberianmh/lunawork'
+import { LunaworkClient, Stage, applicationCommand } from '@siberianmh/lunawork'
 import { CommandInteraction } from 'discord.js'
 
 export class ExampleStage extends Stage {
@@ -29,7 +29,7 @@ export class ExampleStage extends Stage {
 
   // Will be executed by `/hello <query>:world`
   // And respond `Hello world` to the user
-  @slashCommand({ description: 'Give the greet' })
+  @applicationCommand({ description: 'Give the greet' })
   public async greet(msg: CommandInteraction, arg1: string) {
     return msg.reply({ content: `Hello ${arg1}` })
   }

@@ -6,7 +6,7 @@ import { IListener, IWebSocket } from '../lib/types'
 import { IButton } from '../lib/types/button'
 import { IPrefixCommand } from '../lib/types/prefix'
 import { ISelectMenu } from '../lib/types/select-menu'
-import { ISlashCommand } from '../lib/types/slash-command'
+import { IApplicationCommand } from '../lib/types/application-command'
 
 export class Manager extends Stage {
   public constructor(public client: LunaworkClient) {
@@ -88,9 +88,9 @@ export class Manager extends Stage {
   //#endregion
 
   //#region Slash Commands
-  public slashCmds: Set<ISlashCommand> = new Set()
+  public slashCmds: Set<IApplicationCommand> = new Set()
 
-  public async registerSlashCommands(cmds: Array<ISlashCommand>) {
+  public async registerApplicationCommands(cmds: Array<IApplicationCommand>) {
     for (const cmd of cmds) {
       if (this.slashCmds.has(cmd)) {
         return
@@ -162,13 +162,13 @@ export class Manager extends Stage {
   //#endregion
 }
 
-export class SlashCommandManager extends Stage {
+export class ApplicationCommandManager extends Stage {
   public constructor(client: LunaworkClient) {
     super(client)
   }
 
   @listener({ event: 'ready' })
-  public async registerSlashCommands() {
+  public async registerApplicatonCommands() {
     const { slashCmds } = this.client.manager
 
     for (const cmd of slashCmds) {

@@ -13,7 +13,7 @@ import { getArgTypes } from '../lib/arg-type-provider'
 import { Context } from '../lib/context'
 import { IButton } from '../lib/types/button'
 import { IPrefixCommand } from '../lib/types/prefix'
-import { ISlashCommand } from '../lib/types/slash-command'
+import { IApplicationCommand } from '../lib/types/application-command'
 
 export class ExecutorStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -96,9 +96,9 @@ export class ExecutorStage extends Stage {
   }
   //#endregion
 
-  //#region Slash Commands
+  //#region Application Commands
   @listener({ event: 'interactionCreate' })
-  public async onSlashCommand(interaction: CommandInteraction) {
+  public async onApplicationCommand(interaction: CommandInteraction) {
     if (!interaction.isCommand()) {
       return
     }
@@ -222,7 +222,7 @@ export class ExecutorStage extends Stage {
       | ButtonInteraction
       | CommandInteraction
       | SelectMenuInteraction
-    cmd: IPrefixCommand | IButton | ISelectMenuDecorator | ISlashCommand
+    cmd: IPrefixCommand | IButton | ISelectMenuDecorator | IApplicationCommand
     typedArgs?: Array<unknown>
     parsed?: string
     cmdTrigger?: string
