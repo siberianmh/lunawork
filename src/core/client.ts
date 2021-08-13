@@ -106,7 +106,6 @@ export class LunaworkClient extends Client {
   public constructor(
     options: ClientOptions = {
       intents: Intents.FLAGS.GUILDS,
-      manageApplicationCommands: true,
     },
   ) {
     super(options)
@@ -118,7 +117,7 @@ export class LunaworkClient extends Client {
 
     this.registerStage(ExecutorStage)
 
-    const manageCommands = this.options.manageApplicationCommands
+    const manageCommands = this.options.manageApplicationCommands ?? true
 
     if (manageCommands) {
       this.registerStage(ApplicationCommandManager)
