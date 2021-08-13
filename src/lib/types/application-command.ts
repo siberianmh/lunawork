@@ -1,9 +1,10 @@
-import { ApplicationCommandData, CommandInteraction } from 'discord.js'
+import { ChatInputApplicationCommandData, CommandInteraction } from 'discord.js'
 import { Inhibitor } from '../inhibitors'
 import { Awaited } from './util'
 import type { Stage } from '../../core/stage'
 
-export interface IApplicationCommand extends Partial<ApplicationCommandData> {
+export interface IApplicationCommand
+  extends Partial<ChatInputApplicationCommandData> {
   func: (msg: CommandInteraction, ...typedArgs: Array<unknown>) => Awaited<void>
   id: string
   stage: Stage

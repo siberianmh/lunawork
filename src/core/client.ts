@@ -25,9 +25,11 @@ interface ILunaworkClientOptions {
   experimental?: Partial<IExperimentalOptions>
 
   /**
-   * Register the Slash commands automatically
+   * Register the Slash commands automatically.
+   *
+   * Defaults to `true`
    */
-  autoRegisterSlash?: boolean
+  manageApplicationCommands?: boolean
 
   /**
    * The default prefix.
@@ -102,7 +104,10 @@ export class LunaworkClient extends Client {
   public fetchPrefix: ILunaworkPrefixHook
 
   public constructor(
-    options: ClientOptions = { intents: Intents.FLAGS.GUILDS },
+    options: ClientOptions = {
+      intents: Intents.FLAGS.GUILDS,
+      manageApplicationCommands: true,
+    },
   ) {
     super(options)
 
@@ -113,7 +118,9 @@ export class LunaworkClient extends Client {
 
     this.registerStage(ExecutorStage)
 
-    if (this.options.autoRegisterSlash) {
+    const manageCommands = this.options.manageApplicationCommands
+
+    if (manageCommands) {
       this.registerStage(ApplicationCommandManager)
     }
   }

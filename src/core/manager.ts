@@ -103,6 +103,10 @@ export class Manager extends Stage {
   public getSlashByTrigger(trigger: string) {
     return Array.from(this.slashCmds).find((c) => c.trigger === trigger)
   }
+
+  public getSlashByName(name: string) {
+    return Array.from(this.slashCmds).find((a) => a.name === name)
+  }
   //#endregion
 
   //#region Prefixed Commands
@@ -175,6 +179,7 @@ export class ApplicationCommandManager extends Stage {
       const registerData: ApplicationCommandData = {
         name: cmd.name ?? cmd.trigger,
         description: cmd.description,
+        type: cmd.type || 'CHAT_INPUT',
         options: cmd.options || [],
       }
 

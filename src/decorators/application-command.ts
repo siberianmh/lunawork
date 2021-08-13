@@ -1,10 +1,10 @@
-import { CommandInteraction, ApplicationCommandData } from 'discord.js'
+import { CommandInteraction, ChatInputApplicationCommandData } from 'discord.js'
 import { Stage } from '../core/stage'
 import { applicationCommandMetaKey } from '../lib/reflect-prefixes'
 import { Inhibitor } from '../lib/inhibitors'
 
 export interface IApplicationCommandDecoratorOptions
-  extends Partial<ApplicationCommandData> {
+  extends Partial<ChatInputApplicationCommandData> {
   readonly description: string
 
   readonly inhibitors?: Array<Inhibitor>
@@ -41,6 +41,7 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
       id: propertyKey,
       inhibitors: opts.inhibitors || [],
       options: opts.options || undefined,
+      type: opts.type || 'CHAT_INPUT',
       onError:
         opts.onError ||
         ((msg) =>

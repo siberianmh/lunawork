@@ -2,6 +2,7 @@ import {
   ButtonInteraction,
   CommandInteraction,
   CommandInteractionOption,
+  ContextMenuInteraction,
   Message,
   SelectMenuInteraction,
 } from 'discord.js'
@@ -164,6 +165,33 @@ export class ExecutorStage extends Stage {
 
     return output
   }
+
+  @listener({ event: 'interactionCreate' })
+  public async onContextMenu(interaction: ContextMenuInteraction) {
+    if (!interaction.isContextMenu()) {
+      return
+    }
+
+    const cmd = this.client.manager.getSlashByName(interaction.commandName)
+
+    if (!cmd) {
+      return
+    }
+
+    for (const inhibitor of cmd.inhibitors) {
+      const reason = await inhibitor(interaction, this.client)
+      if (reason) {
+        return interaction.reply({
+          content: `:warning: command was inhibited: ${reason}`,
+        })
+      }
+    }
+
+    return this.execute({
+      msg: interaction,
+      cmd,
+    })
+  }
   //#endregion
 
   //#region Buttons
@@ -221,6 +249,7 @@ export class ExecutorStage extends Stage {
       | Message
       | ButtonInteraction
       | CommandInteraction
+      | ContextMenuInteraction
       | SelectMenuInteraction
     cmd: IPrefixCommand | IButton | ISelectMenuDecorator | IApplicationCommand
     typedArgs?: Array<unknown>

@@ -69,6 +69,8 @@ export class Stage {
           stage: this,
           onError: meta.onError,
           trigger: meta.id,
+          name: meta.name !== '' ? meta.name : undefined,
+          type: meta.type,
           description: meta.description,
         } as IApplicationCommand),
     )

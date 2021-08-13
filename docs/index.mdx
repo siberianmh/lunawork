@@ -52,7 +52,7 @@ And after let's create the `src/index.ts` file with the following content:
 // Import libraries
 import 'reflect-metadata'
 import { LunaworkClient, Stage } from '@siberianmh/lunawork'
-import { CommandInteraction } from 'discord.js'
+import { CommandInteraction, Intents } from 'discord.js'
 
 // Create the first stage with commands
 class CommandStage extends Stage {
@@ -70,7 +70,7 @@ class CommandStage extends Stage {
 
 // Register client, support all `discord.js` options
 const client = new LunaworkClient({
-  autoRegisterSlash: true,
+  intents: Intents.FLAGS.GUILDS,
 })
 
 // Register previously create command stage
