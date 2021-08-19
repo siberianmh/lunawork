@@ -1,0 +1,43 @@
+---
+title: Advanced Usage of Application Commands
+---
+
+## Using with Slash Command builders
+
+A Lunawork supports using third-party builders for Application Commands if they
+return the Discord `JSON` object, like `@discord.js/builders'.
+
+In the following example, we will use `@discordjs/builders` to create the simple
+command with the output that can be used by the `@applicationCommand` decorator.
+
+```typescript
+import { LunaworkClient, Stage, applicationCommand } from '@siberianmh/lunawork'
+import { CommandInteraction } from 'discord.js'
+import { SlashCommandBuilder } from '@discord.js/builders'
+
+// This also can be possible to do inside the class
+const pingCommand = new SlashCommandBuilder()
+  .setName('ping')
+  .setDescription('Check if this interaction is responsive.')
+  .toJSON()
+
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed by `/hello` command
+  // And respond `Hello world` to the user
+  @applicationCommand({ description: 'Give the greet' })
+  public async greet(msg: CommandInteraction) {
+    return msg.reply({ content: `Hello world.` })
+  }
+
+  // Can be executed using `/ping` command.
+  // And respond the 'pong 🏓' to the user
+  @applicationCommand({ ...pingCommand })
+  public async ping(msg: CommandInteraction) {
+    return msg.reply({ content: 'pong 🏓' })
+  }
+}
+```

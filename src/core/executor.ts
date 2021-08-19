@@ -68,12 +68,14 @@ export class ExecutorStage extends Stage {
           } instead`,
         })
       }
+
       for (const i in stringArgs) {
         if (!cmd.args[i]) {
           continue
         }
         const sa = stringArgs[i]
         const arg = getArgTypes(this.client)[cmd.args[i].type.name](sa, msg)
+
         if (arg === null || arg === undefined) {
           return msg.channel.send({
             content: `:warning: argument #${
@@ -119,7 +121,7 @@ export class ExecutorStage extends Stage {
       }
     }
 
-    let resultArgs: Array<unknown> = []
+    let resultArgs: Record<string, unknown> = {}
 
     for (const option of interaction.options.data) {
       if (
@@ -129,41 +131,52 @@ export class ExecutorStage extends Stage {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
       } else {
-        resultArgs.push(
-          option.member || option.user || option.channel || option.value,
-        )
+        resultArgs[option.name] =
+          option.member || option.user || option.channel || option.value
       }
     }
 
     return this.execute({
       msg: interaction,
       cmd,
-      typedArgs: resultArgs,
+      objectArgs: resultArgs,
     })
   }
 
   private handleSubCommand(
     options: ReadonlyArray<CommandInteractionOption>,
-    baseArray?: Array<unknown>,
-  ): Array<unknown> {
-    const output = baseArray ?? ([] as Array<unknown>)
+    baseObject?: Record<string, unknown>,
+  ): Record<string, unknown> {
+    const output = baseObject ?? ({} as Record<string, unknown>)
 
     options.forEach((option) => {
       if (!option.value && !option.options && option.name) {
-        output.push(option.name)
+        const type = this.getCorrectType(option.type)
+        output[type] = option.name
       }
 
       if (option.value) {
-        output.push(option.value)
+        output[option.name] = option.value
       }
 
       if (option.options && option.name) {
-        output.push(option.name)
+        const type = this.getCorrectType(option.type)
+        output[type] = option.name
         this.handleSubCommand(option.options, output)
       }
     })
 
     return output
+  }
+
+  private getCorrectType(type: CommandInteractionOption['type']): string {
+    if (type === 'SUB_COMMAND') {
+      return 'subCommand'
+    } else if (type === 'SUB_COMMAND_GROUP') {
+      return 'subCommandGroup'
+    }
+
+    return ''
   }
 
   @listener({ event: 'interactionCreate' })
@@ -242,6 +255,7 @@ export class ExecutorStage extends Stage {
     cmd,
     msg,
     typedArgs = [],
+    objectArgs = {},
     cmdTrigger,
     parsed,
   }: {
@@ -252,6 +266,7 @@ export class ExecutorStage extends Stage {
       | ContextMenuInteraction
       | SelectMenuInteraction
     cmd: IPrefixCommand | IButton | ISelectMenu | IApplicationCommand
+    objectArgs?: Record<string, unknown>
     typedArgs?: Array<unknown>
     parsed?: string
     cmdTrigger?: string
@@ -267,8 +282,19 @@ export class ExecutorStage extends Stage {
           ? context
           : msg
 
-      // @ts-expect-error
-      const result = cmd.func.call(cmd.stage, messageWithContext, ...typedArgs)
+      let result
+      if (objectArgs) {
+        // @ts-expect-error
+        result = cmd.func.call(
+          cmd.stage,
+          messageWithContext,
+          Object.freeze(objectArgs),
+        )
+      } else {
+        // @ts-expect-error
+        result = cmd.func.call(cmd.stage, messageWithContext, ...typedArgs)
+      }
+
       if (result instanceof Promise) {
         await result
       }

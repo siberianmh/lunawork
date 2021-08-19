@@ -28,11 +28,14 @@ export class ExampleStage extends Stage {
     super(client)
   }
 
-  // Will be executed by `/hello <query>:world`
+  // Will be executed by `/hello` command
   // And respond `Hello world` to the user
   @applicationCommand({ description: 'Give the greet' })
-  public async greet(msg: CommandInteraction, arg1: string) {
-    return msg.reply({ content: `Hello ${arg1}` })
+  public async greet(msg: CommandInteraction) {
+    return msg.reply({ content: `Hello world.` })
   }
 }
 ```
+
+For more advanced usages see the
+[advanced Application Commands](/app-cmds/advanced) documentation.
