@@ -1,11 +1,19 @@
-import { CommandInteraction, ChatInputApplicationCommandData } from 'discord.js'
+import type {
+  CommandInteraction,
+  ApplicationCommandOptionData,
+} from 'discord.js'
+import type { APIApplicationCommandOption } from 'discord-api-types/v9'
 import { Stage } from '../core/stage'
 import { applicationCommandMetaKey } from '../lib/reflect-prefixes'
 import { Inhibitor } from '../lib/inhibitors'
 
-export interface IApplicationCommandDecoratorOptions
-  extends Partial<ChatInputApplicationCommandData> {
-  readonly description: string
+export interface IApplicationCommandDecoratorOptions {
+  readonly name?: string
+  readonly description?: string
+  readonly type?: 'CHAT_INPUT' | 'MESSAGE' | 'USER'
+  readonly options?:
+    | Array<APIApplicationCommandOption>
+    | Array<ApplicationCommandOptionData>
 
   readonly inhibitors?: Array<Inhibitor>
   readonly onError?: (msg: CommandInteraction, error: Error) => void

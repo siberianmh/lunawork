@@ -9,12 +9,12 @@ import {
 import { LunaworkClient } from '../core/client'
 import { Stage } from '../core/stage'
 import { listener } from '../decorators/listener'
-import { ISelectMenuDecorator } from '../decorators/select-menu'
 import { getArgTypes } from '../lib/arg-type-provider'
 import { Context } from '../lib/context'
 import { IButton } from '../lib/types/button'
 import { IPrefixCommand } from '../lib/types/prefix'
 import { IApplicationCommand } from '../lib/types/application-command'
+import { ISelectMenu } from '../lib/types/select-menu'
 
 export class ExecutorStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -251,7 +251,7 @@ export class ExecutorStage extends Stage {
       | CommandInteraction
       | ContextMenuInteraction
       | SelectMenuInteraction
-    cmd: IPrefixCommand | IButton | ISelectMenuDecorator | IApplicationCommand
+    cmd: IPrefixCommand | IButton | ISelectMenu | IApplicationCommand
     typedArgs?: Array<unknown>
     parsed?: string
     cmdTrigger?: string
