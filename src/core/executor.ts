@@ -156,7 +156,8 @@ export class ExecutorStage extends Stage {
       }
 
       if (option.value) {
-        output[option.name] = option.value
+        output[option.name] =
+          option.member || option.user || option.channel || option.value
       }
 
       if (option.options && option.name) {
