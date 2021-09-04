@@ -1,9 +1,11 @@
 import { SelectMenuInteraction } from 'discord.js'
+import { Inhibitor } from '../lib/inhibitors'
 import { Stage } from '../core/stage'
 import { selectMenuMetaKey } from '../lib/reflect-prefixes'
 
 export interface ISelectMenuDecoratorOptions {
   readonly customID: string
+  readonly inhibitors?: Array<Inhibitor>
   readonly onErorr?: (msg: SelectMenuInteraction, error: Error) => void
 }
 
@@ -35,6 +37,7 @@ export function selectMenu(opts: ISelectMenuDecoratorOptions) {
     const meta: ISelectMenuDecorator = {
       id: propertyKey,
       customID: opts.customID,
+      inhibitors: opts.inhibitors || [],
       onErorr:
         opts.onErorr ||
         ((msg) =>

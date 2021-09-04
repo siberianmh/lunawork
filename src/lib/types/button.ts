@@ -1,4 +1,5 @@
 import { ButtonInteraction } from 'discord.js'
+import { Inhibitor } from '../inhibitors'
 import { Stage } from '../../core/stage'
 import { Awaited } from './util'
 
@@ -10,5 +11,6 @@ export interface IButton {
   id: string
   customID: string
   stage: Stage
+  inhibitors: Array<Inhibitor>
   onError: (msg: ButtonInteraction, error: Error) => void
 }

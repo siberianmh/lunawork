@@ -9,12 +9,16 @@ import {
 import { LunaworkClient } from '../core/client'
 import { Stage } from '../core/stage'
 import { listener } from '../decorators/listener'
+import { isMessage } from '../lib/type-guarding'
 import { getArgTypes } from '../lib/arg-type-provider'
+import { Inhibitor } from '../lib/inhibitors'
 import { Context } from '../lib/context'
 import { IButton } from '../lib/types/button'
 import { IPrefixCommand } from '../lib/types/prefix'
 import { IApplicationCommand } from '../lib/types/application-command'
 import { ISelectMenu } from '../lib/types/select-menu'
+
+let deprecatedTriggered = false
 
 export class ExecutorStage extends Stage {
   public constructor(client: LunaworkClient) {
@@ -44,11 +48,9 @@ export class ExecutorStage extends Stage {
     }
 
     for (const inhibitor of cmd.inhibitors) {
-      const reason = await inhibitor(msg, this.client)
-      if (reason) {
-        return msg.channel.send({
-          content: `:warning: command was inhibited: ${reason}`,
-        })
+      const inhibited = await this.inhibiteCommand(inhibitor, msg)
+      if (inhibited) {
+        return
       }
     }
 
@@ -113,11 +115,9 @@ export class ExecutorStage extends Stage {
     }
 
     for (const inhibitor of cmd.inhibitors) {
-      const reason = await inhibitor(interaction, this.client)
-      if (reason) {
-        return interaction.reply({
-          content: `:warning: command was inhibited: ${reason}`,
-        })
+      const inhibited = await this.inhibiteCommand(inhibitor, interaction)
+      if (inhibited) {
+        return
       }
     }
 
@@ -193,11 +193,9 @@ export class ExecutorStage extends Stage {
     }
 
     for (const inhibitor of cmd.inhibitors) {
-      const reason = await inhibitor(interaction, this.client)
-      if (reason) {
-        return interaction.reply({
-          content: `:warning: command was inhibited: ${reason}`,
-        })
+      const inhibited = await this.inhibiteCommand(inhibitor, interaction)
+      if (inhibited) {
+        return
       }
     }
 
@@ -223,6 +221,13 @@ export class ExecutorStage extends Stage {
       return
     }
 
+    for (const inhibitor of cmd.inhibitors) {
+      const inhibited = await this.inhibiteCommand(inhibitor, interaction)
+      if (inhibited) {
+        return
+      }
+    }
+
     return this.execute({
       cmd,
       msg: interaction,
@@ -243,6 +248,13 @@ export class ExecutorStage extends Stage {
 
     if (!cmd) {
       return
+    }
+
+    for (const inhibitor of cmd.inhibitors) {
+      const inhibited = await this.inhibiteCommand(inhibitor, interaction)
+      if (inhibited) {
+        return
+      }
     }
 
     return this.execute({
@@ -336,5 +348,58 @@ export class ExecutorStage extends Stage {
       prefixes.find((prefix) => content.startsWith(prefix.toLowerCase())) ??
       null
     )
+  }
+
+  private async inhibiteCommand(
+    inhibitor: Inhibitor,
+    interaction:
+      | Message
+      | CommandInteraction
+      | ContextMenuInteraction
+      | ButtonInteraction
+      | SelectMenuInteraction,
+  ): Promise<boolean> {
+    const reason = await inhibitor(interaction, this.client)
+
+    if (!reason) {
+      return false
+    }
+
+    if (typeof reason === 'string') {
+      if (!deprecatedTriggered) {
+        console.log(
+          '[@siberianmh/lunawork] The string inhibitors is deprecated, switch to use object',
+        )
+        deprecatedTriggered = true
+      }
+
+      if (isMessage(interaction)) {
+        await interaction.channel.send({
+          content: reason,
+        })
+      } else {
+        await interaction.reply({
+          content: reason,
+        })
+      }
+      return true
+    } else if ('content' in reason) {
+      if (isMessage(interaction)) {
+        await interaction.channel.send({
+          content: reason.content ?? undefined,
+          embeds: reason.embeds ?? undefined,
+          components: reason.components ?? undefined,
+        })
+      } else {
+        await interaction.reply({
+          content: reason.content ?? undefined,
+          embeds: reason.embeds ?? undefined,
+          components: reason.components ?? undefined,
+          ephemeral: true,
+        })
+      }
+    }
+
+    return false
   }
 }

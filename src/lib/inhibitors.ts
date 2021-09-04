@@ -1,10 +1,39 @@
-import { Message, CommandInteraction, PermissionResolvable } from 'discord.js'
+import {
+  Message,
+  CommandInteraction,
+  PermissionResolvable,
+  SelectMenuInteraction,
+  ContextMenuInteraction,
+  ButtonInteraction,
+  MessageEmbed,
+  MessageActionRow,
+} from 'discord.js'
 import { LunaworkClient } from '../core/client'
 
+/**
+ */
 export type Inhibitor = (
-  msg: Message | CommandInteraction,
+  msg:
+    | Message
+    | CommandInteraction
+    | SelectMenuInteraction
+    | ButtonInteraction
+    | ContextMenuInteraction,
   client: LunaworkClient,
-) => Promise<string | undefined>
+) => Promise<
+  | string
+  | {
+      content?: string
+      embeds?: Array<MessageEmbed>
+      components?: Array<MessageActionRow>
+      /**
+       * NOTE: Will be silently skipped when using prefixed commands,
+       *       and will be used in application commands
+       */
+      ephemeral?: boolean
+    }
+  | undefined
+>
 
 export function mergeInhibitors(a: Inhibitor, b: Inhibitor): Inhibitor {
   return async (msg, client) => {
@@ -18,15 +47,15 @@ export function mergeInhibitors(a: Inhibitor, b: Inhibitor): Inhibitor {
 }
 
 export const guildsOnly: Inhibitor = async (msg) =>
-  msg.member ? undefined : 'not in a guild'
+  msg.member ? undefined : { content: 'not in a guild' }
 
 export const dmsOnly: Inhibitor = async (msg) =>
-  msg.channel!.type === 'DM' ? undefined : 'not in dms'
+  msg.channel!.type === 'DM' ? undefined : { content: 'not in dms' }
 
 export const hasGuildPermission = (perm: PermissionResolvable) =>
   mergeInhibitors(guildsOnly, async (msg) =>
     // @ts-expect-error
     msg.member!.permissions.has(perm)
       ? undefined
-      : 'missing discord permission ' + perm,
+      : { content: `missing discord permission: ${perm}` },
   )

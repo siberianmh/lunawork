@@ -1,5 +1,6 @@
 import { SelectMenuInteraction } from 'discord.js'
 import { Stage } from '../../core/stage'
+import { Inhibitor } from '../inhibitors'
 import { Awaited } from './util'
 
 export interface ISelectMenu {
@@ -10,5 +11,6 @@ export interface ISelectMenu {
   id: string
   customID: string
   stage: Stage
+  inhibitors: Array<Inhibitor>
   onError: (msg: SelectMenuInteraction, error: Error) => void
 }

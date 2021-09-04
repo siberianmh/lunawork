@@ -115,6 +115,7 @@ export class Stage {
           id: this.constructor.name + '/' + meta.id,
           stage: this,
           onError: meta.onError,
+          inhibitors: meta.inhibitors,
         } as IButton),
     )
 
@@ -129,6 +130,7 @@ export class Stage {
           id: this.constructor.name + '/' + meta.id,
           onError: meta.onErorr,
           stage: this,
+          inhibitors: meta.inhibitors,
         } as ISelectMenu),
     )
 

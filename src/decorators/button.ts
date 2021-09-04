@@ -1,9 +1,11 @@
 import { ButtonInteraction } from 'discord.js'
 import { Stage } from '../core/stage'
+import { Inhibitor } from '../lib/inhibitors'
 import { buttonMetaKey } from '../lib/reflect-prefixes'
 
 export interface IButtonDecoratorOptions {
   readonly customID: string
+  readonly inhibitors?: Array<Inhibitor>
   readonly onError?: (msg: ButtonInteraction, error: Error) => void
 }
 
@@ -34,6 +36,7 @@ export function button(opts: IButtonDecoratorOptions) {
     const meta: IButtonDecorator = {
       id: propertyKey,
       customID: opts.customID,
+      inhibitors: opts.inhibitors || [],
       onError:
         opts.onError ||
         ((msg) =>
