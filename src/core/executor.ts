@@ -91,7 +91,7 @@ export class ExecutorStage extends Stage {
     }
 
     // Execute the command
-    return await this.execute({
+    return await this.executePrefixed({
       msg,
       cmd,
       typedArgs,
@@ -131,8 +131,7 @@ export class ExecutorStage extends Stage {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
       } else {
-        resultArgs[option.name] =
-          option.member || option.user || option.channel || option.value
+        resultArgs[option.name] = this.getPossibleResponseType(option)
       }
     }
 
@@ -156,8 +155,7 @@ export class ExecutorStage extends Stage {
       }
 
       if (option.value) {
-        output[option.name] =
-          option.member || option.user || option.channel || option.value
+        output[option.name] = this.getPossibleResponseType(option)
       }
 
       if (option.options && option.name) {
@@ -168,6 +166,17 @@ export class ExecutorStage extends Stage {
     })
 
     return output
+  }
+
+  private getPossibleResponseType(option: CommandInteractionOption) {
+    return (
+      option.user ||
+      option.member ||
+      option.role ||
+      option.channel ||
+      option.message ||
+      option.value
+    )
   }
 
   private getCorrectType(type: CommandInteractionOption['type']): string {
@@ -264,67 +273,69 @@ export class ExecutorStage extends Stage {
   }
   //#endregion
 
+  private async executePrefixed({
+    cmd,
+    cmdTrigger,
+    msg,
+    parsed,
+    typedArgs = [],
+  }: {
+    msg: Message
+    cmd: IPrefixCommand
+    typedArgs?: Array<unknown>
+    cmdTrigger: string
+    parsed: string
+  }) {
+    const context = cmd.usesContextAPI
+      ? new Context(msg, parsed, cmdTrigger, cmd)
+      : msg
+
+    try {
+      const result = cmd.func.call(
+        cmd.stage,
+        cmd.usesContextAPI ? context : msg,
+        ...typedArgs,
+      )
+
+      if (result instanceof Promise) {
+        await result
+      }
+    } catch (err: any) {
+      console.error(
+        `error while executing command ${cmd.id}! executed by ${msg.author.tag}/${msg.author.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
+        err,
+      )
+      cmd.onError(msg, err)
+    }
+  }
+
   private async execute({
     cmd,
     msg,
-    typedArgs = [],
     objectArgs = {},
-    cmdTrigger,
-    parsed,
   }: {
     msg:
-      | Message
       | ButtonInteraction
       | CommandInteraction
       | ContextMenuInteraction
       | SelectMenuInteraction
-    cmd: IPrefixCommand | IButton | ISelectMenu | IApplicationCommand
+    cmd: IButton | ISelectMenu | IApplicationCommand
     objectArgs?: Record<string, unknown>
-    typedArgs?: Array<unknown>
     parsed?: string
     cmdTrigger?: string
   }) {
-    const context =
-      msg instanceof Message && 'usesContextAPI' in cmd
-        ? new Context(msg, parsed!, cmdTrigger!, cmd)
-        : undefined
-
     try {
-      const messageWithContext =
-        msg instanceof Message && 'usesContextAPI' in cmd && cmd.usesContextAPI
-          ? context
-          : msg
-
-      let result
-      if (objectArgs) {
-        // @ts-expect-error
-        result = cmd.func.call(
-          cmd.stage,
-          messageWithContext,
-          Object.freeze(objectArgs),
-        )
-      } else {
-        // @ts-expect-error
-        result = cmd.func.call(cmd.stage, messageWithContext, ...typedArgs)
-      }
+      // @ts-expect-error
+      const result = cmd.func.call(cmd.stage, msg, Object.freeze(objectArgs))
 
       if (result instanceof Promise) {
         await result
       }
     } catch (err) {
-      if (msg instanceof Message) {
-        console.error(
-          `error while executing command ${cmd.id}! executed by ${msg.author.tag}/${msg.author.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
-          err,
-        )
-        // @ts-expect-error
-        cmd.onError(msg, err)
-      } else {
-        console.error(
-          `error while exeucting command ${cmd.id}! executed by ${msg.user.tag}/${msg.user.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
-          err,
-        )
-      }
+      console.error(
+        `error while exeucting command ${cmd.id}! executed by ${msg.user.tag}/${msg.user.id} in guild ${msg.guild?.name}/${msg.guild?.id}\n`,
+        err,
+      )
       // @ts-expect-error
       cmd.onError(msg, err)
     }

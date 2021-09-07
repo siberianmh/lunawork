@@ -1,11 +1,15 @@
-import { Stage } from '../../core/stage'
 import { Message } from 'discord.js'
+import { Stage } from '../../core/stage'
+import { Context } from '../context'
 import { ICommandArgument } from '../../decorators/command'
 import { Inhibitor } from '../inhibitors'
 import { Awaited } from './util'
 
 export interface IPrefixCommand {
-  readonly func: (msg: Message, ...typedArgs: Array<unknown>) => Awaited<void>
+  readonly func: (
+    msg: Message | Context,
+    ...typedArgs: Array<unknown>
+  ) => Awaited<void>
   readonly args: Array<ICommandArgument>
   readonly triggers: Array<string>
   readonly id: string
