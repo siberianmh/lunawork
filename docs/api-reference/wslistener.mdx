@@ -1,0 +1,34 @@
+---
+title: wsListener decorator
+---
+
+## Usage
+
+`@wsListener` decorator represents the `client.ws.on(<event>, (fn) => {})` in
+the `discord.js`, and supports all `discord.js` EventEmitter events.
+
+### Options
+
+| name  | type     | description                                                                                                   |
+| ----- | -------- | ------------------------------------------------------------------------------------------------------------- |
+| event | string   | see [discord.js](https://discord.js.org/#/docs/main/stable/typedef/WSEventType) doc for all supported events. |
+| once  | boolean? | does should event be emitted once                                                                             |
+
+#### Example
+
+```typescript
+import { LunaworkClient, Stage, wsListener } from '@siberianmh/lunawork'
+import { Message } from 'discord.js'
+
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed when new message is sent
+  @wsListener({ event: 'MESSAGE_CREATE' })
+  public async onNewMessage(event: any) {
+    console.log(event)
+  }
+}
+```

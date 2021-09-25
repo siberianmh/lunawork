@@ -2,7 +2,7 @@ import { Stage } from '../core/stage'
 import { IListener } from '../lib/types'
 import { listenerMetaKey } from '../lib/reflect-prefixes'
 
-export type IListenerDecoratorOptions = Pick<IListener, 'event'>
+export type IListenerDecoratorOptions = Pick<IListener, 'event' | 'once'>
 export type IListenerDecoratorMeta = Pick<IListener, 'event' | 'id' | 'func'>
 
 export function listener(opts: IListenerDecoratorOptions) {

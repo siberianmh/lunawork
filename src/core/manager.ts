@@ -36,7 +36,11 @@ export class Manager extends Stage {
       listener.wrapperFunc = (...args: Array<unknown>) =>
         listener.func.apply(listener.stage, args)
       this.listeners.add(listener)
-      this.client.on(listener.event, listener.wrapperFunc)
+      if (listener.once) {
+        this.client.once(listener.event, listener.wrapperFunc)
+      } else {
+        this.client.on(listener.event, listener.wrapperFunc)
+      }
     }
   }
 
@@ -71,7 +75,11 @@ export class Manager extends Stage {
       websocket.wrapperFunc = (...args: Array<unknown>) =>
         websocket.func.apply(websocket.stage, args)
       this.websockets.add(websocket)
-      this.client.ws.on(websocket.event, websocket.wrapperFunc)
+      if (websocket.once) {
+        this.client.ws.once(websocket.event, websocket.wrapperFunc)
+      } else {
+        this.client.ws.on(websocket.event, websocket.wrapperFunc)
+      }
     }
   }
 
