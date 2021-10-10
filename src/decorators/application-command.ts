@@ -1,23 +1,6 @@
-import type {
-  CommandInteraction,
-  ApplicationCommandOptionData,
-} from 'discord.js'
-import type { APIApplicationCommandOption } from 'discord-api-types/v9'
+import { IApplicationCommandDecoratorOptions } from '../lib/types/application-command'
 import { Stage } from '../core/stage'
 import { applicationCommandMetaKey } from '../lib/reflect-prefixes'
-import { Inhibitor } from '../lib/inhibitors'
-
-export interface IApplicationCommandDecoratorOptions {
-  readonly name?: string
-  readonly description?: string
-  readonly type?: 'CHAT_INPUT' | 'MESSAGE' | 'USER'
-  readonly options?:
-    | Array<APIApplicationCommandOption>
-    | Array<ApplicationCommandOptionData>
-
-  readonly inhibitors?: Array<Inhibitor>
-  readonly onError?: (msg: CommandInteraction, error: Error) => void
-}
 
 interface IApplicationCommandDecoratorMeta {
   readonly id: string
@@ -50,6 +33,7 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
       inhibitors: opts.inhibitors || [],
       options: opts.options || undefined,
       type: opts.type || 'CHAT_INPUT',
+      disabled: opts.disabled || false,
       onError:
         opts.onError ||
         ((msg) =>
@@ -60,7 +44,9 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
 
     const targetMeta: Array<IApplicationCommandDecorator> =
       Reflect.getMetadata(applicationCommandMetaKey, target) || []
+
     targetMeta.push(newMeta)
+
     Reflect.defineMetadata(applicationCommandMetaKey, targetMeta, target)
   }
 }

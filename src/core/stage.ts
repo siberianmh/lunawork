@@ -69,6 +69,7 @@ export class Stage {
           stage: this,
           onError: meta.onError,
           trigger: meta.id,
+          disabled: meta.disabled,
           name: meta.name !== '' ? meta.name : undefined,
           type: meta.type,
           description: meta.description,

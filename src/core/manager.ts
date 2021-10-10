@@ -184,10 +184,15 @@ export class ApplicationCommandManager extends Stage {
     const { slashCmds } = this.client.manager
 
     for (const cmd of slashCmds) {
+      if (cmd.disabled) {
+        continue
+      }
+
       const registerData: ApplicationCommandData = {
         name: cmd.name ?? cmd.trigger,
         description: cmd.description,
         type: cmd.type || 'CHAT_INPUT',
+        // @ts-expect-error
         options: cmd.options || [],
       }
 

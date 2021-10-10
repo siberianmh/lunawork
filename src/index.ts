@@ -7,10 +7,10 @@ export { Stage } from './core/stage'
 export { IListenerDecoratorOptions, listener } from './decorators/listener'
 export { IWebSocketDecoratorOptions, wsListener } from './decorators/wslistener'
 export {
-  IApplicationCommandDecoratorOptions,
   applicationCommand,
   slashCommand,
 } from './decorators/application-command'
+export { IApplicationCommandDecoratorOptions } from './lib/types/application-command'
 export { IPrefixCommandDecoratorOptions, command } from './decorators/command'
 export { optional } from './decorators/optional'
 export { IButtonDecoratorOptions, button } from './decorators/button'
