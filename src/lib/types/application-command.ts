@@ -1,16 +1,21 @@
 import type { APIApplicationCommandOption } from 'discord-api-types/v9'
-import { ApplicationCommandOptionData, CommandInteraction } from 'discord.js'
+import { CommandInteraction } from 'discord.js'
 import { Inhibitor } from '../inhibitors'
 import { Awaited } from './util'
 import type { Stage } from '../../core/stage'
 
+export { ApplicationCommandOptionType } from 'discord-api-types/v9'
+export enum ApplicationCommandTypes {
+  CHAT_INPUT = 1,
+  MESSAGE,
+  USER,
+}
+
 export interface IApplicationCommandDecoratorOptions {
   readonly name?: string
   readonly description?: string
-  readonly type?: 'CHAT_INPUT' | 'MESSAGE' | 'USER'
-  readonly options?:
-    | Array<APIApplicationCommandOption>
-    | Array<ApplicationCommandOptionData>
+  readonly type?: ApplicationCommandTypes
+  readonly options?: Array<APIApplicationCommandOption>
 
   /**
    * Does the command should not be registered automatically.
@@ -22,9 +27,14 @@ export interface IApplicationCommandDecoratorOptions {
   readonly onError?: (msg: CommandInteraction, error: Error) => void
 }
 
+export interface IApplicationCommandDecoratorMeta {
+  readonly id: string
+}
+
 export interface IApplicationCommand
-  extends Partial<IApplicationCommandDecoratorOptions> {
-  id: string
+  extends Partial<
+    IApplicationCommandDecoratorOptions & IApplicationCommandDecoratorMeta
+  > {
   func: (msg: CommandInteraction, ...typedArgs: Array<unknown>) => Awaited<void>
 
   stage: Stage

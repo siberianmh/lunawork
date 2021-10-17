@@ -1,10 +1,10 @@
-import { IApplicationCommandDecoratorOptions } from '../lib/types/application-command'
+import {
+  IApplicationCommandDecoratorOptions,
+  IApplicationCommandDecoratorMeta,
+  ApplicationCommandTypes,
+} from '../lib/types'
 import { Stage } from '../core/stage'
 import { applicationCommandMetaKey } from '../lib/reflect-prefixes'
-
-interface IApplicationCommandDecoratorMeta {
-  readonly id: string
-}
 
 export type IApplicationCommandDecorator = IApplicationCommandDecoratorMeta &
   IApplicationCommandDecoratorOptions
@@ -32,7 +32,7 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
       id: propertyKey,
       inhibitors: opts.inhibitors || [],
       options: opts.options || undefined,
-      type: opts.type || 'CHAT_INPUT',
+      type: opts.type || ApplicationCommandTypes.CHAT_INPUT,
       disabled: opts.disabled || false,
       onError:
         opts.onError ||

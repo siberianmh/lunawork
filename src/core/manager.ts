@@ -1,12 +1,16 @@
-import { ApplicationCommandData } from 'discord.js'
-import { LunaworkClient } from '../core/client'
-import { Stage } from '../core/stage'
+import { LunaworkClient } from './client'
+import { Stage } from './stage'
+import { APIWrapper } from './api-wrapper'
 import { listener } from '../decorators/listener'
-import { IListener, IWebSocket } from '../lib/types'
-import { IButton } from '../lib/types/button'
-import { IPrefixCommand } from '../lib/types/prefix'
-import { ISelectMenu } from '../lib/types/select-menu'
-import { IApplicationCommand } from '../lib/types/application-command'
+import {
+  IListener,
+  IWebSocket,
+  ApplicationCommandTypes,
+  IApplicationCommand,
+  IPrefixCommand,
+  ISelectMenu,
+  IButton,
+} from '../lib/types'
 
 export class Manager extends Stage {
   public constructor(public client: LunaworkClient) {
@@ -175,42 +179,51 @@ export class Manager extends Stage {
 }
 
 export class ApplicationCommandManager extends Stage {
+  private apiWrapper: APIWrapper
+
   public constructor(client: LunaworkClient) {
     super(client)
+
+    this.apiWrapper = new APIWrapper(client.token!, client.user!.id)
   }
 
   @listener({ event: 'ready' })
   public async registerApplicatonCommands() {
     const { slashCmds } = this.client.manager
 
+    const toRegister: Array<any> = []
     for (const cmd of slashCmds) {
       if (cmd.disabled) {
         continue
       }
 
-      const registerData: ApplicationCommandData = {
+      // TODO: Add Types
+      const registerData: any = {
         name: cmd.name ?? cmd.trigger,
         description: cmd.description,
-        type: cmd.type || 'CHAT_INPUT',
-        // @ts-expect-error
+        type: cmd.type || ApplicationCommandTypes.CHAT_INPUT,
         options: cmd.options || [],
       }
 
-      await this.register(registerData)
+      toRegister.push(registerData)
     }
 
-    return
+    return await this.register(toRegister)
   }
 
-  private async register(command: ApplicationCommandData) {
+  // TODO: Add Types
+  private async register(commands: Array<any>) {
     if (process.env.NODE_ENV === 'development') {
       const guilds = [...this.client.guilds.cache.values()]
 
       for (const guild of guilds) {
-        await guild.commands.create(command)
+        await this.apiWrapper.bulkOverwriteGuildApplicationCommands(
+          commands,
+          guild.id,
+        )
       }
     } else {
-      await this.client.application?.commands.create(command)
+      await this.apiWrapper.bulkOverwriteGlobalApplicationCommands(commands)
     }
 
     return

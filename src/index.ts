@@ -21,6 +21,10 @@ export {
 
 // Utils
 export {
+  ApplicationCommandOptionType,
+  ApplicationCommandTypes,
+} from './lib/types'
+export {
   Inhibitor,
   dmsOnly,
   guildsOnly,

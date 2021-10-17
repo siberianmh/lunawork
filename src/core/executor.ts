@@ -13,10 +13,12 @@ import { isMessage } from '../lib/type-guarding'
 import { getArgTypes } from '../lib/arg-type-provider'
 import { Inhibitor } from '../lib/inhibitors'
 import { Context } from '../lib/context'
-import { IButton } from '../lib/types/button'
-import { IPrefixCommand } from '../lib/types/prefix'
-import { IApplicationCommand } from '../lib/types/application-command'
-import { ISelectMenu } from '../lib/types/select-menu'
+import {
+  IButton,
+  IPrefixCommand,
+  IApplicationCommand,
+  ISelectMenu,
+} from '../lib/types'
 
 let deprecatedTriggered = false
 

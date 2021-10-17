@@ -10,17 +10,20 @@ import {
   applicationCommandMetaKey,
   webSocketMetaKey,
 } from '../lib/reflect-prefixes'
-import { IListener, IWebSocket } from '../lib/types'
+import {
+  IListener,
+  IWebSocket,
+  ISelectMenu,
+  IButton,
+  IApplicationCommand,
+  IPrefixCommand,
+} from '../lib/types'
+import { getArgTypes } from '../lib/arg-type-provider'
 import { IWebSocketDecoratorMeta } from '../decorators/wslistener'
 import { IApplicationCommandDecorator } from '../decorators/application-command'
-import { IApplicationCommand } from '../lib/types/application-command'
-import { IPrefixCommand } from '../lib/types/prefix'
 import { IPrefixCommanDecorator } from '../decorators/command'
-import { getArgTypes } from '../lib/arg-type-provider'
 import { IButtonDecorator } from '../decorators/button'
-import { IButton } from '../lib/types/button'
 import { ISelectMenuDecorator } from '../decorators/select-menu'
-import { ISelectMenu } from '../lib/types/select-menu'
 
 export class Stage {
   public client: LunaworkClient

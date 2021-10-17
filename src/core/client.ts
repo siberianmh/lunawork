@@ -116,12 +116,6 @@ export class LunaworkClient extends Client {
       options.fetchPrefix ?? (() => this.options.defaultPrefix ?? null)
 
     this.registerStage(ExecutorStage)
-
-    const manageCommands = this.options.manageApplicationCommands ?? true
-
-    if (manageCommands) {
-      this.registerStage(ApplicationCommandManager)
-    }
   }
 
   public registerStages(stages: Array<typeof Stage | Stage>) {
@@ -191,6 +185,22 @@ export class LunaworkClient extends Client {
 
     this.stages.add(instance)
     return this
+  }
+
+  /**
+   * Loads the internal API requester, and then login using d.js
+   */
+  public async login(token?: string) {
+    const login = await super.login(token)
+
+    // We relay on the real user!
+    const manageCommands = this.options.manageApplicationCommands ?? true
+
+    if (manageCommands) {
+      this.registerStage(ApplicationCommandManager)
+    }
+
+    return login
   }
 }
 
