@@ -27,7 +27,7 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
     }
 
     const newMeta: IApplicationCommandDecorator = {
-      name: opts.name || '',
+      name: opts.name,
       description: opts.description || '',
       id: propertyKey,
       inhibitors: opts.inhibitors || [],

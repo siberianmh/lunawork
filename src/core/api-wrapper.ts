@@ -56,7 +56,7 @@ export class APIWrapper {
       },
     })
 
-    if (result.statusCode <= 200 || result.statusCode >= 400) {
+    if (result.statusCode < 200 || result.statusCode >= 400) {
       throw result
     }
 

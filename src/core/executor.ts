@@ -173,8 +173,11 @@ export class ExecutorStage extends Stage {
       }
     }
 
-    console.log(cmd)
-    return cmd.onAutocomplete!(interaction, resultArgs)
+    return cmd.onAutocomplete!.call(
+      cmd.stage,
+      interaction,
+      Object.freeze(resultArgs),
+    )
   }
 
   private handleSubCommand(

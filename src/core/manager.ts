@@ -208,8 +208,7 @@ export class ApplicationCommandManager extends Stage {
       toRegister.push(registerData)
     }
 
-    await this.register(toRegister)
-    return
+    return await this.register(toRegister)
   }
 
   // TODO: Add Types
@@ -218,22 +217,13 @@ export class ApplicationCommandManager extends Stage {
       const guilds = [...this.client.guilds.cache.values()]
 
       for (const guild of guilds) {
-        await this.apiWrapper
-          .bulkOverwriteGuildApplicationCommands(commands, guild.id)
-          .then(() => {})
-          .catch((err) => {
-            console.log(err.body)
-          })
+        await this.apiWrapper.bulkOverwriteGuildApplicationCommands(
+          commands,
+          guild.id,
+        )
       }
     } else {
-      this.apiWrapper
-        .bulkOverwriteGlobalApplicationCommands(commands)
-        .then(() => {
-          return
-        })
-        .catch((err) => {
-          console.log(err.body)
-        })
+      await this.apiWrapper.bulkOverwriteGlobalApplicationCommands(commands)
     }
 
     return

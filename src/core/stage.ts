@@ -65,18 +65,17 @@ export class Stage {
     const applicationCommands = applicationCommandMeta.map(
       (meta) =>
         ({
+          ...meta,
           id: this.constructor.name + '/' + meta.id,
           func: Reflect.get(this, meta.id),
-          inhibitors: meta.inhibitors,
           options: meta.options,
           stage: this,
           trigger: meta.id,
           disabled: meta.disabled,
-          name: meta.name !== '' ? meta.name : undefined,
-          type: meta.type,
-          description: meta.description,
           onError: meta.onError,
-          onAutocomplete: meta.onAutocomplete,
+          onAutocomplete:
+            meta.onAutocomplete ||
+            Reflect.get(this, `on${meta.name}Autocomplete`),
         } as IApplicationCommand),
     )
 
