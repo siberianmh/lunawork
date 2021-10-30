@@ -36,7 +36,7 @@ Next, let's update the `package.json` and adds the `dev` command:
   },
   "dependencies": {
     "@siberianmh/lunawork": "^0.0.3",
-    "discord.js": "^13.1.0",
+    "discord.js": "^13.3.0",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
@@ -62,7 +62,7 @@ class CommandStage extends Stage {
 
   // Will be executed when slash command `doFun`
   // be exeucted by user.
-  @slashCommand({ description: 'Make the fun' })
+  @slashCommand({ name: 'doFun', description: 'Make the fun' })
   public async doFun(msg: CommandInteraction) {
     return msg.reply({ content: 'Wu ho' })
   }
