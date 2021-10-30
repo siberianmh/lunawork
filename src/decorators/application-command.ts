@@ -34,6 +34,7 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
       options: opts.options || undefined,
       type: opts.type || ApplicationCommandTypes.CHAT_INPUT,
       disabled: opts.disabled || false,
+      onAutocomplete: opts.onAutocomplete || undefined,
       onError:
         opts.onError ||
         ((msg) =>

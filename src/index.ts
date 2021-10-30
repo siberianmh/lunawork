@@ -10,7 +10,7 @@ export {
   applicationCommand,
   slashCommand,
 } from './decorators/application-command'
-export { IApplicationCommandDecoratorOptions } from './lib/types/application-command'
+export { IApplicationCommandDecoratorOptions } from './lib/types/application-commands'
 export { IPrefixCommandDecoratorOptions, command } from './decorators/command'
 export { optional } from './decorators/optional'
 export { IButtonDecoratorOptions, button } from './decorators/button'

@@ -1,4 +1,5 @@
 import {
+  AutocompleteInteraction,
   ButtonInteraction,
   CommandInteraction,
   CommandInteractionOption,
@@ -142,6 +143,38 @@ export class ExecutorStage extends Stage {
       cmd,
       objectArgs: resultArgs,
     })
+  }
+
+  @listener({ event: 'interactionCreate' })
+  public onAutocomplete(
+    interaction: AutocompleteInteraction,
+  ): Promise<void> | void {
+    if (!interaction.isAutocomplete()) {
+      return
+    }
+
+    const cmd = this.client.manager.getSlashByTrigger(interaction.commandName)
+
+    if (!cmd) {
+      return
+    }
+
+    let resultArgs: Record<string, unknown> = {}
+
+    for (const option of interaction.options.data) {
+      if (
+        option.type === 'SUB_COMMAND_GROUP' ||
+        option.type === 'SUB_COMMAND'
+      ) {
+        const args = this.handleSubCommand(interaction.options.data)
+        resultArgs = args
+      } else {
+        resultArgs[option.name] = this.getPossibleResponseType(option)
+      }
+    }
+
+    console.log(cmd)
+    return cmd.onAutocomplete!(interaction, resultArgs)
   }
 
   private handleSubCommand(

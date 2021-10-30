@@ -1,4 +1,4 @@
-export * from './application-command'
+export * from './application-commands'
 export * from './button'
 export * from './events'
 export * from './listener'

@@ -6,7 +6,7 @@ import { selectMenuMetaKey } from '../lib/reflect-prefixes'
 export interface ISelectMenuDecoratorOptions {
   readonly customID: string
   readonly inhibitors?: Array<Inhibitor>
-  readonly onErorr?: (msg: SelectMenuInteraction, error: Error) => void
+  readonly onError?: (msg: SelectMenuInteraction, error: Error) => void
 }
 
 interface ISelectMenuDecoratorMeta {
@@ -38,8 +38,8 @@ export function selectMenu(opts: ISelectMenuDecoratorOptions) {
       id: propertyKey,
       customID: opts.customID,
       inhibitors: opts.inhibitors || [],
-      onErorr:
-        opts.onErorr ||
+      onError:
+        opts.onError ||
         ((msg) =>
           msg.reply({
             content: ':warning: error while executing the command',

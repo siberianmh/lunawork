@@ -70,12 +70,13 @@ export class Stage {
           inhibitors: meta.inhibitors,
           options: meta.options,
           stage: this,
-          onError: meta.onError,
           trigger: meta.id,
           disabled: meta.disabled,
           name: meta.name !== '' ? meta.name : undefined,
           type: meta.type,
           description: meta.description,
+          onError: meta.onError,
+          onAutocomplete: meta.onAutocomplete,
         } as IApplicationCommand),
     )
 
@@ -114,12 +115,10 @@ export class Stage {
     const buttons = buttonsMeta.map(
       (meta) =>
         ({
-          customID: meta.customID,
+          ...meta,
           func: Reflect.get(this, meta.id),
           id: this.constructor.name + '/' + meta.id,
           stage: this,
-          onError: meta.onError,
-          inhibitors: meta.inhibitors,
         } as IButton),
     )
 
@@ -129,12 +128,10 @@ export class Stage {
     const selectMenus = selectMenusMeta.map(
       (meta) =>
         ({
-          customID: meta.customID,
+          ...meta,
           func: Reflect.get(this, meta.id),
           id: this.constructor.name + '/' + meta.id,
-          onError: meta.onErorr,
           stage: this,
-          inhibitors: meta.inhibitors,
         } as ISelectMenu),
     )
 
