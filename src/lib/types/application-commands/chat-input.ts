@@ -12,11 +12,14 @@ interface IApplicationCommandOptionBase {
 }
 
 export type IApplicationCommandOption =
-  | IApplicationCommandArgumentOptions
+  | IApplicationCommandStringArgumentOptions
   | IApplicationCommandSubCommandOptions
   | IApplicationCommandOptionBase
   | IApplicationCommandChannelOptions
-  | IApplicationCommandAutocompleteOptions
+  | IApplicationCommandStringArgumentOptions
+  | IApplicationCommandNumberArgumentOptions
+  | IApplicationCommandStringAutocompleteOptions
+  | IApplicationCommandNumericAutocompleteOptions
 
 /**
  * If the option is a `SUB_COMMAND` or `SUB_COMMAND_GROUP` type, this nested options will be the parameters.
@@ -33,7 +36,7 @@ export interface IApplicationCommandSubCommandOptions
  * In contrast to `IApplicationCommandSubCommandOptions`, these types cannot have an `options` array,
  * but they can have a either a `choices` or a `autocomplete` field wherre it's set to false.
  */
-export interface IApplicationCommandArgumentOptions
+export interface IApplicationCommandStringArgumentOptions
   extends Omit<IApplicationCommandOptionBase, 'type' | 'autocomplete'> {
   type:
     | ApplicationCommandOptionType.String
@@ -43,13 +46,46 @@ export interface IApplicationCommandArgumentOptions
   autocomplete?: false
 }
 
-export interface IApplicationCommandAutocompleteOptions
+export interface IApplicationCommandStringAutocompleteOptions
   extends Omit<IApplicationCommandOptionBase, 'type' | 'autocomplete'> {
   type:
     | ApplicationCommandOptionType.String
     | ApplicationCommandOptionType.Integer
     | ApplicationCommandOptionType.Number
   autocomplete: true
+}
+
+export interface IApplicationCommandNumericAutocompleteOptions
+  extends Omit<IApplicationCommandOptionBase, 'type' | 'autocomplete'> {
+  type:
+    | ApplicationCommandOptionType.Integer
+    | ApplicationCommandOptionType.Number
+  autocomplete: true
+  /**
+   * If the option is an `INTEGER` or `NUMBER` type, the minimum value permitted.
+   */
+  min_value?: number
+  /**
+   * If the option is an `INTEGER` or `NUMBER` type, the minimum value permitted.
+   */
+  max_value?: number
+}
+
+export interface IApplicationCommandNumberArgumentOptions
+  extends Omit<IApplicationCommandOptionBase, 'type' | 'autocomplete'> {
+  type:
+    | ApplicationCommandOptionType.Integer
+    | ApplicationCommandOptionType.Number
+  choices?: Array<IApplicationCommandOptionChoice>
+  /**
+   * If the option is an `INTEGER` or `NUMBER` type, the minimum value permitted.
+   */
+  min_value?: number
+  /**
+   * If the option is an `INTEGER` or `NUMBER` type, the maximum value permitted.
+   */
+  max_value?: number
+  autocomplete?: false
 }
 
 export interface IApplicationCommandChannelOptions
