@@ -1,0 +1,111 @@
+---
+title: applicationCommand decorator
+---
+
+## Usage
+
+`@applicationCommand` decorator is a modern way to provide commands to users.
+Using this decorator also automatically registers related application commands,
+you can disable this state by `manageCommands` option in the `LunaworkClient`
+constructor.
+
+### Options
+
+| name             | type                          | description                                                                                                                                                                                        |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`           | string                        | if provided this is being used as `name` for command instead of function name                                                                                                                      |
+| `type`           | number                        | Can be CHAT_INPUT (1), USER (2), MESSAGE (3), defaults to `1`                                                                                                                                      |
+| `description`    | string (required)             | the description for the command, required and will be shown when the user see a list of commands                                                                                                   |
+| `options`        | Array<ApplicationCommandData> | the list of options, see [Discord Documentation](https://discord.dev/docs/interactions/application-commands#application-command-object-application-command-option-structure() for possible options |
+| `disabled`       | boolean?                      | Should the command be not registered automatically. Defaults to `false`                                                                                                                            |
+| `onError`        | Promise<void>                 | error handler                                                                                                                                                                                      |
+| `onAutocomplete` | ?Promise<void>                | will be used if not inclass function is not found                                                                                                                                                  |
+
+#### Example
+
+```typescript
+import { LunaworkClient, Stage, applicationCommand } from '@siberianmh/lunawork'
+import { CommandInteraction } from 'discord.js'
+
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed by `/hello` command
+  // And respond `Hello world` to the user
+  @applicationCommand({ description: 'Give the greet' })
+  public async greet(msg: CommandInteraction) {
+    return msg.reply({ content: `Hello world.` })
+  }
+}
+```
+
+For more advanced usages see the
+[advanced Application Commands](/application-commands/advanced) documentation.
+
+### Autocomplete Interactions
+
+#### Example
+
+Lunawork has support for autocomplete interactions out of box and can be used as
+in Stage class or using external function. When `autocomplete` option is
+provided, Lunawork will try to find `on{opts.name}Autocomplete` function, and
+perform actions on these functions, otherwise you can provide the
+`onAutocomplete` function in the decorator.
+
+### TypeScript Information
+
+When using TypeScript the function type is should be:
+
+```typescript
+type AutocompleteFunction = (
+  msg: AutocompleteInteraction,
+  // Object of options
+  {}: Record<string, unknown>,
+) => Promise<void>
+```
+
+```typescript
+export class ExampleStage extends Stage {
+  public constructor(client: LunaworkClient) {
+    super(client)
+  }
+
+  // Will be executed by `/hello` command
+  // And respond `Hello world` to the user
+  @applicationCommand({
+    name: 'greet',
+    description: 'Give the greet',
+    options: { name: 'entry', type: 1, autocomplete: true },
+  })
+  public async greet(msg: CommandInteraction, { entry }: { entry: string }) {
+    // The entry in this case will be `value` which is provided by autocomplete interaction.
+    return msg.reply({ content: `Hello ${entry}` })
+  }
+
+  public async ongreetAutocomplete(
+    msg: AutocompleteInteraction,
+    { entry }: { entry: string },
+  ): Promise<void> {
+    if (entry === '') {
+      return msg.respond([
+        {
+          name: 'Option 1',
+          value: 'option1',
+        },
+        {
+          name: 'Option 2',
+          value: 'option2',
+        },
+      ])
+    }
+
+    // Perform another actions
+    // ...
+
+    // And return another array of possible values.
+    return msg.respond([])
+  }
+}
+```

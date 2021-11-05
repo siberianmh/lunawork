@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Getting Started",
+    "routes": [{ "title": "Introduction", "path": "index" }]
+  },
+  {
+    "title": "Application Commands",
+    "routes": [
+      {
+        "title": "Using builders",
+        "path": "application-commands/using-builders"
+      }
+    ]
+  },
+  {
+    "title": "API Reference",
+    "routes": [
+      {
+        "title": "@applicationCommand",
+        "path": "api-reference/application-command"
+      },
+      {
+        "title": "@button",
+        "path": "api-reference/button"
+      },
+      {
+        "title": "@selectMenu",
+        "path": "api-reference/select-menu"
+      },
+      {
+        "title": "@command",
+        "path": "api-reference/command"
+      },
+      {
+        "title": "@listener",
+        "path": "api-reference/listener"
+      },
+      {
+        "title": "@wslistener",
+        "path": "api-reference/wslistener"
+      }
+    ]
+  }
+]
