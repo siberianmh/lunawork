@@ -22,7 +22,7 @@
     "lint:fix": "yarn lint --write"
   },
   "dependencies": {
-    "got": "^11.8.2",
+    "got": "^11.8.3",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
