@@ -207,6 +207,10 @@ export class ExecutorStage extends Stage {
   }
 
   private getPossibleResponseType(option: CommandInteractionOption) {
+    if (option.type === /* ApplicationCommandOptionType.User */ 'USER') {
+      return option.member || option.user
+    }
+
     return (
       option.user ||
       option.member ||
