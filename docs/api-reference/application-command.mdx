@@ -11,15 +11,15 @@ constructor.
 
 ### Options
 
-| name             | type                          | description                                                                                                                                                                                        |
-| ---------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`           | string                        | if provided this is being used as `name` for command instead of function name                                                                                                                      |
-| `type`           | number                        | Can be CHAT_INPUT (1), USER (2), MESSAGE (3), defaults to `1`                                                                                                                                      |
-| `description`    | string (required)             | the description for the command, required and will be shown when the user see a list of commands                                                                                                   |
-| `options`        | Array<ApplicationCommandData> | the list of options, see [Discord Documentation](https://discord.dev/docs/interactions/application-commands#application-command-object-application-command-option-structure() for possible options |
-| `disabled`       | boolean?                      | Should the command be not registered automatically. Defaults to `false`                                                                                                                            |
-| `onError`        | Promise<void>                 | error handler                                                                                                                                                                                      |
-| `onAutocomplete` | ?Promise<void>                | will be used if not inclass function is not found                                                                                                                                                  |
+| name             | type                           | description                                                                                                                                                                                        |
+| ---------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`           | string                         | if provided this is being used as `name` for command instead of function name                                                                                                                      |
+| `type`           | number                         | Can be CHAT_INPUT (1), USER (2), MESSAGE (3), defaults to `1`                                                                                                                                      |
+| `description`    | string (required)              | the description for the command, required and will be shown when the user see a list of commands                                                                                                   |
+| `options`        | Array<ApplicationCommandData\> | the list of options, see [Discord Documentation](https://discord.dev/docs/interactions/application-commands#application-command-object-application-command-option-structure() for possible options |
+| `disabled`       | boolean?                       | Should the command be not registered automatically. Defaults to `false`                                                                                                                            |
+| `onError`        | Promise<void\>                 | error handler                                                                                                                                                                                      |
+| `onAutocomplete` | ?Promise<void\>                | will be used if not inclass function is not found                                                                                                                                                  |
 
 #### Example
 
