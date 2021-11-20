@@ -79,10 +79,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.2.tgz#1f2b42c4be7156ff4a6f914b2fb03d05fa84e38d"
   integrity sha512-zjQ69G564OCIWIOHSXyQEEDpdpGl+G348RAKY0XXy9Z5kU9Vzv1GMNnkar/ZJ8dzXB3COzD9Mo9NtRZ4xfgUww==
 
-"@types/node@^16.11.0":
-  version "16.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.0.tgz#4b95f2327bacd1ef8f08d8ceda193039c5d7f52e"
-  integrity sha512-8MLkBIYQMuhRBQzGN9875bYsOhPnf/0rgXGo66S2FemHkhbn9qtsz9ywV1iCG+vbjigE4WUNVvw37Dx+L0qsPg==
+"@types/node@^16.11.9":
+  version "16.11.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.9.tgz#879be3ad7af29f4c1a5c433421bf99fab7047185"
+  integrity sha512-MKmdASMf3LtPzwLyRrFjtFFZ48cMf8jmX5VRYrDQiJa8Ybu5VAmkqBWqKU8fdCwD8ysw4mQ9nrEHvzg6gunR7A==
 
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
@@ -108,7 +108,7 @@ cacheable-lookup@^5.0.3:
   resolved "https://registry.yarnpkg.com/cacheable-lookup/-/cacheable-lookup-5.0.4.tgz#5a6b865b2c44357be3d5ebc2a467b032719a7005"
   integrity sha512-2/kNscPhpcxrOigMZzbiWF7dz8ilhb/nIHU3EyZiXWXpeq/au8qJ8VhdftMkty3n7Gj6HIGalQG8oiBNB3AJgA==
 
-cacheable-request@^7.0.1:
+cacheable-request@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/cacheable-request/-/cacheable-request-7.0.2.tgz#ea0d0b889364a25854757301ca12b2da77f91d27"
   integrity sha512-pouW8/FmiPQbuGpkXQ9BAPv/Mo5xDGANgSNXzTzJ8DrKGuXOssM4wIQRjfanNRh3Yu5cfYPvcorqbhg2KIJtew==
@@ -162,10 +162,10 @@ discord-api-types@^0.24.0:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.24.0.tgz#9e429b8a1ddb4147134dfb3109093422de7ec549"
   integrity sha512-X0uA2a92cRjowUEXpLZIHWl4jiX1NsUpDhcEOpa1/hpO1vkaokgZ8kkPtPih9hHth5UVQ3mHBu/PpB4qjyfJ4A==
 
-discord.js@^13.3.0:
-  version "13.3.0"
-  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.3.0.tgz#684198e19b9dabc9cd5f6cfc4864f73e6d380cc4"
-  integrity sha512-kZcDVrQRTuzjRx99/Xl9HF1Kt7xNkiN4Gwvk1hNmLRAn+7Syzw9XTkQZdOPXLpijhbTNsZcdAaMxgvTmtyNdyA==
+discord.js@^13.3.1:
+  version "13.3.1"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-13.3.1.tgz#94fe05bc3ec0a3e4761e4f312a2a418c29721ab6"
+  integrity sha512-zn4G8tL5+tMV00+0aSsVYNYcIfMSdT2g0nudKny+Ikd+XKv7m6bqI7n3Vji0GIRqXDr5ArPaw+iYFM2I1Iw3vg==
   dependencies:
     "@discordjs/builders" "^0.8.1"
     "@discordjs/collection" "^0.3.2"
@@ -207,17 +207,17 @@ get-stream@^5.1.0:
   dependencies:
     pump "^3.0.0"
 
-got@^11.8.2:
-  version "11.8.2"
-  resolved "https://registry.yarnpkg.com/got/-/got-11.8.2.tgz#7abb3959ea28c31f3576f1576c1effce23f33599"
-  integrity sha512-D0QywKgIe30ODs+fm8wMZiAcZjypcCodPNuMz5H9Mny7RJ+IjJ10BdmGW7OM7fHXP+O7r6ZwapQ/YQmMSvB0UQ==
+got@^11.8.3:
+  version "11.8.3"
+  resolved "https://registry.yarnpkg.com/got/-/got-11.8.3.tgz#f496c8fdda5d729a90b4905d2b07dbd148170770"
+  integrity sha512-7gtQ5KiPh1RtGS9/Jbv1ofDpBFuq42gyfEib+ejaRBJuj/3tQFeR5+gw57e4ipaU8c/rCjvX6fkQz2lyDlGAOg==
   dependencies:
     "@sindresorhus/is" "^4.0.0"
     "@szmarczak/http-timer" "^4.0.5"
     "@types/cacheable-request" "^6.0.1"
     "@types/responselike" "^1.0.0"
     cacheable-lookup "^5.0.3"
-    cacheable-request "^7.0.1"
+    cacheable-request "^7.0.2"
     decompress-response "^6.0.0"
     http2-wrapper "^1.0.0-beta.5.2"
     lowercase-keys "^2.0.0"
@@ -370,10 +370,10 @@ type-fest@^2.3.4:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.5.2.tgz#d6a5247b8019716b300d9023fa7b1b02016dd864"
   integrity sha512-WMbytmAs5PUTqwGJRE+WoRrD2S0bYFtHX8k4Y/1l18CG5kqA3keJud9pPQ/r30FE9n8XRFCXF9BbccHIZzRYJw==
 
-typescript@^4.4.4:
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
-  integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
+typescript@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
+  integrity sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==
 
 vali-date@^1.0.0:
   version "1.0.0"
