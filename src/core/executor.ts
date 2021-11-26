@@ -339,6 +339,7 @@ export class ExecutorStage extends Stage {
         ...typedArgs,
       )
 
+      // @ts-expect-error
       if (result instanceof Promise) {
         await result
       }
@@ -370,6 +371,7 @@ export class ExecutorStage extends Stage {
       // @ts-expect-error
       const result = cmd.func.call(cmd.stage, msg, Object.freeze(objectArgs))
 
+      // @ts-expect-error
       if (result instanceof Promise) {
         await result
       }

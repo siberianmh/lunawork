@@ -1,7 +1,6 @@
 import { SelectMenuInteraction } from 'discord.js'
 import { Stage } from '../../core/stage'
 import { Inhibitor } from '../inhibitors'
-import { Awaited } from './util'
 
 export interface ISelectMenu {
   func: (

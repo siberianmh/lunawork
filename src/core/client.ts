@@ -1,6 +1,6 @@
 import { Client, ClientOptions, Message, Intents } from 'discord.js'
 
-import type { Awaited, IExperimentalOptions } from '../lib/types'
+import type { IExperimentalOptions } from '../lib/types'
 import { Stage } from './stage'
 import { ExecutorStage } from './executor'
 import { Manager, ApplicationCommandManager } from './manager'

@@ -1,6 +1,5 @@
 import { CommandInteraction, AutocompleteInteraction } from 'discord.js'
 import { Inhibitor } from '../../inhibitors'
-import { Awaited } from '../util'
 import type { Stage } from '../../../core/stage'
 import { IApplicationCommandOption } from './chat-input'
 import { ApplicationCommandTypes } from './shared'

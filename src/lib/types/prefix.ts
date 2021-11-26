@@ -3,7 +3,6 @@ import { Stage } from '../../core/stage'
 import { Context } from '../context'
 import { ICommandArgument } from '../../decorators/command'
 import { Inhibitor } from '../inhibitors'
-import { Awaited } from './util'
 
 export interface IPrefixCommand {
   readonly func: (

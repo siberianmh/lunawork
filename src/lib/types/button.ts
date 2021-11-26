@@ -1,7 +1,6 @@
 import { ButtonInteraction } from 'discord.js'
 import { Inhibitor } from '../inhibitors'
 import { Stage } from '../../core/stage'
-import { Awaited } from './util'
 
 export interface IButton {
   func: (
