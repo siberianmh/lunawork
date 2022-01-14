@@ -11,3 +11,4 @@ e2e-realtesting
 *.log
 .env
 .DS_Store
+.turbo

@@ -1,19 +1,6 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2021",
-    "allowUnreachableCode": false,
-    "outDir": "dist",
-    "rootDir": "src",
-    "allowUnusedLabels": false,
-    "noImplicitReturns": true,
-    "module": "commonjs",
-    "strict": true,
-    "declaration": true,
-    "strictPropertyInitialization": false,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "sourceMap": true
-  },
-  "exclude": ["node_modules"]
+    "noEmit": true
+  }
 }
