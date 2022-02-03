@@ -9,9 +9,12 @@
   "scripts": {
     "build": "yarn turbo run build",
     "lint": "prettier --check \"./**/*.{ts,tsx,js,yaml,yml}\"",
-    "lint:fix": "yarn lint --write"
+    "lint:fix": "yarn lint --write",
+    "ci:version": "yarn changeset version",
+    "ci:release": "yarn build && yarn changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.20.0",
     "@types/node": "^17.0.14",
     "prettier": "^2.5.1",
     "turbo": "^1.1.2",
