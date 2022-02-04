@@ -1,6 +1,6 @@
 {
   "name": "@siberianmh/lunawork",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Discord bot framework for advanced and scalability bots.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
