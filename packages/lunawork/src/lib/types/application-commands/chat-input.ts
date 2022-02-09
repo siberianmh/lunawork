@@ -95,17 +95,19 @@ export interface IApplicationCommandChannelOptions
   channel_types?: Array<any>
 }
 
+// https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
 export enum ApplicationCommandOptionType {
-  Subcommand = 1,
-  SubcommandGroup,
-  String,
-  Integer,
-  Boolean,
-  User,
-  Channel,
-  Role,
-  Mentionable,
-  Number,
+  Subcommand = 1 /* 1 */,
+  SubcommandGroup /* 2 */,
+  String /* 3 */,
+  Integer /* 4 */,
+  Boolean /* 5 */,
+  User /* 6 */,
+  Channel /* 7 */,
+  Role /* 8 */,
+  Mentionable /* 9 */,
+  Number /* 10 */,
+  Attachment /* 11 */,
 }
 
 export interface IApplicationCommandOptionChoice {
