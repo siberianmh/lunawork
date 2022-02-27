@@ -3,8 +3,9 @@ import {
   ButtonInteraction,
   CommandInteraction,
   CommandInteractionOption,
-  ContextMenuInteraction,
+  ContextMenuCommandInteraction,
   Message,
+  Interaction,
   SelectMenuInteraction,
 } from 'discord.js'
 import { LunaworkClient } from '../core/client'
@@ -19,6 +20,7 @@ import {
   IPrefixCommand,
   IApplicationCommand,
   ISelectMenu,
+  ApplicationCommandOptionType,
 } from '../lib/types'
 
 let deprecatedTriggered = false
@@ -106,11 +108,21 @@ export class ExecutorStage extends Stage {
 
   //#region Application Commands
   @listener({ event: 'interactionCreate' })
-  public async onApplicationCommand(interaction: CommandInteraction) {
-    if (!interaction.isCommand()) {
-      return
+  public async onInteractionCreate(interaction: Interaction) {
+    if (interaction.isCommand()) {
+      return this.onApplicationCommand(interaction)
+    } else if (interaction.isAutocomplete()) {
+      return this.onAutocomplete(interaction)
+    } else if (interaction.isContextMenuCommand()) {
+      return this.onContextMenuCommand(interaction)
+    } else if (interaction.isButton()) {
+      return this.onButton(interaction)
+    } else if (interaction.isSelectMenu()) {
+      return this.onSelectMenu(interaction)
     }
+  }
 
+  private async onApplicationCommand(interaction: CommandInteraction) {
     const cmd = this.client.manager.getSlashByTrigger(interaction.commandName)
 
     if (!cmd) {
@@ -128,8 +140,8 @@ export class ExecutorStage extends Stage {
 
     for (const option of interaction.options.data) {
       if (
-        option.type === 'SUB_COMMAND_GROUP' ||
-        option.type === 'SUB_COMMAND'
+        option.type === ApplicationCommandOptionType.SubcommandGroup ||
+        option.type === ApplicationCommandOptionType.Subcommand
       ) {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
@@ -145,14 +157,9 @@ export class ExecutorStage extends Stage {
     })
   }
 
-  @listener({ event: 'interactionCreate' })
   public onAutocomplete(
     interaction: AutocompleteInteraction,
   ): Promise<void> | void {
-    if (!interaction.isAutocomplete()) {
-      return
-    }
-
     const cmd = this.client.manager.getSlashByTrigger(interaction.commandName)
 
     if (!cmd) {
@@ -163,8 +170,8 @@ export class ExecutorStage extends Stage {
 
     for (const option of interaction.options.data) {
       if (
-        option.type === 'SUB_COMMAND_GROUP' ||
-        option.type === 'SUB_COMMAND'
+        option.type === ApplicationCommandOptionType.SubcommandGroup ||
+        option.type === ApplicationCommandOptionType.Subcommand
       ) {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
@@ -207,7 +214,7 @@ export class ExecutorStage extends Stage {
   }
 
   private getPossibleResponseType(option: CommandInteractionOption) {
-    if (option.type === /* ApplicationCommandOptionType.User */ 'USER') {
+    if (option.type === ApplicationCommandOptionType.User) {
       return option.member || option.user
     }
 
@@ -222,21 +229,18 @@ export class ExecutorStage extends Stage {
   }
 
   private getCorrectType(type: CommandInteractionOption['type']): string {
-    if (type === 'SUB_COMMAND') {
+    if (type === ApplicationCommandOptionType.Subcommand) {
       return 'subCommand'
-    } else if (type === 'SUB_COMMAND_GROUP') {
+    } else if (type === ApplicationCommandOptionType.SubcommandGroup) {
       return 'subCommandGroup'
     }
 
     return ''
   }
 
-  @listener({ event: 'interactionCreate' })
-  public async onContextMenu(interaction: ContextMenuInteraction) {
-    if (!interaction.isContextMenu()) {
-      return
-    }
-
+  private async onContextMenuCommand(
+    interaction: ContextMenuCommandInteraction,
+  ) {
     const cmd = this.client.manager.getSlashByName(interaction.commandName)
 
     if (!cmd) {
@@ -258,8 +262,7 @@ export class ExecutorStage extends Stage {
   //#endregion
 
   //#region Buttons
-  @listener({ event: 'interactionCreate' })
-  public async onButton(interaction: ButtonInteraction) {
+  private async onButton(interaction: ButtonInteraction) {
     if (!interaction.isButton()) {
       return
     }
@@ -287,8 +290,7 @@ export class ExecutorStage extends Stage {
   //#endregion
 
   //#region Select Menus
-  @listener({ event: 'interactionCreate' })
-  public async onSelectMenu(interaction: SelectMenuInteraction) {
+  private async onSelectMenu(interaction: SelectMenuInteraction) {
     if (!interaction.isSelectMenu()) {
       return
     }
@@ -360,7 +362,7 @@ export class ExecutorStage extends Stage {
     msg:
       | ButtonInteraction
       | CommandInteraction
-      | ContextMenuInteraction
+      | ContextMenuCommandInteraction
       | SelectMenuInteraction
     cmd: IButton | ISelectMenu | IApplicationCommand
     objectArgs?: Record<string, unknown>
@@ -410,7 +412,7 @@ export class ExecutorStage extends Stage {
     interaction:
       | Message
       | CommandInteraction
-      | ContextMenuInteraction
+      | ContextMenuCommandInteraction
       | ButtonInteraction
       | SelectMenuInteraction,
   ): Promise<boolean> {

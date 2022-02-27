@@ -24,7 +24,7 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "discord.js": "^13.6.0"
+    "discord.js": "^14.0.0-dev.1645402068.78aa36f"
   },
   "publishConfig": {
     "access": "public"

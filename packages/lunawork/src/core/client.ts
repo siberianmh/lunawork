@@ -1,4 +1,4 @@
-import { Client, ClientOptions, Message, Intents } from 'discord.js'
+import { Client, ClientOptions, Message, GatewayIntentBits } from 'discord.js'
 
 import type { IExperimentalOptions } from '../lib/types'
 import { Stage } from './stage'
@@ -105,7 +105,7 @@ export class LunaworkClient extends Client {
 
   public constructor(
     options: ClientOptions = {
-      intents: Intents.FLAGS.GUILDS,
+      intents: GatewayIntentBits.Guilds,
     },
   ) {
     super(options)
