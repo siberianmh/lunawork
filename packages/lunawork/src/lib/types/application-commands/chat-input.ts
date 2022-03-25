@@ -1,3 +1,5 @@
+import { LocalizationMap } from './shared'
+
 interface IApplicationCommandOptionBase {
   type:
     | ApplicationCommandOptionType.Boolean
@@ -5,7 +7,9 @@ interface IApplicationCommandOptionBase {
     | ApplicationCommandOptionType.Role
     | ApplicationCommandOptionType.Mentionable
   name: string
+  name_localizations?: LocalizationMap
   description: string
+  description_localizations?: LocalizationMap
   default?: boolean
   required?: boolean
   autocomplete?: never

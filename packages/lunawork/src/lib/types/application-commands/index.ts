@@ -2,17 +2,28 @@ import { CommandInteraction, AutocompleteInteraction } from 'discord.js'
 import { Inhibitor } from '../../inhibitors'
 import type { Stage } from '../../../core/stage'
 import { IApplicationCommandOption } from './chat-input'
-import { ApplicationCommandTypes } from './shared'
+import { ApplicationCommandTypes, LocalizationMap } from './shared'
 
 export interface IApplicationCommandDiscordBase {
+  /**
+   * 1-32 character name; `CHAT_INPUT` command names must be all lowercased matching `^[\w-]{1,32}$`
+   */
   readonly name?: string
+  /**
+   * Localization dictionary for the name field. Values follow the same restrictions as name
+   */
+  readonly name_localizations?: LocalizationMap
   readonly options?: Array<IApplicationCommandOption>
 }
 
 export interface IChatInputApplicationCommand
   extends IApplicationCommandDiscordBase {
   readonly description?: string
-  // TODO: TYPES jhasklgklgj
+  /**
+   * Localization dictionary for the description field. Values follow the same restrictions as description
+   */
+  readonly description_locazations?: LocalizationMap
+  // TODO: types
   readonly type?:
     | ApplicationCommandTypes.CHAT_INPUT
     | ApplicationCommandTypes.MESSAGE
