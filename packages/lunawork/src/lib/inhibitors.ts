@@ -6,7 +6,7 @@ import {
   ContextMenuCommandInteraction,
   ButtonInteraction,
   Embed,
-  ActionRow,
+  ActionRowBuilder,
   ChannelType,
 } from 'discord.js'
 import { LunaworkClient } from '../core/client'
@@ -26,7 +26,7 @@ export type Inhibitor = (
   | {
       content?: string
       embeds?: Array<Embed>
-      components?: Array<ActionRow>
+      components?: Array<ActionRowBuilder>
       /**
        * NOTE: Will be silently skipped when using prefixed commands,
        *       and will be used in application commands

@@ -445,12 +445,14 @@ export class ExecutorStage extends Stage {
         await interaction.channel.send({
           content: reason.content ?? undefined,
           embeds: reason.embeds ?? undefined,
+          // @ts-expect-error
           components: reason.components ?? undefined,
         })
       } else {
         await interaction.reply({
           content: reason.content ?? undefined,
           embeds: reason.embeds ?? undefined,
+          // @ts-expect-error
           components: reason.components ?? undefined,
           ephemeral: true,
         })
