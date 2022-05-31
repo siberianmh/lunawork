@@ -51,16 +51,3 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
     Reflect.defineMetadata(applicationCommandMetaKey, targetMeta, target)
   }
 }
-
-/**
- * @deprecated use `applicationCommand(opts)` instead
- */
-export function slashCommand(opts: IApplicationCommandDecoratorOptions) {
-  return function (
-    target: Stage,
-    propertyKey: string,
-    descriptor: PropertyDescriptor,
-  ) {
-    return applicationCommand(opts)(target, propertyKey, descriptor)
-  }
-}
