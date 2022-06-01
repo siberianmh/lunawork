@@ -1,5 +1,4 @@
 import type { URL } from 'url'
-import type { RequestInit, Response } from 'node-fetch'
 
 import { Bucket } from './bucket'
 

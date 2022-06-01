@@ -1,6 +1,4 @@
 import { URL } from 'url'
-import type { RequestInit, Response } from 'node-fetch'
-import fetch from 'node-fetch'
 
 function parseBoolean(
   bool: string | number | boolean | undefined | null,
@@ -87,7 +85,7 @@ export class Bucket {
 
       // execute request
       try {
-        const response = await fetch(url, options)
+        const response = await fetch(url.toString(), options)
 
         if (response.headers != null) {
           const id = response.headers.get('x-ratelimit-bucket')

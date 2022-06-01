@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/siberianmh/lunawork"
@@ -20,7 +23,6 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
