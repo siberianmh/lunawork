@@ -7,6 +7,7 @@ import {
   Message,
   Interaction,
   SelectMenuInteraction,
+  ModalSubmitInteraction,
 } from 'discord.js'
 import { LunaworkClient } from '../core/client'
 import { Stage } from '../core/stage'
@@ -21,6 +22,7 @@ import {
   IApplicationCommand,
   ISelectMenu,
   ApplicationCommandOptionType,
+  IModal,
 } from '../lib/types'
 
 let deprecatedTriggered = false
@@ -119,6 +121,8 @@ export class ExecutorStage extends Stage {
       return this.onButton(interaction)
     } else if (interaction.isSelectMenu()) {
       return this.onSelectMenu(interaction)
+    } else if (interaction.isModalSubmit()) {
+      return this.onModalSubmit(interaction)
     }
   }
 
@@ -317,6 +321,39 @@ export class ExecutorStage extends Stage {
   }
   //#endregion
 
+  private async onModalSubmit(interaction: ModalSubmitInteraction) {
+    if (!interaction.isModalSubmit()) {
+      return
+    }
+
+    const cmd = Array.from(this.client.manager.modals).find(
+      (m) => m.customID === interaction.customId,
+    )
+
+    if (!cmd) {
+      return
+    }
+
+    for (const inhibitor of cmd.inhibitors) {
+      const inhibited = await this.inhibiteCommand(inhibitor, interaction)
+      if (inhibited) {
+        return
+      }
+    }
+
+    const resultArgs: Record<string, unknown> = {}
+
+    for (const [fieldName, fieldObject] of interaction.fields.fields) {
+      resultArgs[fieldName] = fieldObject.data.value
+    }
+
+    return this.execute({
+      cmd,
+      msg: interaction,
+      objectArgs: resultArgs,
+    })
+  }
+
   private async executePrefixed({
     cmd,
     cmdTrigger,
@@ -364,7 +401,8 @@ export class ExecutorStage extends Stage {
       | CommandInteraction
       | ContextMenuCommandInteraction
       | SelectMenuInteraction
-    cmd: IButton | ISelectMenu | IApplicationCommand
+      | ModalSubmitInteraction
+    cmd: IButton | ISelectMenu | IApplicationCommand | IModal
     objectArgs?: Record<string, unknown>
     parsed?: string
     cmdTrigger?: string
@@ -414,7 +452,8 @@ export class ExecutorStage extends Stage {
       | CommandInteraction
       | ContextMenuCommandInteraction
       | ButtonInteraction
-      | SelectMenuInteraction,
+      | SelectMenuInteraction
+      | ModalSubmitInteraction,
   ): Promise<boolean> {
     const reason = await inhibitor(interaction, this.client)
 

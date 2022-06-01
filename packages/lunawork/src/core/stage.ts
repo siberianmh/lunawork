@@ -9,6 +9,7 @@ import {
   selectMenuMetaKey,
   applicationCommandMetaKey,
   webSocketMetaKey,
+  modalMetaKey,
 } from '../lib/reflect-prefixes'
 import {
   IListener,
@@ -17,6 +18,7 @@ import {
   IButton,
   IApplicationCommand,
   IPrefixCommand,
+  IModal,
 } from '../lib/types'
 import { getArgTypes } from '../lib/arg-type-provider'
 import { IWebSocketDecoratorMeta } from '../decorators/wslistener'
@@ -24,6 +26,7 @@ import { IApplicationCommandDecorator } from '../decorators/application-command'
 import { IPrefixCommanDecorator } from '../decorators/command'
 import { IButtonDecorator } from '../decorators/button'
 import { ISelectMenuDecorator } from '../decorators/select-menu'
+import { IModalDecorator } from '../decorators/modal'
 
 export class Stage {
   public client: LunaworkClient
@@ -134,6 +137,19 @@ export class Stage {
         } as ISelectMenu),
     )
 
+    const modalsMeta: Array<IModalDecorator> =
+      Reflect.getMetadata(modalMetaKey, this) || []
+
+    const modals = modalsMeta.map(
+      (meta) =>
+        ({
+          ...meta,
+          func: Reflect.get(this, meta.id),
+          id: this.constructor.name + '/' + meta.id,
+          stage: this,
+        } as IModal),
+    )
+
     return {
       listeners,
       wsListeners,
@@ -141,6 +157,7 @@ export class Stage {
       prefixCommands,
       buttons,
       selectMenus,
+      modals,
     }
   }
 }

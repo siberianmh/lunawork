@@ -10,6 +10,7 @@ export { applicationCommand } from './decorators/application-command'
 export { IApplicationCommandDecoratorOptions } from './lib/types/application-commands'
 export { IPrefixCommandDecoratorOptions, command } from './decorators/command'
 export { optional } from './decorators/optional'
+export { IModalDecoratorOptions, modal } from './decorators/modal'
 export { IButtonDecoratorOptions, button } from './decorators/button'
 export {
   ISelectMenuDecoratorOptions,

@@ -8,6 +8,7 @@ import {
   Embed,
   ActionRowBuilder,
   ChannelType,
+  ModalSubmitInteraction,
 } from 'discord.js'
 import { LunaworkClient } from '../core/client'
 
@@ -19,7 +20,8 @@ export type Inhibitor = (
     | CommandInteraction
     | SelectMenuInteraction
     | ButtonInteraction
-    | ContextMenuCommandInteraction,
+    | ContextMenuCommandInteraction
+    | ModalSubmitInteraction,
   client: LunaworkClient,
 ) => Promise<
   | string

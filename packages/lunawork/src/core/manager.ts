@@ -10,6 +10,7 @@ import {
   IPrefixCommand,
   ISelectMenu,
   IButton,
+  IModal,
 } from '../lib/types'
 
 export class Manager extends Stage {
@@ -176,6 +177,18 @@ export class Manager extends Stage {
     }
   }
   //#endregion
+
+  public modals: Set<IModal> = new Set()
+
+  public registerModals(modals: Array<IModal>) {
+    for (const modal of modals) {
+      if (this.modals.has(modal)) {
+        return
+      }
+
+      this.modals.add(modal)
+    }
+  }
 }
 
 export class ApplicationCommandManager extends Stage {

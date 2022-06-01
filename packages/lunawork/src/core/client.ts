@@ -174,6 +174,7 @@ export class LunaworkClient extends Client {
       listeners,
       wsListeners,
       applicationCommands,
+      modals,
     } = instance.process.bind(instance)()
 
     this.manager.registerListeners(listeners)
@@ -182,6 +183,7 @@ export class LunaworkClient extends Client {
     this.manager.registerPrefixCommands(prefixCommands)
     this.manager.registerButtons(buttons)
     this.manager.registerSelectMenus(selectMenus)
+    this.manager.registerModals(modals)
 
     this.stages.add(instance)
     return this
