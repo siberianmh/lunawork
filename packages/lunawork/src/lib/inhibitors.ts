@@ -3,11 +3,10 @@ import {
   CommandInteraction,
   PermissionResolvable,
   SelectMenuInteraction,
-  ContextMenuCommandInteraction,
+  ContextMenuInteraction,
   ButtonInteraction,
-  Embed,
-  ActionRowBuilder,
-  ChannelType,
+  MessageEmbed,
+  MessageActionRow,
   ModalSubmitInteraction,
 } from 'discord.js'
 import { LunaworkClient } from '../core/client'
@@ -20,15 +19,15 @@ export type Inhibitor = (
     | CommandInteraction
     | SelectMenuInteraction
     | ButtonInteraction
-    | ContextMenuCommandInteraction
+    | ContextMenuInteraction
     | ModalSubmitInteraction,
   client: LunaworkClient,
 ) => Promise<
   | string
   | {
       content?: string
-      embeds?: Array<Embed>
-      components?: Array<ActionRowBuilder>
+      embeds?: Array<MessageEmbed>
+      components?: Array<MessageActionRow>
       /**
        * NOTE: Will be silently skipped when using prefixed commands,
        *       and will be used in application commands
@@ -53,7 +52,7 @@ export const guildsOnly: Inhibitor = async (msg) =>
   msg.member ? undefined : { content: 'not in a guild' }
 
 export const dmsOnly: Inhibitor = async (msg) =>
-  msg.channel!.type === ChannelType.DM ? undefined : { content: 'not in dms' }
+  msg.channel!.type === 'DM' ? undefined : { content: 'not in dms' }
 
 export const hasGuildPermission = (perm: PermissionResolvable) =>
   mergeInhibitors(guildsOnly, async (msg) =>

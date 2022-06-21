@@ -3,7 +3,7 @@ import {
   ButtonInteraction,
   CommandInteraction,
   CommandInteractionOption,
-  ContextMenuCommandInteraction,
+  ContextMenuInteraction,
   Message,
   Interaction,
   SelectMenuInteraction,
@@ -21,7 +21,6 @@ import {
   IPrefixCommand,
   IApplicationCommand,
   ISelectMenu,
-  ApplicationCommandOptionType,
   IModal,
 } from '../lib/types'
 
@@ -115,7 +114,7 @@ export class ExecutorStage extends Stage {
       return this.onApplicationCommand(interaction)
     } else if (interaction.isAutocomplete()) {
       return this.onAutocomplete(interaction)
-    } else if (interaction.isContextMenuCommand()) {
+    } else if (interaction.isContextMenu()) {
       return this.onContextMenuCommand(interaction)
     } else if (interaction.isButton()) {
       return this.onButton(interaction)
@@ -144,8 +143,10 @@ export class ExecutorStage extends Stage {
 
     for (const option of interaction.options.data) {
       if (
-        option.type === ApplicationCommandOptionType.SubcommandGroup ||
-        option.type === ApplicationCommandOptionType.Subcommand
+        option.type ===
+          'SUB_COMMAND_GROUP' /* ApplicationCommandOptionType.SubcommandGroup */ ||
+        option.type ===
+          'SUB_COMMAND' /* ApplicationCommandOptionType.Subcommand */
       ) {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
@@ -174,8 +175,10 @@ export class ExecutorStage extends Stage {
 
     for (const option of interaction.options.data) {
       if (
-        option.type === ApplicationCommandOptionType.SubcommandGroup ||
-        option.type === ApplicationCommandOptionType.Subcommand
+        option.type ===
+          'SUB_COMMAND_GROUP' /* ApplicationCommandOptionType.SubcommandGroup */ ||
+        option.type ===
+          'SUB_COMMAND' /* ApplicationCommandOptionType.Subcommand */
       ) {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
@@ -218,7 +221,7 @@ export class ExecutorStage extends Stage {
   }
 
   private getPossibleResponseType(option: CommandInteractionOption) {
-    if (option.type === ApplicationCommandOptionType.User) {
+    if (option.type === 'USER' /* ApplicationCommandOptionType.User */) {
       return option.member || option.user
     }
 
@@ -233,18 +236,19 @@ export class ExecutorStage extends Stage {
   }
 
   private getCorrectType(type: CommandInteractionOption['type']): string {
-    if (type === ApplicationCommandOptionType.Subcommand) {
+    if (type === 'SUB_COMMAND' /* ApplicationCommandOptionType.Subcommand */) {
       return 'subCommand'
-    } else if (type === ApplicationCommandOptionType.SubcommandGroup) {
+    } else if (
+      type ===
+      'SUB_COMMAND_GROUP' /* ApplicationCommandOptionType.SubcommandGroup */
+    ) {
       return 'subCommandGroup'
     }
 
     return ''
   }
 
-  private async onContextMenuCommand(
-    interaction: ContextMenuCommandInteraction,
-  ) {
+  private async onContextMenuCommand(interaction: ContextMenuInteraction) {
     const cmd = this.client.manager.getSlashByName(interaction.commandName)
 
     if (!cmd) {
@@ -343,7 +347,8 @@ export class ExecutorStage extends Stage {
 
     const resultArgs: Record<string, unknown> = {}
 
-    for (const [fieldName, fieldObject] of interaction.fields.fields) {
+    // @ts-expect-error
+    for (const [fieldName, fieldObject] of interaction.fields['_fields']) {
       resultArgs[fieldName] = fieldObject.data.value
     }
 
@@ -399,7 +404,7 @@ export class ExecutorStage extends Stage {
     msg:
       | ButtonInteraction
       | CommandInteraction
-      | ContextMenuCommandInteraction
+      | ContextMenuInteraction
       | SelectMenuInteraction
       | ModalSubmitInteraction
     cmd: IButton | ISelectMenu | IApplicationCommand | IModal
@@ -450,7 +455,7 @@ export class ExecutorStage extends Stage {
     interaction:
       | Message
       | CommandInteraction
-      | ContextMenuCommandInteraction
+      | ContextMenuInteraction
       | ButtonInteraction
       | SelectMenuInteraction
       | ModalSubmitInteraction,
@@ -484,14 +489,12 @@ export class ExecutorStage extends Stage {
         await interaction.channel.send({
           content: reason.content ?? undefined,
           embeds: reason.embeds ?? undefined,
-          // @ts-expect-error
           components: reason.components ?? undefined,
         })
       } else {
         await interaction.reply({
           content: reason.content ?? undefined,
           embeds: reason.embeds ?? undefined,
-          // @ts-expect-error
           components: reason.components ?? undefined,
           ephemeral: true,
         })
