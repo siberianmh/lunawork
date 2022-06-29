@@ -347,9 +347,8 @@ export class ExecutorStage extends Stage {
 
     const resultArgs: Record<string, unknown> = {}
 
-    // @ts-expect-error
-    for (const [fieldName, fieldObject] of interaction.fields['_fields']) {
-      resultArgs[fieldName] = fieldObject.data.value
+    for (const field of interaction.fields['_fields']) {
+      resultArgs[field.customId] = field.value
     }
 
     return this.execute({

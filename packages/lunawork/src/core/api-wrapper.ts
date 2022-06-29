@@ -14,7 +14,7 @@ export class APIWrapper {
     this.token = token
     this.clientId = clientId
 
-    this.baseURL = 'https://discord.com/api/v9'
+    this.baseURL = 'https://discord.com/api/v10'
     this.client = new Client()
   }
 

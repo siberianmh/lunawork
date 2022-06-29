@@ -193,9 +193,9 @@ export class LunaworkClient extends Client {
    * Loads the internal API requester, and then login using d.js
    */
   public async login(token?: string) {
+    // We relay on the real user!
     const login = await super.login(token)
 
-    // We relay on the real user!
     const manageCommands = this.options.manageApplicationCommands ?? true
 
     if (manageCommands) {

@@ -230,13 +230,22 @@ export class ApplicationCommandManager extends Stage {
       const guilds = [...this.client.guilds.cache.values()]
 
       for (const guild of guilds) {
-        await this.apiWrapper.bulkOverwriteGuildApplicationCommands(
-          commands,
-          guild.id,
-        )
+        try {
+          console.log(commands, guild.id)
+          await this.apiWrapper.bulkOverwriteGuildApplicationCommands(
+            commands,
+            guild.id,
+          )
+        } catch (e) {
+          console.error(e)
+        }
       }
     } else {
-      await this.apiWrapper.bulkOverwriteGlobalApplicationCommands(commands)
+      try {
+        await this.apiWrapper.bulkOverwriteGlobalApplicationCommands(commands)
+      } catch (e) {
+        console.error(e)
+      }
     }
 
     return
