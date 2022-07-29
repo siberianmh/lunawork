@@ -3,11 +3,14 @@ import {
   ButtonInteraction,
   CommandInteraction,
   CommandInteractionOption,
-  ContextMenuInteraction,
+  MessageContextMenuCommandInteraction,
+  UserContextMenuCommandInteraction,
   Message,
   Interaction,
   SelectMenuInteraction,
   ModalSubmitInteraction,
+  InteractionType,
+  ApplicationCommandOptionType,
 } from 'discord.js'
 import { LunaworkClient } from '../core/client'
 import { Stage } from '../core/stage'
@@ -110,17 +113,25 @@ export class ExecutorStage extends Stage {
   //#region Application Commands
   @listener({ event: 'interactionCreate' })
   public async onInteractionCreate(interaction: Interaction) {
-    if (interaction.isCommand()) {
+    if (interaction.type === InteractionType.ApplicationCommand) {
       return this.onApplicationCommand(interaction)
-    } else if (interaction.isAutocomplete()) {
+    } else if (
+      interaction.type === InteractionType.ApplicationCommandAutocomplete
+    ) {
       return this.onAutocomplete(interaction)
-    } else if (interaction.isContextMenu()) {
+    } else if (
+      // TODO: Make them different?
+      interaction.isMessageContextMenuCommand() ||
+      interaction.isUserContextMenuCommand()
+    ) {
       return this.onContextMenuCommand(interaction)
     } else if (interaction.isButton()) {
+      // TODO:             ^^^^^^^^ It's true?
       return this.onButton(interaction)
     } else if (interaction.isSelectMenu()) {
+      // TODO:             ^^^^^^^^ also?
       return this.onSelectMenu(interaction)
-    } else if (interaction.isModalSubmit()) {
+    } else if (interaction.type === InteractionType.ModalSubmit) {
       return this.onModalSubmit(interaction)
     }
   }
@@ -143,10 +154,8 @@ export class ExecutorStage extends Stage {
 
     for (const option of interaction.options.data) {
       if (
-        option.type ===
-          'SUB_COMMAND_GROUP' /* ApplicationCommandOptionType.SubcommandGroup */ ||
-        option.type ===
-          'SUB_COMMAND' /* ApplicationCommandOptionType.Subcommand */
+        option.type === ApplicationCommandOptionType.SubcommandGroup ||
+        option.type === ApplicationCommandOptionType.Subcommand
       ) {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
@@ -175,10 +184,8 @@ export class ExecutorStage extends Stage {
 
     for (const option of interaction.options.data) {
       if (
-        option.type ===
-          'SUB_COMMAND_GROUP' /* ApplicationCommandOptionType.SubcommandGroup */ ||
-        option.type ===
-          'SUB_COMMAND' /* ApplicationCommandOptionType.Subcommand */
+        option.type === ApplicationCommandOptionType.SubcommandGroup ||
+        option.type === ApplicationCommandOptionType.Subcommand
       ) {
         const args = this.handleSubCommand(interaction.options.data)
         resultArgs = args
@@ -221,7 +228,7 @@ export class ExecutorStage extends Stage {
   }
 
   private getPossibleResponseType(option: CommandInteractionOption) {
-    if (option.type === 'USER' /* ApplicationCommandOptionType.User */) {
+    if (option.type === ApplicationCommandOptionType.User) {
       return option.member || option.user
     }
 
@@ -236,19 +243,20 @@ export class ExecutorStage extends Stage {
   }
 
   private getCorrectType(type: CommandInteractionOption['type']): string {
-    if (type === 'SUB_COMMAND' /* ApplicationCommandOptionType.Subcommand */) {
+    if (type === ApplicationCommandOptionType.Subcommand) {
       return 'subCommand'
-    } else if (
-      type ===
-      'SUB_COMMAND_GROUP' /* ApplicationCommandOptionType.SubcommandGroup */
-    ) {
+    } else if (type === ApplicationCommandOptionType.SubcommandGroup) {
       return 'subCommandGroup'
     }
 
     return ''
   }
 
-  private async onContextMenuCommand(interaction: ContextMenuInteraction) {
+  private async onContextMenuCommand(
+    interaction:
+      | MessageContextMenuCommandInteraction
+      | UserContextMenuCommandInteraction,
+  ) {
     const cmd = this.client.manager.getSlashByName(interaction.commandName)
 
     if (!cmd) {
@@ -326,7 +334,7 @@ export class ExecutorStage extends Stage {
   //#endregion
 
   private async onModalSubmit(interaction: ModalSubmitInteraction) {
-    if (!interaction.isModalSubmit()) {
+    if (interaction.type !== InteractionType.ModalSubmit) {
       return
     }
 
@@ -347,8 +355,8 @@ export class ExecutorStage extends Stage {
 
     const resultArgs: Record<string, unknown> = {}
 
-    for (const field of interaction.fields['_fields']) {
-      resultArgs[field.customId] = field.value
+    for (const [fieldName, fieldObject] of interaction.fields.fields) {
+      resultArgs[fieldName] = fieldObject.data.value
     }
 
     return this.execute({
@@ -403,7 +411,8 @@ export class ExecutorStage extends Stage {
     msg:
       | ButtonInteraction
       | CommandInteraction
-      | ContextMenuInteraction
+      | MessageContextMenuCommandInteraction
+      | UserContextMenuCommandInteraction
       | SelectMenuInteraction
       | ModalSubmitInteraction
     cmd: IButton | ISelectMenu | IApplicationCommand | IModal
@@ -454,7 +463,8 @@ export class ExecutorStage extends Stage {
     interaction:
       | Message
       | CommandInteraction
-      | ContextMenuInteraction
+      | MessageContextMenuCommandInteraction
+      | UserContextMenuCommandInteraction
       | ButtonInteraction
       | SelectMenuInteraction
       | ModalSubmitInteraction,
