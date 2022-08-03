@@ -3,19 +3,24 @@ import 'reflect-metadata'
 export { LunaworkClient } from './core/client'
 export { Stage } from './core/stage'
 
+export type { IListenerDecoratorOptions } from './decorators/listener'
+export type { IWebSocketDecoratorOptions } from './decorators/wslistener'
+export type { IApplicationCommandDecoratorOptions } from './lib/types/application-commands'
+export type { IPrefixCommandDecoratorOptions } from './decorators/command'
+export type { IModalDecoratorOptions } from './decorators/modal'
+export type { IButtonDecoratorOptions } from './decorators/button'
+export type { ISelectMenuDecoratorOptions } from './decorators/select-menu'
+export type { Inhibitor } from './lib/inhibitors'
+
 // Decorators
-export { IListenerDecoratorOptions, listener } from './decorators/listener'
-export { IWebSocketDecoratorOptions, wsListener } from './decorators/wslistener'
+export { listener } from './decorators/listener'
+export { wsListener } from './decorators/wslistener'
 export { applicationCommand } from './decorators/application-command'
-export { IApplicationCommandDecoratorOptions } from './lib/types/application-commands'
-export { IPrefixCommandDecoratorOptions, command } from './decorators/command'
+export { command } from './decorators/command'
 export { optional } from './decorators/optional'
-export { IModalDecoratorOptions, modal } from './decorators/modal'
-export { IButtonDecoratorOptions, button } from './decorators/button'
-export {
-  ISelectMenuDecoratorOptions,
-  selectMenu,
-} from './decorators/select-menu'
+export { modal } from './decorators/modal'
+export { button } from './decorators/button'
+export { selectMenu } from './decorators/select-menu'
 
 // Utils
 export {
@@ -23,7 +28,6 @@ export {
   ApplicationCommandTypes,
 } from './lib/types'
 export {
-  Inhibitor,
   dmsOnly,
   guildsOnly,
   hasGuildPermission,

@@ -4,6 +4,10 @@
   "description": "Discord bot framework for advanced and scalability bots.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "README.md"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18"
@@ -20,7 +24,7 @@
     "slash commands"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "rollup -c"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.13"
