@@ -1,1 +1,3 @@
-export type IExperimentalOptions = never
+export type IExperimentalOptions = {
+  UNSTABLE_server: boolean
+}

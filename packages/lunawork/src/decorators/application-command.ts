@@ -1,7 +1,7 @@
 import {
   IApplicationCommandDecoratorOptions,
   IApplicationCommandDecoratorMeta,
-  ApplicationCommandTypes,
+  ApplicationCommandType,
 } from '../lib/types'
 import { Stage } from '../core/stage'
 import { applicationCommandMetaKey } from '../lib/reflect-prefixes'
@@ -32,7 +32,7 @@ export function applicationCommand(opts: IApplicationCommandDecoratorOptions) {
       id: propertyKey,
       inhibitors: opts.inhibitors || [],
       options: opts.options || undefined,
-      type: opts.type || ApplicationCommandTypes.CHAT_INPUT,
+      type: opts.type || ApplicationCommandType.ChatInput,
       disabled: opts.disabled || false,
       onAutocomplete: opts.onAutocomplete || undefined,
       onError:

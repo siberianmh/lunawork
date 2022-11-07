@@ -5,7 +5,7 @@ import { listener } from '../decorators/listener'
 import {
   IListener,
   IWebSocket,
-  ApplicationCommandTypes,
+  ApplicationCommandType,
   IApplicationCommand,
   IPrefixCommand,
   ISelectMenu,
@@ -214,7 +214,7 @@ export class ApplicationCommandManager extends Stage {
       const registerData: any = {
         name: cmd.name ?? cmd.trigger,
         description: cmd.description,
-        type: cmd.type || ApplicationCommandTypes.CHAT_INPUT,
+        type: cmd.type || ApplicationCommandType.ChatInput,
         options: cmd.options || [],
       }
 

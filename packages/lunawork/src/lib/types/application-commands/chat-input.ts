@@ -1,4 +1,8 @@
-import { LocalizationMap } from './shared'
+import {
+  LocalizationMap,
+  APIApplicationCommandOptionChoice,
+  ApplicationCommandOptionType,
+} from 'discord-api-types/v10'
 
 interface IApplicationCommandOptionBase {
   type:
@@ -20,7 +24,6 @@ export type IApplicationCommandOption =
   | IApplicationCommandSubCommandOptions
   | IApplicationCommandOptionBase
   | IApplicationCommandChannelOptions
-  | IApplicationCommandStringArgumentOptions
   | IApplicationCommandNumberArgumentOptions
   | IApplicationCommandStringAutocompleteOptions
   | IApplicationCommandNumericAutocompleteOptions
@@ -46,7 +49,7 @@ export interface IApplicationCommandStringArgumentOptions
     | ApplicationCommandOptionType.String
     | ApplicationCommandOptionType.Integer
     | ApplicationCommandOptionType.Number
-  choices?: Array<IApplicationCommandOptionChoice>
+  choices?: Array<APIApplicationCommandOptionChoice>
   autocomplete?: false
 }
 
@@ -80,7 +83,7 @@ export interface IApplicationCommandNumberArgumentOptions
   type:
     | ApplicationCommandOptionType.Integer
     | ApplicationCommandOptionType.Number
-  choices?: Array<IApplicationCommandOptionChoice>
+  choices?: Array<APIApplicationCommandOptionChoice>
   /**
    * If the option is an `INTEGER` or `NUMBER` type, the minimum value permitted.
    */
@@ -99,22 +102,4 @@ export interface IApplicationCommandChannelOptions
   channel_types?: Array<any>
 }
 
-// https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
-export enum ApplicationCommandOptionType {
-  Subcommand = 1 /* 1 */,
-  SubcommandGroup /* 2 */,
-  String /* 3 */,
-  Integer /* 4 */,
-  Boolean /* 5 */,
-  User /* 6 */,
-  Channel /* 7 */,
-  Role /* 8 */,
-  Mentionable /* 9 */,
-  Number /* 10 */,
-  Attachment /* 11 */,
-}
-
-export interface IApplicationCommandOptionChoice {
-  name: string
-  value: string | number
-}
+export { ApplicationCommandOptionType }

@@ -25,7 +25,7 @@ export { selectMenu } from './decorators/select-menu'
 // Utils
 export {
   ApplicationCommandOptionType,
-  ApplicationCommandTypes,
+  ApplicationCommandType,
 } from './lib/types'
 export {
   dmsOnly,

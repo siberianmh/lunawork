@@ -1,8 +1,9 @@
 import { CommandInteraction, AutocompleteInteraction } from 'discord.js'
+import { LocalizationMap } from 'discord-api-types/v10'
 import { Inhibitor } from '../../inhibitors'
 import type { Stage } from '../../../core/stage'
 import { IApplicationCommandOption } from './chat-input'
-import { ApplicationCommandTypes, LocalizationMap } from './shared'
+import { ApplicationCommandType } from './shared'
 
 export interface IApplicationCommandDiscordBase {
   /**
@@ -25,14 +26,14 @@ export interface IChatInputApplicationCommand
   readonly description_locazations?: LocalizationMap
   // TODO: types
   readonly type?:
-    | ApplicationCommandTypes.CHAT_INPUT
-    | ApplicationCommandTypes.MESSAGE
-    | ApplicationCommandTypes.USER
+    | ApplicationCommandType.ChatInput
+    | ApplicationCommandType.Message
+    | ApplicationCommandType.User
 }
 
 export interface IContextMenuApplicationCommand
   extends Omit<IApplicationCommandDiscordBase, 'description'> {
-  readonly type: ApplicationCommandTypes.MESSAGE | ApplicationCommandTypes.USER
+  readonly type: ApplicationCommandType.Message | ApplicationCommandType.User
 }
 
 export interface IApplicationCommandLunaworkBase {
