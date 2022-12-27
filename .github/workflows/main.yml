@@ -16,7 +16,9 @@ jobs:
         with:
           node-version: '18'
       - name: Install deps
-        run: pnpm install
+        run: |
+          npm install -g pnpm
+          pnpm install
       - name: Run lint
         run: pnpm lint
 
@@ -29,6 +31,8 @@ jobs:
         with:
           node-version: '18'
       - name: Install deps
-        run: pnpm install
+        run: |
+          npm install -g pnpm
+          pnpm install
       - name: Run build
         run: pnpm build
