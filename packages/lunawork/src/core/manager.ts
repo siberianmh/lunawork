@@ -231,7 +231,6 @@ export class ApplicationCommandManager extends Stage {
 
       for (const guild of guilds) {
         try {
-          console.log(commands, guild.id)
           await this.apiWrapper.bulkOverwriteGuildApplicationCommands(
             commands,
             guild.id,
