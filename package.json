@@ -2,26 +2,26 @@
   "name": "@lunawork/root",
   "private": true,
   "version": "0.0.0",
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "pnpm@7.20.0",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn turbo run build",
+    "build": "pnpm turbo run build",
     "lint": "prettier --check \"./**/*.{ts,tsx,js,yaml,yml}\"",
-    "lint:fix": "yarn lint --write",
-    "ci:version": "yarn changeset version",
-    "ci:release": "yarn build && yarn changeset publish"
+    "lint:fix": "pnpm lint --write",
+    "ci:version": "pnpm changeset version",
+    "ci:release": "pnpm build && pnpm changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.23.1",
-    "@types/node": "^17.0.14",
-    "esbuild": "^0.14.53",
-    "rollup": "^3.2.3",
-    "rollup-plugin-dts": "^5.0.0",
-    "rollup-plugin-esbuild": "^4.10.1",
-    "prettier": "^2.8.0",
+    "@changesets/cli": "^2.26.0",
+    "@types/node": "^18.11.18",
+    "esbuild": "^0.16.10",
+    "rollup": "^3.8.1",
+    "rollup-plugin-dts": "^5.1.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "prettier": "^2.8.1",
     "turbo": "^1.6.3",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   }
 }

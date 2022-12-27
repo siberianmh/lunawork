@@ -25,14 +25,14 @@ jobs:
           node-version: '18'
 
       - name: Install deps
-        run: yarn install
+        run: pnpm install
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@master
         with:
-          version: yarn ci:version
-          publish: yarn ci:release
+          version: pnpm ci:version
+          publish: pnpm ci:release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
