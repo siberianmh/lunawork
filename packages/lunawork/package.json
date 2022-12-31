@@ -4,10 +4,6 @@
   "description": "Discord bot framework for advanced and scalability bots.",
   "main": "src/index",
   "types": "src/index",
-  "files": [
-    "dist/*",
-    "README.md"
-  ],
   "license": "MIT",
   "engines": {
     "node": ">=18"
@@ -34,6 +30,7 @@
     "discord.js": "^14.7.1"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist"
   }
 }
