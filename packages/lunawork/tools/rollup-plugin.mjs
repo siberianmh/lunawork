@@ -15,9 +15,8 @@ export function packageJSON() {
       const inputObject = JSON.parse(inputFile)
       const outputPath = path.resolve(__dirname, '..', 'dist')
 
-      console.log(outputPath)
-      delete inputFile['devDependencies']
-      delete inputFile['publishConfig']
+      delete inputObject['devDependencies']
+      delete inputObject['publishConfig']
       const outputObject = {
         ...inputObject,
         main: 'index.js',
