@@ -17,6 +17,7 @@ export function packageJSON() {
 
       console.log(outputPath)
       delete inputFile['devDependencies']
+      delete inputFile['publishConfig']
       const outputObject = {
         ...inputObject,
         main: 'index.js',
