@@ -9,7 +9,7 @@ importers:
       esbuild: ^0.16.10
       prettier: ^2.8.1
       rollup: ^3.8.1
-      rollup-plugin-dts: ^5.1.0
+      rollup-plugin-dts: ^5.3.0
       rollup-plugin-esbuild: ^5.0.0
       turbo: ^1.6.3
       typescript: ^4.9.4
@@ -19,7 +19,7 @@ importers:
       esbuild: 0.16.10
       prettier: 2.8.1
       rollup: 3.8.1
-      rollup-plugin-dts: 5.1.0_q6nddm75e3egjsxnhzkgx66xvi
+      rollup-plugin-dts: 5.3.0_q6nddm75e3egjsxnhzkgx66xvi
       rollup-plugin-esbuild: 5.0.0_73mjc43bqvjvxvhdgowfpra7ou
       turbo: 1.6.3
       typescript: 4.9.4
@@ -483,6 +483,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@jridgewell/sourcemap-codec/1.4.14:
+    resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
+    dev: true
 
   /@manypkg/find-root/1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -1464,11 +1468,11 @@ packages:
       yallist: 2.1.2
     dev: true
 
-  /magic-string/0.26.7:
-    resolution: {integrity: sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==}
+  /magic-string/0.30.0:
+    resolution: {integrity: sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==}
     engines: {node: '>=12'}
     dependencies:
-      sourcemap-codec: 1.4.8
+      '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
   /map-obj/1.0.1:
@@ -1789,14 +1793,14 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: true
 
-  /rollup-plugin-dts/5.1.0_q6nddm75e3egjsxnhzkgx66xvi:
-    resolution: {integrity: sha512-R+4cVEhu9LfAlR1hqp1D67nO5hsiYFSsbVa2Uj/xchN6WxN4Ct9VjuEP1mw7f4dKJR5rj+OtjUz5cVINX51eFA==}
+  /rollup-plugin-dts/5.3.0_q6nddm75e3egjsxnhzkgx66xvi:
+    resolution: {integrity: sha512-8FXp0ZkyZj1iU5klkIJYLjIq/YZSwBoERu33QBDxm/1yw5UU4txrEtcmMkrq+ZiKu3Q4qvPCNqc3ovX6rjqzbQ==}
     engines: {node: '>=v14'}
     peerDependencies:
       rollup: ^3.0.0
-      typescript: ^4.1
+      typescript: ^4.1 || ^5.0
     dependencies:
-      magic-string: 0.26.7
+      magic-string: 0.30.0
       rollup: 3.8.1
       typescript: 4.9.4
     optionalDependencies:
@@ -1900,11 +1904,6 @@ packages:
       strip-ansi: 6.0.1
       wcwidth: 1.0.1
       yargs: 15.4.1
-    dev: true
-
-  /sourcemap-codec/1.4.8:
-    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
-    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
 
   /spawndamnit/2.0.0:
