@@ -14,7 +14,7 @@
     "ci:release": "pnpm build && pnpm changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.0",
+    "@changesets/cli": "^2.26.1",
     "@types/node": "^18.15.3",
     "esbuild": "^0.17.12",
     "rollup": "^3.19.1",
