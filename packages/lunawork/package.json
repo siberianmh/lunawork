@@ -23,11 +23,11 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.40",
+    "discord-api-types": "^0.37.47",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "discord.js": "^14.9.0"
+    "discord.js": "^14.11.0"
   },
   "publishConfig": {
     "access": "public",
