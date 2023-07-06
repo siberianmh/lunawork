@@ -51,8 +51,8 @@ export interface IApplicationCommandLunaworkBase {
   ) => void
 }
 
-export type IApplicationCommandDecoratorOptions =
-  | IChatInputApplicationCommand & IApplicationCommandLunaworkBase
+export type IApplicationCommandDecoratorOptions = IChatInputApplicationCommand &
+  IApplicationCommandLunaworkBase
 
 export interface IApplicationCommandDecoratorMeta {
   readonly id: string

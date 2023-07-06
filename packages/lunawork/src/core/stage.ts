@@ -46,7 +46,7 @@ export class Stage {
           id: this.constructor.name + '/' + meta.id,
           stage: this,
           func: meta.func,
-        } as IListener),
+        }) as IListener,
     )
 
     const wsListenerMeta: Array<IWebSocketDecoratorMeta> =
@@ -59,7 +59,7 @@ export class Stage {
           event: meta.event,
           stage: this,
           func: meta.func,
-        } as IWebSocket),
+        }) as IWebSocket,
     )
 
     const applicationCommandMeta: Array<IApplicationCommandDecorator> =
@@ -79,7 +79,7 @@ export class Stage {
           onAutocomplete:
             meta.onAutocomplete ||
             Reflect.get(this, `on${meta.name}Autocomplete`),
-        } as IApplicationCommand),
+        }) as IApplicationCommand,
     )
 
     const prefixCommandsMeta: Array<IPrefixCommanDecorator> =
@@ -98,7 +98,7 @@ export class Stage {
           inhibitors: meta.inhibitors,
           usesContextAPI: meta.usesContextAPI,
           onError: meta.onError,
-        } as IPrefixCommand),
+        }) as IPrefixCommand,
     )
 
     prefixCommands.forEach((cmd) => {
@@ -121,7 +121,7 @@ export class Stage {
           func: Reflect.get(this, meta.id),
           id: this.constructor.name + '/' + meta.id,
           stage: this,
-        } as IButton),
+        }) as IButton,
     )
 
     const selectMenusMeta: Array<ISelectMenuDecorator> =
@@ -134,7 +134,7 @@ export class Stage {
           func: Reflect.get(this, meta.id),
           id: this.constructor.name + '/' + meta.id,
           stage: this,
-        } as ISelectMenu),
+        }) as ISelectMenu,
     )
 
     const modalsMeta: Array<IModalDecorator> =
@@ -147,7 +147,7 @@ export class Stage {
           func: Reflect.get(this, meta.id),
           id: this.constructor.name + '/' + meta.id,
           stage: this,
-        } as IModal),
+        }) as IModal,
     )
 
     return {
