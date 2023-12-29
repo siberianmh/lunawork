@@ -23,7 +23,7 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.54",
+    "discord-api-types": "^0.37.67",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
