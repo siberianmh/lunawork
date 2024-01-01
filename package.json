@@ -14,14 +14,14 @@
     "ci:release": "pnpm build && pnpm changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
-    "@types/node": "^20.5.3",
-    "esbuild": "^0.19.2",
-    "rollup": "^3.28.1",
-    "rollup-plugin-dts": "^6.0.0",
-    "rollup-plugin-esbuild": "^5.0.0",
-    "prettier": "^3.0.2",
-    "turbo": "^1.10.12",
-    "typescript": "^5.1.6"
+    "@changesets/cli": "^2.27.1",
+    "@types/node": "^20.10.6",
+    "esbuild": "^0.19.11",
+    "rollup": "^4.9.2",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.1.0",
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.2",
+    "typescript": "^5.3.3"
   }
 }
