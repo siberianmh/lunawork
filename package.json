@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
-    "@types/node": "^20.10.6",
+    "@types/node": "^20.17.0",
     "esbuild": "^0.19.11",
     "rollup": "^4.9.2",
     "rollup-plugin-dts": "^6.1.0",
