@@ -6,7 +6,7 @@
   "types": "src/index",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=20.18.0"
   },
   "repository": {
     "type": "git",
